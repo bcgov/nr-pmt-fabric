@@ -1,0 +1,39 @@
+{
+  "formatVersion": "202502",
+  "computeEngineSettings": {},
+  "name": "PMT",
+  "queryGroups": [],
+  "documentLocale": "en-US",
+  "gatewayObjectId": "9202c329-259a-4afb-9e62-3999b9341dc1",
+  "queriesMetadata": {
+    "ats_replication ats_authorizations": {
+      "queryId": "a35aa3d8-e6d2-49eb-8601-c514104273d0",
+      "queryName": "ats_replication ats_authorizations",
+      "loadEnabled": false
+    },
+    "ats_replication ats_authorizations_DataDestination": {
+      "queryId": "740e9f6a-e0a0-46e3-8488-8711e92e8e6f",
+      "queryName": "ats_replication ats_authorizations_DataDestination",
+      "isHidden": true,
+      "loadEnabled": false
+    },
+    "DefaultDestination": {
+      "queryId": "2640fa8d-75dc-46c3-ab7d-fa5ccf070f3c",
+      "queryName": "DefaultDestination",
+      "isHidden": true,
+      "loadEnabled": false
+    }
+  },
+  "connections": [
+    {
+      "path": "theory.bcgov:5434;odstst",
+      "kind": "PostgreSQL",
+      "connectionId": "{\"ClusterId\":\"9202c329-259a-4afb-9e62-3999b9341dc1\",\"DatasourceId\":\"3d3db57e-907f-438e-883c-211433a060fb\"}"
+    },
+    {
+      "path": "Lakehouse",
+      "kind": "Lakehouse",
+      "connectionId": "{\"ClusterId\":\"1f7baf71-1832-47ee-ba8c-e8f46696fbb5\",\"DatasourceId\":\"242c11af-5a94-4dc0-a80c-556166c29afe\"}"
+    }
+  ]
+}

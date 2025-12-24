@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "CopyJob",
+    "displayName": "rrs_road_section_status_code"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "1efc92ff-b732-94ee-4895-2af787c4fd95"
+  }
+}

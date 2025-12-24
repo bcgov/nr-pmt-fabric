@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "CopyJob",
+    "displayName": "rrs_road_feature_class_sdw"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "f91fcc32-bdee-a01f-4d6e-01587488d0a0"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "CopyJob",
+    "displayName": "vfcbc_atsnumber_vw"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "d08b02cb-9d37-8405-405c-23f56d5afdb7"
+  }
+}

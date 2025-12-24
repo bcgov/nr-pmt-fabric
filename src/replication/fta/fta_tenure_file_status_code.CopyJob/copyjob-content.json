@@ -1,0 +1,113 @@
+{
+  "properties": {
+    "jobMode": "Batch",
+    "source": {
+      "type": "OracleTable",
+      "connectionSettings": {
+        "type": "Oracle",
+        "externalReferences": {
+          "connection": "0256d531-1ecc-4986-86b0-46f5ef9d3c84"
+        }
+      }
+    },
+    "destination": {
+      "type": "LakehouseTable",
+      "connectionSettings": {
+        "type": "Lakehouse",
+        "typeProperties": {
+          "workspaceId": "00000000-0000-0000-0000-000000000000",
+          "artifactId": "a4c99642-feeb-81e8-46b6-ca11201b9b7d",
+          "rootFolder": "Tables"
+        },
+        "externalReferences": {
+          "connection": "8baa7aad-36f4-4594-8596-518807d7ff16"
+        }
+      }
+    },
+    "policy": {
+      "timeout": "0.12:00:00"
+    }
+  },
+  "activities": [
+    {
+      "id": "161a749d-d22b-4408-8bba-6df53bdca97c",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "THE",
+            "table": "TENURE_FILE_STATUS_CODE"
+          }
+        },
+        "destination": {
+          "writeBehavior": "Append",
+          "datasetSettings": {
+            "schema": "fta_replication",
+            "table": "fta_tenure_file_status_code"
+          }
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator",
+          "mappings": [
+            {
+              "source": {
+                "name": "TENURE_FILE_STATUS_CODE",
+                "type": "String"
+              },
+              "destination": {
+                "name": "TENURE_FILE_STATUS_CODE",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "DESCRIPTION",
+                "type": "String"
+              },
+              "destination": {
+                "name": "DESCRIPTION",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "EFFECTIVE_DATE",
+                "type": "DateTime"
+              },
+              "destination": {
+                "name": "EFFECTIVE_DATE",
+                "physicalType": "timestamp"
+              }
+            },
+            {
+              "source": {
+                "name": "EXPIRY_DATE",
+                "type": "DateTime"
+              },
+              "destination": {
+                "name": "EXPIRY_DATE",
+                "physicalType": "timestamp"
+              }
+            },
+            {
+              "source": {
+                "name": "UPDATE_TIMESTAMP",
+                "type": "DateTime"
+              },
+              "destination": {
+                "name": "UPDATE_TIMESTAMP",
+                "physicalType": "timestamp"
+              }
+            }
+          ]
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    }
+  ]
+}

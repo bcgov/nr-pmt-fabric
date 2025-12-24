@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "CopyJob",
+    "displayName": "rrs_road_submission"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "01c58883-41cf-8458-41c8-f15e34cff036"
+  }
+}

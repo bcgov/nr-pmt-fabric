@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "CopyJob",
+    "displayName": "fta_private_mark_certificate"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "6730ad80-618b-9389-4eac-718475f35430"
+  }
+}

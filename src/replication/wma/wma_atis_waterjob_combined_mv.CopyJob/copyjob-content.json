@@ -1,0 +1,630 @@
+{
+  "properties": {
+    "jobMode": "Batch",
+    "source": {
+      "type": "OracleTable",
+      "connectionSettings": {
+        "type": "Oracle",
+        "externalReferences": {
+          "connection": "f516e188-92b9-45ed-98ab-776d3f13239a"
+        }
+      }
+    },
+    "destination": {
+      "type": "LakehouseTable",
+      "connectionSettings": {
+        "type": "Lakehouse",
+        "typeProperties": {
+          "workspaceId": "00000000-0000-0000-0000-000000000000",
+          "artifactId": "a4c99642-feeb-81e8-46b6-ca11201b9b7d",
+          "rootFolder": "Tables"
+        },
+        "externalReferences": {
+          "connection": "bc8539f0-7142-4559-844f-ef25c76ac5da"
+        }
+      }
+    },
+    "policy": {
+      "timeout": "0.12:00:00"
+    }
+  },
+  "activities": [
+    {
+      "id": "4a6ea2e1-339a-4e69-9025-477ba684724a",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "WATERDW",
+            "table": "ATIS_WATERJOB_COMBINED_MV"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "wma_replication",
+            "table": "atis_waterjob_combined_mv"
+          }
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator",
+          "mappings": [
+            {
+              "source": {
+                "name": "UNIQUEID",
+                "type": "Decimal",
+                "scale": 127,
+                "precision": 38
+              },
+              "destination": {
+                "name": "UNIQUEID",
+                "physicalType": "integer"
+              }
+            },
+            {
+              "source": {
+                "name": "VFCBCOBJECTID",
+                "type": "Int32"
+              },
+              "destination": {
+                "name": "VFCBCOBJECTID",
+                "physicalType": "integer"
+              }
+            },
+            {
+              "source": {
+                "name": "AUTHORIZATIONID",
+                "type": "Decimal",
+                "scale": 0,
+                "precision": 38
+              },
+              "destination": {
+                "name": "AUTHORIZATIONID",
+                "physicalType": "decimal",
+                "scale": 18,
+                "precision": 38
+              }
+            },
+            {
+              "source": {
+                "name": "VFCTRACKING_NUMBER",
+                "type": "String"
+              },
+              "destination": {
+                "name": "VFCTRACKING_NUMBER",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "WATEROBJECTID",
+                "type": "Int32"
+              },
+              "destination": {
+                "name": "WATEROBJECTID",
+                "physicalType": "integer"
+              }
+            },
+            {
+              "source": {
+                "name": "JOBNUMBER",
+                "type": "String"
+              },
+              "destination": {
+                "name": "JOBNUMBER",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "FILENUMBER",
+                "type": "String"
+              },
+              "destination": {
+                "name": "FILENUMBER",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "LICENCENUMBER",
+                "type": "String"
+              },
+              "destination": {
+                "name": "LICENCENUMBER",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "VFCAPPSTATUS",
+                "type": "String"
+              },
+              "destination": {
+                "name": "VFCAPPSTATUS",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "ATSAUTHORIZATIONSTATUS",
+                "type": "String"
+              },
+              "destination": {
+                "name": "ATSAUTHORIZATIONSTATUS",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "WATERJOBSTATUS",
+                "type": "String"
+              },
+              "destination": {
+                "name": "WATERJOBSTATUS",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "VFCBCJOBSTATUS",
+                "type": "String"
+              },
+              "destination": {
+                "name": "VFCBCJOBSTATUS",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "STATUSTRANSFORMED",
+                "type": "String"
+              },
+              "destination": {
+                "name": "STATUSTRANSFORMED",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "JOBSTATUSGROUP",
+                "type": "String"
+              },
+              "destination": {
+                "name": "JOBSTATUSGROUP",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "APPJOBOPEN",
+                "type": "String"
+              },
+              "destination": {
+                "name": "APPJOBOPEN",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "APPROVALLICENCESTATUS",
+                "type": "String"
+              },
+              "destination": {
+                "name": "APPROVALLICENCESTATUS",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "REGION",
+                "type": "String"
+              },
+              "destination": {
+                "name": "REGION",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "REGIONTRANSFORMED",
+                "type": "String"
+              },
+              "destination": {
+                "name": "REGIONTRANSFORMED",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "VFCBCOFFICE",
+                "type": "String"
+              },
+              "destination": {
+                "name": "VFCBCOFFICE",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "WATEROFFICE",
+                "type": "String"
+              },
+              "destination": {
+                "name": "WATEROFFICE",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "DISTRICTPRECINCT",
+                "type": "String"
+              },
+              "destination": {
+                "name": "DISTRICTPRECINCT",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "JOBTYPE",
+                "type": "String"
+              },
+              "destination": {
+                "name": "JOBTYPE",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "JOBSUBTYPE",
+                "type": "String"
+              },
+              "destination": {
+                "name": "JOBSUBTYPE",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "JOBTYPETRANSFORMED",
+                "type": "String"
+              },
+              "destination": {
+                "name": "JOBTYPETRANSFORMED",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "JOBTYPEGROUP",
+                "type": "String"
+              },
+              "destination": {
+                "name": "JOBTYPEGROUP",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "CLIENTNAME",
+                "type": "String"
+              },
+              "destination": {
+                "name": "CLIENTNAME",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "WATERSHEDNAME",
+                "type": "String"
+              },
+              "destination": {
+                "name": "WATERSHEDNAME",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "USETYPE",
+                "type": "String"
+              },
+              "destination": {
+                "name": "USETYPE",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "DIVERSIONTYPE",
+                "type": "String"
+              },
+              "destination": {
+                "name": "DIVERSIONTYPE",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "CIATYPE",
+                "type": "String"
+              },
+              "destination": {
+                "name": "CIATYPE",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "DIVERSIONSOURCE",
+                "type": "String"
+              },
+              "destination": {
+                "name": "DIVERSIONSOURCE",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "PURPOSEUSENAME",
+                "type": "String"
+              },
+              "destination": {
+                "name": "PURPOSEUSENAME",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "PURPOSEUSECODE",
+                "type": "String"
+              },
+              "destination": {
+                "name": "PURPOSEUSECODE",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "JOBCURRENTLYASSIGNEDTO",
+                "type": "String"
+              },
+              "destination": {
+                "name": "JOBCURRENTLYASSIGNEDTO",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "RECEIVEDDATE",
+                "type": "DateTime"
+              },
+              "destination": {
+                "name": "RECEIVEDDATE",
+                "physicalType": "timestamp"
+              }
+            },
+            {
+              "source": {
+                "name": "FCBCACCEPTEDDATE",
+                "type": "DateTime"
+              },
+              "destination": {
+                "name": "FCBCACCEPTEDDATE",
+                "physicalType": "timestamp"
+              }
+            },
+            {
+              "source": {
+                "name": "FCBCCOMPLETEDATE",
+                "type": "DateTime"
+              },
+              "destination": {
+                "name": "FCBCCOMPLETEDATE",
+                "physicalType": "timestamp"
+              }
+            },
+            {
+              "source": {
+                "name": "FCBCPROCESSINGTIME",
+                "type": "Decimal",
+                "scale": 127,
+                "precision": 38
+              },
+              "destination": {
+                "name": "FCBCPROCESSINGTIME",
+                "physicalType": "float"
+              }
+            },
+            {
+              "source": {
+                "name": "FNCONSULTTIME",
+                "type": "Decimal",
+                "scale": 127,
+                "precision": 38
+              },
+              "destination": {
+                "name": "FNCONSULTTIME",
+                "physicalType": "float"
+              }
+            },
+            {
+              "source": {
+                "name": "FNCONSULTCOMPLETE",
+                "type": "String"
+              },
+              "destination": {
+                "name": "FNCONSULTCOMPLETE",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "PROCESSSTATUS",
+                "type": "String"
+              },
+              "destination": {
+                "name": "PROCESSSTATUS",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "PRELIMREVIEWCOMPLETEDATE",
+                "type": "DateTime"
+              },
+              "destination": {
+                "name": "PRELIMREVIEWCOMPLETEDATE",
+                "physicalType": "timestamp"
+              }
+            },
+            {
+              "source": {
+                "name": "PRELIMREVIEWNETTIME",
+                "type": "Decimal",
+                "scale": 127,
+                "precision": 38
+              },
+              "destination": {
+                "name": "PRELIMREVIEWNETTIME",
+                "physicalType": "float"
+              }
+            },
+            {
+              "source": {
+                "name": "TECHASSESSMENTCOMPLETEDATE",
+                "type": "DateTime"
+              },
+              "destination": {
+                "name": "TECHASSESSMENTCOMPLETEDATE",
+                "physicalType": "timestamp"
+              }
+            },
+            {
+              "source": {
+                "name": "TECHASSESSMENTNETTIME",
+                "type": "Decimal",
+                "scale": 127,
+                "precision": 38
+              },
+              "destination": {
+                "name": "TECHASSESSMENTNETTIME",
+                "physicalType": "float"
+              }
+            },
+            {
+              "source": {
+                "name": "LEGALCHECKCOMPLETEDATE",
+                "type": "DateTime"
+              },
+              "destination": {
+                "name": "LEGALCHECKCOMPLETEDATE",
+                "physicalType": "timestamp"
+              }
+            },
+            {
+              "source": {
+                "name": "LEGALCHECKCOMPLETENETTIME",
+                "type": "Decimal",
+                "scale": 127,
+                "precision": 38
+              },
+              "destination": {
+                "name": "LEGALCHECKCOMPLETENETTIME",
+                "physicalType": "float"
+              }
+            },
+            {
+              "source": {
+                "name": "GRANTEDREFUSEDATE",
+                "type": "DateTime"
+              },
+              "destination": {
+                "name": "GRANTEDREFUSEDATE",
+                "physicalType": "timestamp"
+              }
+            },
+            {
+              "source": {
+                "name": "GRANTREFUSECOMPLETENETTIME",
+                "type": "Decimal",
+                "scale": 127,
+                "precision": 38
+              },
+              "destination": {
+                "name": "GRANTREFUSECOMPLETENETTIME",
+                "physicalType": "float"
+              }
+            },
+            {
+              "source": {
+                "name": "ATSDECISIONDATE",
+                "type": "DateTime"
+              },
+              "destination": {
+                "name": "ATSDECISIONDATE",
+                "physicalType": "timestamp"
+              }
+            },
+            {
+              "source": {
+                "name": "TOTALTIMEFORDECISION",
+                "type": "Decimal",
+                "scale": 127,
+                "precision": 38
+              },
+              "destination": {
+                "name": "TOTALTIMEFORDECISION",
+                "physicalType": "float"
+              }
+            },
+            {
+              "source": {
+                "name": "CURRENTPARKTIME",
+                "type": "Decimal",
+                "scale": 127,
+                "precision": 38
+              },
+              "destination": {
+                "name": "CURRENTPARKTIME",
+                "physicalType": "float"
+              }
+            },
+            {
+              "source": {
+                "name": "TOTALPARKTIME",
+                "type": "Decimal",
+                "scale": 127,
+                "precision": 38
+              },
+              "destination": {
+                "name": "TOTALPARKTIME",
+                "physicalType": "float"
+              }
+            },
+            {
+              "source": {
+                "name": "NETTIMEFORDECISION",
+                "type": "Decimal",
+                "scale": 127,
+                "precision": 38
+              },
+              "destination": {
+                "name": "NETTIMEFORDECISION",
+                "physicalType": "float"
+              }
+            }
+          ]
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    }
+  ]
+}

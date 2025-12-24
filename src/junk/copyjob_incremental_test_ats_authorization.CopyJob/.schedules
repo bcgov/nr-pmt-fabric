@@ -1,0 +1,55 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/schedules/1.0.0/schema.json",
+  "schedules": [
+    {
+      "enabled": true,
+      "jobType": "Execute",
+      "configuration": {
+        "type": "Cron",
+        "startDateTime": "2025-11-21T11:53:00",
+        "endDateTime": "2025-11-21T17:00:00",
+        "localTimeZoneId": "Pacific Standard Time",
+        "interval": 60
+      }
+    },
+    {
+      "enabled": true,
+      "jobType": "Execute",
+      "configuration": {
+        "type": "Daily",
+        "startDateTime": "2025-11-22T00:00:00",
+        "endDateTime": "2025-11-29T23:59:00",
+        "localTimeZoneId": "Pacific Standard Time",
+        "times": [
+          "06:51"
+        ]
+      }
+    },
+    {
+      "enabled": false,
+      "jobType": "Execute",
+      "configuration": {
+        "type": "Daily",
+        "startDateTime": "2025-11-22T00:00:00",
+        "endDateTime": "2025-11-29T23:59:00",
+        "localTimeZoneId": "Pacific Standard Time",
+        "times": [
+          "06:51"
+        ]
+      }
+    },
+    {
+      "enabled": false,
+      "jobType": "Execute",
+      "configuration": {
+        "type": "Daily",
+        "startDateTime": "2025-11-22T00:00:00",
+        "endDateTime": "2025-11-29T23:59:00",
+        "localTimeZoneId": "Pacific Standard Time",
+        "times": [
+          "06:51"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "CopyJob",
+    "displayName": "tantalis_ta_district_offices"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "458ecd4a-edba-a972-48b8-2a20d6756ef3"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "CopyJob",
+    "displayName": "fta_harvest_type_code"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "20eb41a7-7225-bfc9-486e-4cc27ec9a4e9"
+  }
+}

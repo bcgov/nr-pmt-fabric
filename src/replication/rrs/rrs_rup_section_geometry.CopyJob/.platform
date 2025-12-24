@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "CopyJob",
+    "displayName": "rrs_rup_section_geometry"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "60120d3a-5e4c-8e31-4076-01b6836f281a"
+  }
+}

@@ -1,0 +1,398 @@
+{
+  "properties": {
+    "jobMode": "Batch",
+    "source": {
+      "type": "OracleTable",
+      "connectionSettings": {
+        "type": "Oracle",
+        "externalReferences": {
+          "connection": "d2cc5a7d-e9ce-42dd-8f69-a7ed47de25d0"
+        }
+      }
+    },
+    "destination": {
+      "type": "LakehouseTable",
+      "connectionSettings": {
+        "type": "Lakehouse",
+        "typeProperties": {
+          "workspaceId": "00000000-0000-0000-0000-000000000000",
+          "artifactId": "a4c99642-feeb-81e8-46b6-ca11201b9b7d",
+          "rootFolder": "Tables"
+        },
+        "externalReferences": {
+          "connection": "bc8539f0-7142-4559-844f-ef25c76ac5da"
+        }
+      }
+    },
+    "policy": {
+      "timeout": "0.12:00:00"
+    }
+  },
+  "activities": [
+    {
+      "id": "ba3e996d-5dcb-4b21-b8d9-60488d023fb0",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "TANTALIS",
+            "table": "TA_DISP_TRANS_TASKS"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "tantalis_replication",
+            "table": "ta_disp_trans_tasks"
+          }
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator",
+          "mappings": [
+            {
+              "source": {
+                "name": "TASK_SID",
+                "type": "Decimal",
+                "scale": 127,
+                "precision": 38
+              },
+              "destination": {
+                "name": "TASK_SID",
+                "physicalType": "integer"
+              }
+            },
+            {
+              "source": {
+                "name": "CODE_CHR",
+                "type": "String"
+              },
+              "destination": {
+                "name": "CODE_CHR",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "PRIORITY_CDE",
+                "type": "String"
+              },
+              "destination": {
+                "name": "PRIORITY_CDE",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "CREATED_DAT",
+                "type": "DateTime"
+              },
+              "destination": {
+                "name": "CREATED_DAT",
+                "physicalType": "timestamp"
+              }
+            },
+            {
+              "source": {
+                "name": "USERID_ASSIGNED_BY",
+                "type": "String"
+              },
+              "destination": {
+                "name": "USERID_ASSIGNED_BY",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "DISPOSITION_TRANSACTION_SID",
+                "type": "Decimal",
+                "scale": 127,
+                "precision": 38
+              },
+              "destination": {
+                "name": "DISPOSITION_TRANSACTION_SID",
+                "physicalType": "integer"
+              }
+            },
+            {
+              "source": {
+                "name": "USERID_ASSIGNED_TO",
+                "type": "String"
+              },
+              "destination": {
+                "name": "USERID_ASSIGNED_TO",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "IDENTIFIER_DISP_DOC",
+                "type": "Decimal",
+                "scale": 127,
+                "precision": 38
+              },
+              "destination": {
+                "name": "IDENTIFIER_DISP_DOC",
+                "physicalType": "integer"
+              }
+            },
+            {
+              "source": {
+                "name": "ORG_UNIT_SID",
+                "type": "Decimal",
+                "scale": 127,
+                "precision": 38
+              },
+              "destination": {
+                "name": "ORG_UNIT_SID",
+                "physicalType": "integer"
+              }
+            },
+            {
+              "source": {
+                "name": "BATCH_SID",
+                "type": "Decimal",
+                "scale": 127,
+                "precision": 38
+              },
+              "destination": {
+                "name": "BATCH_SID",
+                "physicalType": "integer"
+              }
+            },
+            {
+              "source": {
+                "name": "ASSIGNED_DAT",
+                "type": "DateTime"
+              },
+              "destination": {
+                "name": "ASSIGNED_DAT",
+                "physicalType": "timestamp"
+              }
+            },
+            {
+              "source": {
+                "name": "BRING_FORWARD_DAT",
+                "type": "DateTime"
+              },
+              "destination": {
+                "name": "BRING_FORWARD_DAT",
+                "physicalType": "timestamp"
+              }
+            },
+            {
+              "source": {
+                "name": "DUE_DAT",
+                "type": "DateTime"
+              },
+              "destination": {
+                "name": "DUE_DAT",
+                "physicalType": "timestamp"
+              }
+            },
+            {
+              "source": {
+                "name": "COMPLETED_DAT",
+                "type": "DateTime"
+              },
+              "destination": {
+                "name": "COMPLETED_DAT",
+                "physicalType": "timestamp"
+              }
+            },
+            {
+              "source": {
+                "name": "ARCS_ORCS_CHR",
+                "type": "String"
+              },
+              "destination": {
+                "name": "ARCS_ORCS_CHR",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "COMMENTS_TXT",
+                "type": "String"
+              },
+              "destination": {
+                "name": "COMMENTS_TXT",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "CREATE_DAT",
+                "type": "DateTime"
+              },
+              "destination": {
+                "name": "CREATE_DAT",
+                "physicalType": "timestamp"
+              }
+            },
+            {
+              "source": {
+                "name": "CREATE_USERID_CHR",
+                "type": "String"
+              },
+              "destination": {
+                "name": "CREATE_USERID_CHR",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "LAST_UPDATE_DAT",
+                "type": "DateTime"
+              },
+              "destination": {
+                "name": "LAST_UPDATE_DAT",
+                "physicalType": "timestamp"
+              }
+            },
+            {
+              "source": {
+                "name": "LAST_UPDATE_USERID_CHR",
+                "type": "String"
+              },
+              "destination": {
+                "name": "LAST_UPDATE_USERID_CHR",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "SUPPLEMENTARY_WORK_SID",
+                "type": "Decimal",
+                "scale": 0,
+                "precision": 38
+              },
+              "destination": {
+                "name": "SUPPLEMENTARY_WORK_SID",
+                "physicalType": "decimal",
+                "scale": 18,
+                "precision": 38
+              }
+            },
+            {
+              "source": {
+                "name": "LAND_STATUS_DAT",
+                "type": "DateTime"
+              },
+              "destination": {
+                "name": "LAND_STATUS_DAT",
+                "physicalType": "timestamp"
+              }
+            },
+            {
+              "source": {
+                "name": "INSPECTED_DAT",
+                "type": "DateTime"
+              },
+              "destination": {
+                "name": "INSPECTED_DAT",
+                "physicalType": "timestamp"
+              }
+            },
+            {
+              "source": {
+                "name": "REPORTED_DAT",
+                "type": "DateTime"
+              },
+              "destination": {
+                "name": "REPORTED_DAT",
+                "physicalType": "timestamp"
+              }
+            },
+            {
+              "source": {
+                "name": "CANCELED_DAT",
+                "type": "DateTime"
+              },
+              "destination": {
+                "name": "CANCELED_DAT",
+                "physicalType": "timestamp"
+              }
+            },
+            {
+              "source": {
+                "name": "ADJUDICATED_DAT",
+                "type": "DateTime"
+              },
+              "destination": {
+                "name": "ADJUDICATED_DAT",
+                "physicalType": "timestamp"
+              }
+            },
+            {
+              "source": {
+                "name": "OFFERED_DAT",
+                "type": "DateTime"
+              },
+              "destination": {
+                "name": "OFFERED_DAT",
+                "physicalType": "timestamp"
+              }
+            },
+            {
+              "source": {
+                "name": "DISALLOWED_DAT",
+                "type": "DateTime"
+              },
+              "destination": {
+                "name": "DISALLOWED_DAT",
+                "physicalType": "timestamp"
+              }
+            },
+            {
+              "source": {
+                "name": "OFFER_ACCEPTED_DAT",
+                "type": "DateTime"
+              },
+              "destination": {
+                "name": "OFFER_ACCEPTED_DAT",
+                "physicalType": "timestamp"
+              }
+            },
+            {
+              "source": {
+                "name": "OFFER_NOT_ACCEPTED_DAT",
+                "type": "DateTime"
+              },
+              "destination": {
+                "name": "OFFER_NOT_ACCEPTED_DAT",
+                "physicalType": "timestamp"
+              }
+            },
+            {
+              "source": {
+                "name": "OTHER_EMPLOYEES_ASSIGNED_TO",
+                "type": "String"
+              },
+              "destination": {
+                "name": "OTHER_EMPLOYEES_ASSIGNED_TO",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "REOFFER_DAT",
+                "type": "DateTime"
+              },
+              "destination": {
+                "name": "REOFFER_DAT",
+                "physicalType": "timestamp"
+              }
+            }
+          ]
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    }
+  ]
+}

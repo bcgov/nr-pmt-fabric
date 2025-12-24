@@ -1,0 +1,170 @@
+{
+  "properties": {
+    "jobMode": "Batch",
+    "source": {
+      "type": "OracleTable",
+      "connectionSettings": {
+        "type": "Oracle",
+        "externalReferences": {
+          "connection": "d2cc5a7d-e9ce-42dd-8f69-a7ed47de25d0"
+        }
+      }
+    },
+    "destination": {
+      "type": "LakehouseTable",
+      "connectionSettings": {
+        "type": "Lakehouse",
+        "typeProperties": {
+          "workspaceId": "00000000-0000-0000-0000-000000000000",
+          "artifactId": "a4c99642-feeb-81e8-46b6-ca11201b9b7d",
+          "rootFolder": "Tables"
+        },
+        "externalReferences": {
+          "connection": "bc8539f0-7142-4559-844f-ef25c76ac5da"
+        }
+      }
+    },
+    "policy": {
+      "timeout": "0.12:00:00"
+    }
+  },
+  "activities": [
+    {
+      "id": "8eb9e272-b278-49d8-aa00-45689b5e4f35",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "TANTALIS",
+            "table": "TA_DISPOSITIONS"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "tantalis_replication",
+            "table": "ta_dispositions"
+          }
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator",
+          "mappings": [
+            {
+              "source": {
+                "name": "DISPOSITION_SID",
+                "type": "Decimal",
+                "scale": 127,
+                "precision": 38
+              },
+              "destination": {
+                "name": "DISPOSITION_SID",
+                "physicalType": "integer"
+              }
+            },
+            {
+              "source": {
+                "name": "ACTIVATION_CDE",
+                "type": "String"
+              },
+              "destination": {
+                "name": "ACTIVATION_CDE",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "FILE_CHR",
+                "type": "String"
+              },
+              "destination": {
+                "name": "FILE_CHR",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "CREATE_DAT",
+                "type": "DateTime"
+              },
+              "destination": {
+                "name": "CREATE_DAT",
+                "physicalType": "timestamp"
+              }
+            },
+            {
+              "source": {
+                "name": "CREATE_USERID_CHR",
+                "type": "String"
+              },
+              "destination": {
+                "name": "CREATE_USERID_CHR",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "LAST_UPDATE_DAT",
+                "type": "DateTime"
+              },
+              "destination": {
+                "name": "LAST_UPDATE_DAT",
+                "physicalType": "timestamp"
+              }
+            },
+            {
+              "source": {
+                "name": "LAST_UPDATE_USERID_CHR",
+                "type": "String"
+              },
+              "destination": {
+                "name": "LAST_UPDATE_USERID_CHR",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "HISTORIC_CG_YRN",
+                "type": "String"
+              },
+              "destination": {
+                "name": "HISTORIC_CG_YRN",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "GENERAL_FILE_YRN",
+                "type": "String"
+              },
+              "destination": {
+                "name": "GENERAL_FILE_YRN",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "DISPOSITION_SID_GROUPED_BY",
+                "type": "Decimal",
+                "scale": 0,
+                "precision": 38
+              },
+              "destination": {
+                "name": "DISPOSITION_SID_GROUPED_BY",
+                "physicalType": "decimal",
+                "scale": 18,
+                "precision": 38
+              }
+            }
+          ]
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    }
+  ]
+}

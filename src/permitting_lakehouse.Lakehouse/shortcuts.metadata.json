@@ -1,0 +1,26 @@
+[
+  {
+    "name": "atis_waterjob_combined_mv_testshare",
+    "path": "/Tables/WATERDW",
+    "target": {
+      "type": "OneLake",
+      "oneLake": {
+        "path": "Tables/wma_replication/atis_waterjob_combined_mv",
+        "itemId": "00000000-0000-0000-0000-000000000000",
+        "workspaceId": "00000000-0000-0000-0000-000000000000"
+      }
+    }
+  },
+  {
+    "name": "HttpServerFile",
+    "path": "/Tables/junk",
+    "target": {
+      "type": "OneLake",
+      "oneLake": {
+        "path": "Tables/dbo/HttpServerFile",
+        "itemId": "2c79e329-9e8e-41c6-bd57-f8aa1e6a4c38",
+        "workspaceId": "2e2bdcd5-6e38-4710-a569-5e6f751dff5e"
+      }
+    }
+  }
+]

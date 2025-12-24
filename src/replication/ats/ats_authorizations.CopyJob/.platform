@@ -1,0 +1,12 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "CopyJob",
+    "displayName": "ats_authorizations",
+    "description": ""
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "25b3d3f2-1be9-9de2-4f88-4ceb6a16a09e"
+  }
+}

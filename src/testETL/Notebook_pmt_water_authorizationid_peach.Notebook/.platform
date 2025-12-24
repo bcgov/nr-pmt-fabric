@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Notebook",
+    "displayName": "Notebook_pmt_water_authorizationid_peach"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "d361f680-30da-8497-4a75-da46646caf1f"
+  }
+}

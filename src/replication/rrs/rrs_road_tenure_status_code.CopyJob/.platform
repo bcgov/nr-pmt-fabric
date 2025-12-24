@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "CopyJob",
+    "displayName": "rrs_road_tenure_status_code"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "2c7b9642-0eb1-85e3-47f3-e28ed82caabc"
+  }
+}

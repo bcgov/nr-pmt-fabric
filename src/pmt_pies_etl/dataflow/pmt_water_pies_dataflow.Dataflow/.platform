@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Dataflow",
+    "displayName": "pmt_water_pies_dataflow"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "8981a690-fd5b-857c-46ba-bfa710038569"
+  }
+}

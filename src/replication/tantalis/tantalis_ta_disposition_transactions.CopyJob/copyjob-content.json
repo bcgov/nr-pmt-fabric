@@ -1,0 +1,1086 @@
+{
+  "properties": {
+    "jobMode": "Batch",
+    "source": {
+      "type": "OracleTable",
+      "connectionSettings": {
+        "type": "Oracle",
+        "externalReferences": {
+          "connection": "d2cc5a7d-e9ce-42dd-8f69-a7ed47de25d0"
+        }
+      }
+    },
+    "destination": {
+      "type": "LakehouseTable",
+      "connectionSettings": {
+        "type": "Lakehouse",
+        "typeProperties": {
+          "workspaceId": "00000000-0000-0000-0000-000000000000",
+          "artifactId": "a4c99642-feeb-81e8-46b6-ca11201b9b7d",
+          "rootFolder": "Tables"
+        },
+        "externalReferences": {
+          "connection": "bc8539f0-7142-4559-844f-ef25c76ac5da"
+        }
+      }
+    },
+    "policy": {
+      "timeout": "0.12:00:00"
+    }
+  },
+  "activities": [
+    {
+      "id": "2d870209-edd2-4823-ad29-586195d6484f",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "TANTALIS",
+            "table": "TA_DISPOSITION_TRANSACTIONS"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "tantalis_replication",
+            "table": "ta_disposition_transactions"
+          }
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator",
+          "mappings": [
+            {
+              "source": {
+                "name": "DISPOSITION_TRANSACTION_SID",
+                "type": "Decimal",
+                "scale": 0,
+                "precision": 38
+              },
+              "destination": {
+                "name": "DISPOSITION_TRANSACTION_SID",
+                "physicalType": "decimal",
+                "scale": 18,
+                "precision": 38
+              }
+            },
+            {
+              "source": {
+                "name": "TYPE_SID",
+                "type": "Decimal",
+                "scale": 0,
+                "precision": 38
+              },
+              "destination": {
+                "name": "TYPE_SID",
+                "physicalType": "decimal",
+                "scale": 18,
+                "precision": 38
+              }
+            },
+            {
+              "source": {
+                "name": "USERID",
+                "type": "String"
+              },
+              "destination": {
+                "name": "USERID",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "DISPOSITION_SID",
+                "type": "Decimal",
+                "scale": 0,
+                "precision": 38
+              },
+              "destination": {
+                "name": "DISPOSITION_SID",
+                "physicalType": "decimal",
+                "scale": 18,
+                "precision": 38
+              }
+            },
+            {
+              "source": {
+                "name": "SUBPURPOSE_SID",
+                "type": "Decimal",
+                "scale": 0,
+                "precision": 38
+              },
+              "destination": {
+                "name": "SUBPURPOSE_SID",
+                "physicalType": "decimal",
+                "scale": 18,
+                "precision": 38
+              }
+            },
+            {
+              "source": {
+                "name": "ORG_UNIT_SID",
+                "type": "Decimal",
+                "scale": 0,
+                "precision": 38
+              },
+              "destination": {
+                "name": "ORG_UNIT_SID",
+                "physicalType": "decimal",
+                "scale": 18,
+                "precision": 38
+              }
+            },
+            {
+              "source": {
+                "name": "PURPOSE_SID",
+                "type": "Decimal",
+                "scale": 0,
+                "precision": 38
+              },
+              "destination": {
+                "name": "PURPOSE_SID",
+                "physicalType": "decimal",
+                "scale": 18,
+                "precision": 38
+              }
+            },
+            {
+              "source": {
+                "name": "SUBTYPE_SID",
+                "type": "Decimal",
+                "scale": 0,
+                "precision": 38
+              },
+              "destination": {
+                "name": "SUBTYPE_SID",
+                "physicalType": "decimal",
+                "scale": 18,
+                "precision": 38
+              }
+            },
+            {
+              "source": {
+                "name": "APPLICATION_TYPE_CDE",
+                "type": "String"
+              },
+              "destination": {
+                "name": "APPLICATION_TYPE_CDE",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "FEE_COLLECTED_YRN",
+                "type": "String"
+              },
+              "destination": {
+                "name": "FEE_COLLECTED_YRN",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "RECEIVED_DAT",
+                "type": "DateTime"
+              },
+              "destination": {
+                "name": "RECEIVED_DAT",
+                "physicalType": "timestamp"
+              }
+            },
+            {
+              "source": {
+                "name": "ENTERED_DAT",
+                "type": "DateTime"
+              },
+              "destination": {
+                "name": "ENTERED_DAT",
+                "physicalType": "timestamp"
+              }
+            },
+            {
+              "source": {
+                "name": "LOCATION_DSC",
+                "type": "String"
+              },
+              "destination": {
+                "name": "LOCATION_DSC",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "FOREST_CLEARANCE_YRN",
+                "type": "String"
+              },
+              "destination": {
+                "name": "FOREST_CLEARANCE_YRN",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "GST_EXEMPT_YRN",
+                "type": "String"
+              },
+              "destination": {
+                "name": "GST_EXEMPT_YRN",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "CROWN_GRANT_YRN",
+                "type": "String"
+              },
+              "destination": {
+                "name": "CROWN_GRANT_YRN",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "LAST_UPDATE_DAT_OLD",
+                "type": "DateTime"
+              },
+              "destination": {
+                "name": "LAST_UPDATE_DAT_OLD",
+                "physicalType": "timestamp"
+              }
+            },
+            {
+              "source": {
+                "name": "CURRENT_PRINCIPLE_DLR",
+                "type": "Double"
+              },
+              "destination": {
+                "name": "CURRENT_PRINCIPLE_DLR",
+                "physicalType": "double"
+              }
+            },
+            {
+              "source": {
+                "name": "CURRENT_GST_DLR",
+                "type": "Double"
+              },
+              "destination": {
+                "name": "CURRENT_GST_DLR",
+                "physicalType": "double"
+              }
+            },
+            {
+              "source": {
+                "name": "CURRENT_INTEREST_DLR",
+                "type": "Double"
+              },
+              "destination": {
+                "name": "CURRENT_INTEREST_DLR",
+                "physicalType": "double"
+              }
+            },
+            {
+              "source": {
+                "name": "REVERSION_SID",
+                "type": "Decimal",
+                "scale": 0,
+                "precision": 38
+              },
+              "destination": {
+                "name": "REVERSION_SID",
+                "physicalType": "decimal",
+                "scale": 18,
+                "precision": 38
+              }
+            },
+            {
+              "source": {
+                "name": "SUBTYPE_SID_APPLIED_FOR",
+                "type": "Decimal",
+                "scale": 0,
+                "precision": 38
+              },
+              "destination": {
+                "name": "SUBTYPE_SID_APPLIED_FOR",
+                "physicalType": "decimal",
+                "scale": 18,
+                "precision": 38
+              }
+            },
+            {
+              "source": {
+                "name": "SUBPURPOSE_SID_APPLIED_FOR",
+                "type": "Decimal",
+                "scale": 0,
+                "precision": 38
+              },
+              "destination": {
+                "name": "SUBPURPOSE_SID_APPLIED_FOR",
+                "physicalType": "decimal",
+                "scale": 18,
+                "precision": 38
+              }
+            },
+            {
+              "source": {
+                "name": "TYPE_SID_APPLIED_AS",
+                "type": "Decimal",
+                "scale": 0,
+                "precision": 38
+              },
+              "destination": {
+                "name": "TYPE_SID_APPLIED_AS",
+                "physicalType": "decimal",
+                "scale": 18,
+                "precision": 38
+              }
+            },
+            {
+              "source": {
+                "name": "FINANCIAL_FACTOR_SID",
+                "type": "Int32"
+              },
+              "destination": {
+                "name": "FINANCIAL_FACTOR_SID",
+                "physicalType": "integer"
+              }
+            },
+            {
+              "source": {
+                "name": "ZONAL_VALUE_SID",
+                "type": "Decimal",
+                "scale": 0,
+                "precision": 38
+              },
+              "destination": {
+                "name": "ZONAL_VALUE_SID",
+                "physicalType": "decimal",
+                "scale": 18,
+                "precision": 38
+              }
+            },
+            {
+              "source": {
+                "name": "PER_USE_ZONE_SID",
+                "type": "Decimal",
+                "scale": 0,
+                "precision": 38
+              },
+              "destination": {
+                "name": "PER_USE_ZONE_SID",
+                "physicalType": "decimal",
+                "scale": 18,
+                "precision": 38
+              }
+            },
+            {
+              "source": {
+                "name": "USERID_LAST_UPDATED_BY",
+                "type": "String"
+              },
+              "destination": {
+                "name": "USERID_LAST_UPDATED_BY",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "PURPOSE_SID_APPLIED_FOR",
+                "type": "Decimal",
+                "scale": 0,
+                "precision": 38
+              },
+              "destination": {
+                "name": "PURPOSE_SID_APPLIED_FOR",
+                "physicalType": "decimal",
+                "scale": 18,
+                "precision": 38
+              }
+            },
+            {
+              "source": {
+                "name": "PRE_APPLICATION_SID",
+                "type": "Decimal",
+                "scale": 0,
+                "precision": 38
+              },
+              "destination": {
+                "name": "PRE_APPLICATION_SID",
+                "physicalType": "decimal",
+                "scale": 18,
+                "precision": 38
+              }
+            },
+            {
+              "source": {
+                "name": "DOCUMENT_CHR",
+                "type": "String"
+              },
+              "destination": {
+                "name": "DOCUMENT_CHR",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "COMMENCEMENT_DAT",
+                "type": "DateTime"
+              },
+              "destination": {
+                "name": "COMMENCEMENT_DAT",
+                "physicalType": "timestamp"
+              }
+            },
+            {
+              "source": {
+                "name": "EXPIRY_DAT",
+                "type": "DateTime"
+              },
+              "destination": {
+                "name": "EXPIRY_DAT",
+                "physicalType": "timestamp"
+              }
+            },
+            {
+              "source": {
+                "name": "GST_EXEMPT_AREA_VAL",
+                "type": "Decimal"
+              },
+              "destination": {
+                "name": "GST_EXEMPT_AREA_VAL",
+                "physicalType": "decimal"
+              }
+            },
+            {
+              "source": {
+                "name": "MINISTERIAL_ORDER_CHR",
+                "type": "String"
+              },
+              "destination": {
+                "name": "MINISTERIAL_ORDER_CHR",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "LAND_VALUE_USED_CDE",
+                "type": "String"
+              },
+              "destination": {
+                "name": "LAND_VALUE_USED_CDE",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "LAST_AUTOSTATUS_DAT",
+                "type": "DateTime"
+              },
+              "destination": {
+                "name": "LAST_AUTOSTATUS_DAT",
+                "physicalType": "timestamp"
+              }
+            },
+            {
+              "source": {
+                "name": "RENT_DLR",
+                "type": "Double"
+              },
+              "destination": {
+                "name": "RENT_DLR",
+                "physicalType": "double"
+              }
+            },
+            {
+              "source": {
+                "name": "RENT_DSC",
+                "type": "String"
+              },
+              "destination": {
+                "name": "RENT_DSC",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "CLIENT_REFERENCE_CHR",
+                "type": "String"
+              },
+              "destination": {
+                "name": "CLIENT_REFERENCE_CHR",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "SHARE_CNT",
+                "type": "Int32"
+              },
+              "destination": {
+                "name": "SHARE_CNT",
+                "physicalType": "integer"
+              }
+            },
+            {
+              "source": {
+                "name": "PREPAID_AMOUNT_DLR",
+                "type": "Double"
+              },
+              "destination": {
+                "name": "PREPAID_AMOUNT_DLR",
+                "physicalType": "double"
+              }
+            },
+            {
+              "source": {
+                "name": "LAST_ASSIGNMENT_DAT",
+                "type": "DateTime"
+              },
+              "destination": {
+                "name": "LAST_ASSIGNMENT_DAT",
+                "physicalType": "timestamp"
+              }
+            },
+            {
+              "source": {
+                "name": "CG_IMPROVEMENT_DLR",
+                "type": "Double"
+              },
+              "destination": {
+                "name": "CG_IMPROVEMENT_DLR",
+                "physicalType": "double"
+              }
+            },
+            {
+              "source": {
+                "name": "RENT_START_DAT",
+                "type": "DateTime"
+              },
+              "destination": {
+                "name": "RENT_START_DAT",
+                "physicalType": "timestamp"
+              }
+            },
+            {
+              "source": {
+                "name": "REVIEW_DAT",
+                "type": "DateTime"
+              },
+              "destination": {
+                "name": "REVIEW_DAT",
+                "physicalType": "timestamp"
+              }
+            },
+            {
+              "source": {
+                "name": "CG_IMPROVEMENT_TXT",
+                "type": "String"
+              },
+              "destination": {
+                "name": "CG_IMPROVEMENT_TXT",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "TERM_NUM",
+                "type": "Single"
+              },
+              "destination": {
+                "name": "TERM_NUM",
+                "physicalType": "float"
+              }
+            },
+            {
+              "source": {
+                "name": "PURCHASE_PRICE_DLR",
+                "type": "Double"
+              },
+              "destination": {
+                "name": "PURCHASE_PRICE_DLR",
+                "physicalType": "double"
+              }
+            },
+            {
+              "source": {
+                "name": "TERM_UNIT_CDE",
+                "type": "String"
+              },
+              "destination": {
+                "name": "TERM_UNIT_CDE",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "TIMBER_VALUE_DLR",
+                "type": "Double"
+              },
+              "destination": {
+                "name": "TIMBER_VALUE_DLR",
+                "physicalType": "double"
+              }
+            },
+            {
+              "source": {
+                "name": "OFFER_TIMBER_DEFERMENT_YRN",
+                "type": "String"
+              },
+              "destination": {
+                "name": "OFFER_TIMBER_DEFERMENT_YRN",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "YEAR_OF_DEVELOPMENT_NUM",
+                "type": "Int16"
+              },
+              "destination": {
+                "name": "YEAR_OF_DEVELOPMENT_NUM",
+                "physicalType": "short"
+              }
+            },
+            {
+              "source": {
+                "name": "CRUISE_REPORT_YRN",
+                "type": "String"
+              },
+              "destination": {
+                "name": "CRUISE_REPORT_YRN",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "CONSTRUCTION_JOBS_NUM",
+                "type": "Decimal",
+                "scale": 127,
+                "precision": 38
+              },
+              "destination": {
+                "name": "CONSTRUCTION_JOBS_NUM",
+                "physicalType": "integer"
+              }
+            },
+            {
+              "source": {
+                "name": "APPLY_DEVELOPMENT_RATE_YRN",
+                "type": "String"
+              },
+              "destination": {
+                "name": "APPLY_DEVELOPMENT_RATE_YRN",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "CRUISE_DAT",
+                "type": "DateTime"
+              },
+              "destination": {
+                "name": "CRUISE_DAT",
+                "physicalType": "timestamp"
+              }
+            },
+            {
+              "source": {
+                "name": "PERMANENT_JOBS_NUM",
+                "type": "Decimal",
+                "scale": 127,
+                "precision": 38
+              },
+              "destination": {
+                "name": "PERMANENT_JOBS_NUM",
+                "physicalType": "integer"
+              }
+            },
+            {
+              "source": {
+                "name": "TIMBER_APPRAISAL_DAT",
+                "type": "DateTime"
+              },
+              "destination": {
+                "name": "TIMBER_APPRAISAL_DAT",
+                "physicalType": "timestamp"
+              }
+            },
+            {
+              "source": {
+                "name": "INVESTMENT_VALLUE_DLR",
+                "type": "Double"
+              },
+              "destination": {
+                "name": "INVESTMENT_VALLUE_DLR",
+                "physicalType": "double"
+              }
+            },
+            {
+              "source": {
+                "name": "YEAR_OF_PHASE_IN_NUM",
+                "type": "Int16"
+              },
+              "destination": {
+                "name": "YEAR_OF_PHASE_IN_NUM",
+                "physicalType": "short"
+              }
+            },
+            {
+              "source": {
+                "name": "ULTIMATE_PHASE_IN_RENT_DLR",
+                "type": "Double"
+              },
+              "destination": {
+                "name": "ULTIMATE_PHASE_IN_RENT_DLR",
+                "physicalType": "double"
+              }
+            },
+            {
+              "source": {
+                "name": "CHARGE_CHR",
+                "type": "String"
+              },
+              "destination": {
+                "name": "CHARGE_CHR",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "TIMBER_COMMENTS_TXT",
+                "type": "String"
+              },
+              "destination": {
+                "name": "TIMBER_COMMENTS_TXT",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "TOTAL_VALUE_DLR",
+                "type": "Double"
+              },
+              "destination": {
+                "name": "TOTAL_VALUE_DLR",
+                "physicalType": "double"
+              }
+            },
+            {
+              "source": {
+                "name": "ANIMAL_UNIT_MONTH_VAL",
+                "type": "Double"
+              },
+              "destination": {
+                "name": "ANIMAL_UNIT_MONTH_VAL",
+                "physicalType": "double"
+              }
+            },
+            {
+              "source": {
+                "name": "TOTAL_VALUE_TXT",
+                "type": "String"
+              },
+              "destination": {
+                "name": "TOTAL_VALUE_TXT",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "ROYALTY_RATE_DLR",
+                "type": "Double"
+              },
+              "destination": {
+                "name": "ROYALTY_RATE_DLR",
+                "physicalType": "double"
+              }
+            },
+            {
+              "source": {
+                "name": "ROYALTY_UNIT_CDE",
+                "type": "String"
+              },
+              "destination": {
+                "name": "ROYALTY_UNIT_CDE",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "CONSUMPTION_VAL",
+                "type": "Double"
+              },
+              "destination": {
+                "name": "CONSUMPTION_VAL",
+                "physicalType": "double"
+              }
+            },
+            {
+              "source": {
+                "name": "CONSUMPTION_UNIT_CDE",
+                "type": "String"
+              },
+              "destination": {
+                "name": "CONSUMPTION_UNIT_CDE",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "GROSS_REVENUE_PCT",
+                "type": "Single"
+              },
+              "destination": {
+                "name": "GROSS_REVENUE_PCT",
+                "physicalType": "float"
+              }
+            },
+            {
+              "source": {
+                "name": "SURFACE_OR_UNDER_CDE",
+                "type": "String"
+              },
+              "destination": {
+                "name": "SURFACE_OR_UNDER_CDE",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "MORTGAGE_YRN",
+                "type": "String"
+              },
+              "destination": {
+                "name": "MORTGAGE_YRN",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "SUBTENANTS_YRN",
+                "type": "String"
+              },
+              "destination": {
+                "name": "SUBTENANTS_YRN",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "REPLMNT_FOR_DISP_TRANS_SID",
+                "type": "Decimal",
+                "scale": 0,
+                "precision": 38
+              },
+              "destination": {
+                "name": "REPLMNT_FOR_DISP_TRANS_SID",
+                "physicalType": "decimal",
+                "scale": 18,
+                "precision": 38
+              }
+            },
+            {
+              "source": {
+                "name": "BATCH_SID",
+                "type": "Decimal",
+                "scale": 0,
+                "precision": 38
+              },
+              "destination": {
+                "name": "BATCH_SID",
+                "physicalType": "decimal",
+                "scale": 18,
+                "precision": 38
+              }
+            },
+            {
+              "source": {
+                "name": "CREATE_DAT",
+                "type": "DateTime"
+              },
+              "destination": {
+                "name": "CREATE_DAT",
+                "physicalType": "timestamp"
+              }
+            },
+            {
+              "source": {
+                "name": "CREATE_USERID_CHR",
+                "type": "String"
+              },
+              "destination": {
+                "name": "CREATE_USERID_CHR",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "LAST_UPDATE_DAT",
+                "type": "DateTime"
+              },
+              "destination": {
+                "name": "LAST_UPDATE_DAT",
+                "physicalType": "timestamp"
+              }
+            },
+            {
+              "source": {
+                "name": "LAST_UPDATE_USERID_CHR",
+                "type": "String"
+              },
+              "destination": {
+                "name": "LAST_UPDATE_USERID_CHR",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "MODIFIED_TENURE_YRN",
+                "type": "String"
+              },
+              "destination": {
+                "name": "MODIFIED_TENURE_YRN",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "MODIFIED_DAT",
+                "type": "DateTime"
+              },
+              "destination": {
+                "name": "MODIFIED_DAT",
+                "physicalType": "timestamp"
+              }
+            },
+            {
+              "source": {
+                "name": "MODIFIED_BY",
+                "type": "String"
+              },
+              "destination": {
+                "name": "MODIFIED_BY",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "COMPLEXITY_LEVEL_CDE",
+                "type": "String"
+              },
+              "destination": {
+                "name": "COMPLEXITY_LEVEL_CDE",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "MANAGING_AGENCY",
+                "type": "String"
+              },
+              "destination": {
+                "name": "MANAGING_AGENCY",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "NOMINAL_RENT_TENURE_CDE",
+                "type": "String"
+              },
+              "destination": {
+                "name": "NOMINAL_RENT_TENURE_CDE",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "SECURITY_REQUIRED_YRN",
+                "type": "String"
+              },
+              "destination": {
+                "name": "SECURITY_REQUIRED_YRN",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "DO_NOT_INVOICE_DAT",
+                "type": "DateTime"
+              },
+              "destination": {
+                "name": "DO_NOT_INVOICE_DAT",
+                "physicalType": "timestamp"
+              }
+            },
+            {
+              "source": {
+                "name": "DO_NOT_INVOICE_USERID",
+                "type": "String"
+              },
+              "destination": {
+                "name": "DO_NOT_INVOICE_USERID",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "DO_NOT_INVOICE_YRN",
+                "type": "String"
+              },
+              "destination": {
+                "name": "DO_NOT_INVOICE_YRN",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "ROYALTY_INFO_OFFSET_DAYS",
+                "type": "Int32"
+              },
+              "destination": {
+                "name": "ROYALTY_INFO_OFFSET_DAYS",
+                "physicalType": "integer"
+              }
+            },
+            {
+              "source": {
+                "name": "DISTRICT_OFFICE_SID",
+                "type": "Int32"
+              },
+              "destination": {
+                "name": "DISTRICT_OFFICE_SID",
+                "physicalType": "integer"
+              }
+            },
+            {
+              "source": {
+                "name": "DIST_OFFICE_ARRIVAL_DAT",
+                "type": "DateTime"
+              },
+              "destination": {
+                "name": "DIST_OFFICE_ARRIVAL_DAT",
+                "physicalType": "timestamp"
+              }
+            },
+            {
+              "source": {
+                "name": "CPI_RENT_INCREASE_SID",
+                "type": "Int32"
+              },
+              "destination": {
+                "name": "CPI_RENT_INCREASE_SID",
+                "physicalType": "integer"
+              }
+            }
+          ]
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    }
+  ]
+}

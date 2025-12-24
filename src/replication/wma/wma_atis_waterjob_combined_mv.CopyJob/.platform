@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "CopyJob",
+    "displayName": "wma_atis_waterjob_combined_mv"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "aa1e6e83-4a76-868b-49fb-5b609a968747"
+  }
+}
