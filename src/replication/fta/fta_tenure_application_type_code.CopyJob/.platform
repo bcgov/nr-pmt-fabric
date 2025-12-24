@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "CopyJob",
+    "displayName": "fta_tenure_application_type_code"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "a4757903-632c-9662-446e-93476f879e01"
+  }
+}

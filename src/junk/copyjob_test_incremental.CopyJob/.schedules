@@ -1,0 +1,29 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/schedules/1.0.0/schema.json",
+  "schedules": [
+    {
+      "enabled": false,
+      "jobType": "Execute",
+      "configuration": {
+        "type": "Cron",
+        "startDateTime": "2025-11-13T15:20:02.694",
+        "endDateTime": "9999-01-01T08:00:00",
+        "localTimeZoneId": "Pacific Standard Time",
+        "interval": 15
+      }
+    },
+    {
+      "enabled": true,
+      "jobType": "Execute",
+      "configuration": {
+        "type": "Daily",
+        "startDateTime": "2025-11-13T00:00:00",
+        "endDateTime": "2025-11-21T23:59:00",
+        "localTimeZoneId": "Pacific Standard Time",
+        "times": [
+          "22:46"
+        ]
+      }
+    }
+  ]
+}

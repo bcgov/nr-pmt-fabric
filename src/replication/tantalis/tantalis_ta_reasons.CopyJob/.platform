@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "CopyJob",
+    "displayName": "tantalis_ta_reasons"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "2f61c8dd-e8f3-b9c0-410f-c8d2b644e27b"
+  }
+}

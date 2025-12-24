@@ -1,0 +1,208 @@
+{
+  "properties": {
+    "activities": [
+      {
+        "type": "TridentNotebook",
+        "typeProperties": {
+          "notebookId": "08789d3f-e23f-b000-4a24-fba116105622",
+          "workspaceId": "00000000-0000-0000-0000-000000000000",
+          "sessionTag": "spark_water_session"
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "notebood_water_jobnumber",
+        "description": "run PIES etl mapping for water jobnumber, then push to PEACH",
+        "dependsOn": [
+          {
+            "activity": "Wait 90secs",
+            "dependencyConditions": [
+              "Completed"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "RefreshDataflow",
+        "typeProperties": {
+          "dataflowId": "d851da66-0da2-9424-4312-dbf399f0455a",
+          "workspaceId": "00000000-0000-0000-0000-000000000000",
+          "notifyOption": "NoNotification",
+          "dataflowType": "DataflowFabric"
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Dataflow_ats_raw",
+        "description": "pull ats raw data for water pies etl",
+        "dependsOn": []
+      },
+      {
+        "type": "RefreshDataflow",
+        "typeProperties": {
+          "dataflowId": "a46e1c94-5256-a86c-45fe-4ea5934da867",
+          "workspaceId": "00000000-0000-0000-0000-000000000000",
+          "notifyOption": "NoNotification",
+          "dataflowType": "DataflowFabric"
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Dataflow_vfcbc_raw",
+        "description": "Pull raw data from vfcbc views for PIES ETL water",
+        "dependsOn": [
+          {
+            "activity": "Dataflow_ats_raw",
+            "dependencyConditions": [
+              "Completed"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "RefreshDataflow",
+        "typeProperties": {
+          "dataflowId": "da9e42d1-d265-bd10-47a9-4156ae7abb46",
+          "workspaceId": "00000000-0000-0000-0000-000000000000",
+          "notifyOption": "NoNotification",
+          "dataflowType": "DataflowFabric"
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Dataflow_water_raw",
+        "description": "pull water data from water combined view for PIES ETL water",
+        "dependsOn": [
+          {
+            "activity": "Dataflow_vfcbc_raw",
+            "dependencyConditions": [
+              "Completed"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "RefreshDataflow",
+        "typeProperties": {
+          "dataflowId": "1b388f0b-e8cb-bea5-4d0f-9fb93d09db71",
+          "workspaceId": "00000000-0000-0000-0000-000000000000",
+          "notifyOption": "NoNotification",
+          "dataflowType": "DataflowFabric"
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Dataflow_join_three_source_data",
+        "description": "Join the three source data and do some simple transformation",
+        "dependsOn": [
+          {
+            "activity": "Wait 90s",
+            "dependencyConditions": [
+              "Completed"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "TridentNotebook",
+        "typeProperties": {
+          "notebookId": "ec776d45-03c0-a837-4547-c62ad5352db1",
+          "workspaceId": "00000000-0000-0000-0000-000000000000",
+          "sessionTag": "spark_water_session"
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Notebook_vfcbctrackingnumber",
+        "description": "run PIES etl mapping for water vfcbc tracking number, then push to PEACH",
+        "dependsOn": [
+          {
+            "activity": "notebood_water_jobnumber",
+            "dependencyConditions": [
+              "Completed"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "TridentNotebook",
+        "typeProperties": {
+          "notebookId": "d361f680-30da-8497-4a75-da46646caf1f",
+          "workspaceId": "00000000-0000-0000-0000-000000000000",
+          "sessionTag": "spark_water_session"
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Notebook_authorizationid",
+        "description": "run PIES etl mapping for water authorization id, then push to PEACH",
+        "dependsOn": [
+          {
+            "activity": "Notebook_vfcbctrackingnumber",
+            "dependencyConditions": [
+              "Completed"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "Wait",
+        "typeProperties": {
+          "waitTimeInSeconds": 90
+        },
+        "name": "Wait 90s",
+        "dependsOn": [
+          {
+            "activity": "Dataflow_water_raw",
+            "dependencyConditions": [
+              "Completed"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "Wait",
+        "typeProperties": {
+          "waitTimeInSeconds": 90
+        },
+        "name": "Wait 90secs",
+        "dependsOn": [
+          {
+            "activity": "Dataflow_join_three_source_data",
+            "dependencyConditions": [
+              "Completed"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

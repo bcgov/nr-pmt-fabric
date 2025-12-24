@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "CopyJob",
+    "displayName": "tantalis_ta_disp_trans_tasks"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "edc72f02-7d20-8abe-4404-57698923ad90"
+  }
+}

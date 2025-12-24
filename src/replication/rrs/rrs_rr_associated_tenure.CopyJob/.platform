@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "CopyJob",
+    "displayName": "rrs_rr_associated_tenure"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "d615ca25-dbb3-8f2a-4c43-b73b5cf6de10"
+  }
+}

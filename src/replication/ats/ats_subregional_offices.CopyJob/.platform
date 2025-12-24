@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "CopyJob",
+    "displayName": "ats_subregional_offices"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "3ce1d2c2-0673-aafe-40bd-5c7b0b560e86"
+  }
+}

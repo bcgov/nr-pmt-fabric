@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "CopyJob",
+    "displayName": "fta_cut_block"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "df62795f-3c5c-988d-44d3-4b68b9438ee8"
+  }
+}

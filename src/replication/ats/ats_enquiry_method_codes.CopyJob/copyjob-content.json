@@ -1,0 +1,147 @@
+{
+  "properties": {
+    "jobMode": "Batch",
+    "source": {
+      "type": "OracleTable",
+      "connectionSettings": {
+        "type": "Oracle",
+        "externalReferences": {
+          "connection": "dba63a9d-2ead-43fa-bdfc-9daae968799e"
+        }
+      }
+    },
+    "destination": {
+      "type": "LakehouseTable",
+      "connectionSettings": {
+        "type": "Lakehouse",
+        "typeProperties": {
+          "workspaceId": "00000000-0000-0000-0000-000000000000",
+          "artifactId": "a4c99642-feeb-81e8-46b6-ca11201b9b7d",
+          "rootFolder": "Tables"
+        },
+        "externalReferences": {
+          "connection": "bc8539f0-7142-4559-844f-ef25c76ac5da"
+        }
+      }
+    },
+    "policy": {
+      "timeout": "0.12:00:00"
+    }
+  },
+  "activities": [
+    {
+      "id": "548eea79-16af-4305-9a4a-95fd92a5d1de",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "ATS",
+            "table": "ATS_ENQUIRY_METHOD_CODES"
+          }
+        },
+        "destination": {
+          "writeBehavior": "Append",
+          "datasetSettings": {
+            "schema": "ats_replication",
+            "table": "ats_enquiry_method_codes"
+          }
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator",
+          "mappings": [
+            {
+              "source": {
+                "name": "ENQUIRY_METHOD_CODE",
+                "type": "String"
+              },
+              "destination": {
+                "name": "ENQUIRY_METHOD_CODE",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "NAME",
+                "type": "String"
+              },
+              "destination": {
+                "name": "NAME",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "DESCRIPTION",
+                "type": "String"
+              },
+              "destination": {
+                "name": "DESCRIPTION",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "SORT_SEQ",
+                "type": "Decimal",
+                "scale": 0,
+                "precision": 38
+              },
+              "destination": {
+                "name": "SORT_SEQ",
+                "physicalType": "decimal",
+                "scale": 0,
+                "precision": 38
+              }
+            },
+            {
+              "source": {
+                "name": "WHO_CREATED",
+                "type": "String"
+              },
+              "destination": {
+                "name": "WHO_CREATED",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "WHEN_CREATED",
+                "type": "DateTime"
+              },
+              "destination": {
+                "name": "WHEN_CREATED",
+                "physicalType": "timestamp"
+              }
+            },
+            {
+              "source": {
+                "name": "WHO_UPDATED",
+                "type": "String"
+              },
+              "destination": {
+                "name": "WHO_UPDATED",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "WHEN_UPDATED",
+                "type": "DateTime"
+              },
+              "destination": {
+                "name": "WHEN_UPDATED",
+                "physicalType": "timestamp"
+              }
+            }
+          ]
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    }
+  ]
+}

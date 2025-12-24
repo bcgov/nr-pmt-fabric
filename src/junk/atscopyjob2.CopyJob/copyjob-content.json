@@ -1,0 +1,75 @@
+{
+  "properties": {
+    "jobMode": "CDC",
+    "source": {
+      "type": "OracleTable",
+      "connectionSettings": {
+        "type": "Oracle",
+        "externalReferences": {
+          "connection": "fb06eb88-eeb8-4446-b835-948237793214"
+        }
+      }
+    },
+    "destination": {
+      "type": "LakehouseTable",
+      "connectionSettings": {
+        "type": "Lakehouse",
+        "typeProperties": {
+          "workspaceId": "00000000-0000-0000-0000-000000000000",
+          "artifactId": "a4c99642-feeb-81e8-46b6-ca11201b9b7d",
+          "rootFolder": "Tables"
+        },
+        "externalReferences": {
+          "connection": "bc8539f0-7142-4559-844f-ef25c76ac5da"
+        }
+      }
+    },
+    "policy": {
+      "timeout": "0.12:00:00"
+    }
+  },
+  "activities": [
+    {
+      "id": "66b1c23c-d670-4599-b71e-1d1c1740e247",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "ATS",
+            "table": "ATS_PROJECTS"
+          },
+          "changeDataSettings": {
+            "readMethod": "SnapshotPlusIncremental",
+            "columns": [
+              {
+                "name": "WHEN_UPDATED",
+                "type": "DateTime"
+              }
+            ]
+          }
+        },
+        "destination": {
+          "upsertSettings": {
+            "keys": [
+              "PROJECT_ID"
+            ]
+          },
+          "writeBehavior": "Upsert",
+          "datasetSettings": {
+            "schema": "junk",
+            "table": "ats_projects"
+          }
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    }
+  ]
+}

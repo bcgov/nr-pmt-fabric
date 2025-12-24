@@ -1,0 +1,273 @@
+{
+  "properties": {
+    "jobMode": "Batch",
+    "source": {
+      "type": "OracleTable",
+      "connectionSettings": {
+        "type": "Oracle",
+        "externalReferences": {
+          "connection": "0256d531-1ecc-4986-86b0-46f5ef9d3c84"
+        }
+      }
+    },
+    "destination": {
+      "type": "LakehouseTable",
+      "connectionSettings": {
+        "type": "Lakehouse",
+        "typeProperties": {
+          "workspaceId": "00000000-0000-0000-0000-000000000000",
+          "artifactId": "a4c99642-feeb-81e8-46b6-ca11201b9b7d",
+          "rootFolder": "Tables"
+        },
+        "externalReferences": {
+          "connection": "8baa7aad-36f4-4594-8596-518807d7ff16"
+        }
+      }
+    },
+    "policy": {
+      "timeout": "0.12:00:00"
+    }
+  },
+  "activities": [
+    {
+      "id": "10abe9f6-5c37-44c6-b96a-212ea44016c1",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "THE",
+            "table": "CUT_BLOCK"
+          }
+        },
+        "destination": {
+          "writeBehavior": "Append",
+          "datasetSettings": {
+            "schema": "fta_replication",
+            "table": "fta_cut_block"
+          }
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator",
+          "mappings": [
+            {
+              "source": {
+                "name": "CB_SKEY",
+                "type": "Int64"
+              },
+              "destination": {
+                "name": "CB_SKEY",
+                "physicalType": "long"
+              }
+            },
+            {
+              "source": {
+                "name": "HVA_SKEY",
+                "type": "Int64"
+              },
+              "destination": {
+                "name": "HVA_SKEY",
+                "physicalType": "long"
+              }
+            },
+            {
+              "source": {
+                "name": "FOREST_FILE_ID",
+                "type": "String"
+              },
+              "destination": {
+                "name": "FOREST_FILE_ID",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "CUTTING_PERMIT_ID",
+                "type": "String"
+              },
+              "destination": {
+                "name": "CUTTING_PERMIT_ID",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "TIMBER_MARK",
+                "type": "String"
+              },
+              "destination": {
+                "name": "TIMBER_MARK",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "CUT_BLOCK_ID",
+                "type": "String"
+              },
+              "destination": {
+                "name": "CUT_BLOCK_ID",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "SP_EXEMPT_IND",
+                "type": "String"
+              },
+              "destination": {
+                "name": "SP_EXEMPT_IND",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "BLOCK_STATUS_DATE",
+                "type": "DateTime"
+              },
+              "destination": {
+                "name": "BLOCK_STATUS_DATE",
+                "physicalType": "timestamp"
+              }
+            },
+            {
+              "source": {
+                "name": "CUT_BLOCK_DESCRIPTION",
+                "type": "String"
+              },
+              "destination": {
+                "name": "CUT_BLOCK_DESCRIPTION",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "CUT_REGULATION_CODE",
+                "type": "String"
+              },
+              "destination": {
+                "name": "CUT_REGULATION_CODE",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "BLOCK_STATUS_ST",
+                "type": "String"
+              },
+              "destination": {
+                "name": "BLOCK_STATUS_ST",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "REFOREST_DECLARE_TYPE_CODE",
+                "type": "String"
+              },
+              "destination": {
+                "name": "REFOREST_DECLARE_TYPE_CODE",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "REVISION_COUNT",
+                "type": "Int32"
+              },
+              "destination": {
+                "name": "REVISION_COUNT",
+                "physicalType": "integer"
+              }
+            },
+            {
+              "source": {
+                "name": "ENTRY_TIMESTAMP",
+                "type": "DateTime"
+              },
+              "destination": {
+                "name": "ENTRY_TIMESTAMP",
+                "physicalType": "timestamp"
+              }
+            },
+            {
+              "source": {
+                "name": "UPDATE_USERID",
+                "type": "String"
+              },
+              "destination": {
+                "name": "UPDATE_USERID",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "UPDATE_TIMESTAMP",
+                "type": "DateTime"
+              },
+              "destination": {
+                "name": "UPDATE_TIMESTAMP",
+                "physicalType": "timestamp"
+              }
+            },
+            {
+              "source": {
+                "name": "IS_WASTE_ASSESSMENT_REQUIRED",
+                "type": "String"
+              },
+              "destination": {
+                "name": "IS_WASTE_ASSESSMENT_REQUIRED",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "CUT_BLOCK_GUID",
+                "type": "Byte[]"
+              },
+              "destination": {
+                "name": "CUT_BLOCK_GUID",
+                "physicalType": "binary"
+              }
+            },
+            {
+              "source": {
+                "name": "FIRE_HARVESTING_REASON_CODE",
+                "type": "String"
+              },
+              "destination": {
+                "name": "FIRE_HARVESTING_REASON_CODE",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "IS_UNDER_PARTITION_ORDER",
+                "type": "String"
+              },
+              "destination": {
+                "name": "IS_UNDER_PARTITION_ORDER",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "REPORTED_FIRE_DATE",
+                "type": "DateTime"
+              },
+              "destination": {
+                "name": "REPORTED_FIRE_DATE",
+                "physicalType": "timestamp"
+              }
+            }
+          ]
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    }
+  ]
+}

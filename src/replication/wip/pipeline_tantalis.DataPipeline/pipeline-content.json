@@ -1,0 +1,332 @@
+{
+  "properties": {
+    "activities": [
+      {
+        "type": "Copy",
+        "typeProperties": {
+          "source": {
+            "type": "OracleSource",
+            "queryTimeout": "02:00:00",
+            "partitionOption": "None",
+            "numberPrecision": 38,
+            "numberScale": 18,
+            "datasetSettings": {
+              "type": "OracleTable",
+              "typeProperties": {
+                "schema": "TANTALIS",
+                "table": "TA_AVAILABLE_PURPOSES"
+              },
+              "schema": [],
+              "externalReferences": {
+                "connection": "d2cc5a7d-e9ce-42dd-8f69-a7ed47de25d0"
+              },
+              "annotations": []
+            }
+          },
+          "sink": {
+            "type": "LakehouseTableSink",
+            "tableActionOption": "Append",
+            "applyVOrder": true,
+            "partitionOption": "None",
+            "datasetSettings": {
+              "type": "LakehouseTable",
+              "typeProperties": {
+                "schema": "tantalis_replication",
+                "table": "ta_available_purposes"
+              },
+              "schema": [],
+              "connectionSettings": {
+                "name": "pmt_lakehouse",
+                "properties": {
+                  "type": "Lakehouse",
+                  "typeProperties": {
+                    "artifactId": "a4c99642-feeb-81e8-46b6-ca11201b9b7d",
+                    "workspaceId": "00000000-0000-0000-0000-000000000000",
+                    "rootFolder": "Tables"
+                  },
+                  "externalReferences": {
+                    "connection": "bc8539f0-7142-4559-844f-ef25c76ac5da"
+                  },
+                  "annotations": []
+                }
+              },
+              "annotations": []
+            }
+          },
+          "translator": {
+            "type": "TabularTranslator",
+            "typeConversion": true,
+            "typeConversionSettings": {
+              "allowDataTruncation": true,
+              "treatBooleanAsNumber": false
+            }
+          },
+          "enableStaging": false
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "TA_AVAILABLE_PURPOSES",
+        "dependsOn": [
+          {
+            "activity": "Set variable1",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "Copy",
+        "typeProperties": {
+          "source": {
+            "type": "OracleSource",
+            "queryTimeout": "02:00:00",
+            "partitionOption": "None",
+            "numberPrecision": 38,
+            "numberScale": 18,
+            "datasetSettings": {
+              "type": "OracleTable",
+              "typeProperties": {
+                "schema": "TANTALIS",
+                "table": "TA_AVAILABLE_SUBTYPES"
+              },
+              "schema": [],
+              "externalReferences": {
+                "connection": "d2cc5a7d-e9ce-42dd-8f69-a7ed47de25d0"
+              },
+              "annotations": []
+            }
+          },
+          "sink": {
+            "type": "LakehouseTableSink",
+            "tableActionOption": "Append",
+            "applyVOrder": true,
+            "partitionOption": "None",
+            "datasetSettings": {
+              "type": "LakehouseTable",
+              "typeProperties": {
+                "schema": "tantalis_replication",
+                "table": "ta_available_subtypes"
+              },
+              "schema": [],
+              "connectionSettings": {
+                "name": "pmt_lakehouse",
+                "properties": {
+                  "type": "Lakehouse",
+                  "typeProperties": {
+                    "artifactId": "a4c99642-feeb-81e8-46b6-ca11201b9b7d",
+                    "workspaceId": "00000000-0000-0000-0000-000000000000",
+                    "rootFolder": "Tables"
+                  },
+                  "externalReferences": {
+                    "connection": "bc8539f0-7142-4559-844f-ef25c76ac5da"
+                  },
+                  "annotations": []
+                }
+              },
+              "annotations": []
+            }
+          },
+          "translator": {
+            "type": "TabularTranslator",
+            "mappings": [
+              {
+                "source": {
+                  "name": "TYPE_SID",
+                  "type": "Decimal",
+                  "scale": 0,
+                  "precision": 38
+                },
+                "sink": {
+                  "name": "TYPE_SID",
+                  "physicalType": "decimal",
+                  "scale": 0,
+                  "precision": 38
+                }
+              },
+              {
+                "source": {
+                  "name": "SUBTYPE_SID",
+                  "type": "Decimal",
+                  "scale": 0,
+                  "precision": 38
+                },
+                "sink": {
+                  "name": "SUBTYPE_SID",
+                  "physicalType": "decimal",
+                  "scale": 0,
+                  "precision": 38
+                }
+              },
+              {
+                "source": {
+                  "name": "SUBTYPE_NME",
+                  "type": "String"
+                },
+                "sink": {
+                  "name": "SUBTYPE_NME",
+                  "physicalType": "string"
+                }
+              },
+              {
+                "source": {
+                  "name": "SUBTYPE_DSC",
+                  "type": "String"
+                },
+                "sink": {
+                  "name": "SUBTYPE_DSC",
+                  "physicalType": "string"
+                }
+              },
+              {
+                "source": {
+                  "name": "WORLD_BIRTH_DAT",
+                  "type": "DateTime"
+                },
+                "sink": {
+                  "name": "WORLD_BIRTH_DAT",
+                  "physicalType": "timestamp"
+                }
+              },
+              {
+                "source": {
+                  "name": "WORLD_DEATH_DAT",
+                  "type": "DateTime"
+                },
+                "sink": {
+                  "name": "WORLD_DEATH_DAT",
+                  "physicalType": "timestamp"
+                }
+              },
+              {
+                "source": {
+                  "name": "CREATE_DAT",
+                  "type": "DateTime"
+                },
+                "sink": {
+                  "name": "CREATE_DAT",
+                  "physicalType": "timestamp"
+                }
+              },
+              {
+                "source": {
+                  "name": "CREATE_USERID_CHR",
+                  "type": "String"
+                },
+                "sink": {
+                  "name": "CREATE_USERID_CHR",
+                  "physicalType": "string"
+                }
+              },
+              {
+                "source": {
+                  "name": "LAST_UPDATE_DAT",
+                  "type": "DateTime"
+                },
+                "sink": {
+                  "name": "LAST_UPDATE_DAT",
+                  "physicalType": "timestamp"
+                }
+              },
+              {
+                "source": {
+                  "name": "LAST_UPDATE_USERID_CHR",
+                  "type": "String"
+                },
+                "sink": {
+                  "name": "LAST_UPDATE_USERID_CHR",
+                  "physicalType": "string"
+                }
+              }
+            ],
+            "typeConversion": true,
+            "typeConversionSettings": {
+              "allowDataTruncation": true,
+              "treatBooleanAsNumber": false
+            }
+          },
+          "enableStaging": false
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "TA_AVAILABLE_SUBTYPES",
+        "dependsOn": []
+      },
+      {
+        "type": "RefreshDataflow",
+        "typeProperties": {
+          "workspaceId": "79dafa8a-b966-4240-80f7-2e9d46baa5c3",
+          "notifyOption": "NoNotification"
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Dataflow1",
+        "state": "Inactive",
+        "onInactiveMarkAs": "Succeeded",
+        "dependsOn": [
+          {
+            "activity": "TA_AVAILABLE_PURPOSES",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          },
+          {
+            "activity": "TA_AVAILABLE_SUBTYPES",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "TridentNotebook",
+        "typeProperties": {
+          "notebookId": "d8a79fb4-f5be-bb57-4ac6-8bd0452c24c6",
+          "workspaceId": "00000000-0000-0000-0000-000000000000"
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Notebook1",
+        "dependsOn": [
+          {
+            "activity": "Dataflow1",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "SetVariable",
+        "policy": {
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Set variable1",
+        "state": "Inactive",
+        "onInactiveMarkAs": "Succeeded",
+        "dependsOn": []
+      }
+    ]
+  }
+}

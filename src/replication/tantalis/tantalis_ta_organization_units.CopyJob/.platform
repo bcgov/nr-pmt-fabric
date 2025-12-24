@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "CopyJob",
+    "displayName": "tantalis_ta_organization_units"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "9561f67d-2de3-b8c9-416a-432a4a04fbb8"
+  }
+}

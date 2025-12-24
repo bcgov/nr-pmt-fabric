@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "CopyJob",
+    "displayName": "fta_sale_method_code"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "4f0eb32b-55c6-870e-4861-780ea79d11f5"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "CopyJob",
+    "displayName": "fta_harvest_authority_geom"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "1b858da2-3d0e-a975-4ef3-39149b4f6ec0"
+  }
+}

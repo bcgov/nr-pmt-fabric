@@ -1,0 +1,61 @@
+{
+  "properties": {
+    "jobMode": "Batch",
+    "source": {
+      "type": "OracleTable",
+      "connectionSettings": {
+        "type": "Oracle",
+        "externalReferences": {
+          "connection": "0115be78-07d6-46e6-89e8-ccec6da3f4fe"
+        }
+      }
+    },
+    "destination": {
+      "type": "LakehouseTable",
+      "connectionSettings": {
+        "type": "Lakehouse",
+        "typeProperties": {
+          "workspaceId": "00000000-0000-0000-0000-000000000000",
+          "artifactId": "a4c99642-feeb-81e8-46b6-ca11201b9b7d",
+          "rootFolder": "Tables"
+        },
+        "externalReferences": {
+          "connection": "8baa7aad-36f4-4594-8596-518807d7ff16"
+        }
+      }
+    },
+    "policy": {
+      "timeout": "0.12:00:00"
+    }
+  },
+  "activities": [
+    {
+      "id": "49474f8c-4f0e-4f20-982f-daf508d3d890",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "APP_RRS",
+            "table": "ROAD_FOREST_MGT_UNIT_SDW"
+          }
+        },
+        "destination": {
+          "writeBehavior": "Append",
+          "datasetSettings": {
+            "schema": "rrs_replication",
+            "table": "rrs_road_forest_mgt_unit_sdw"
+          }
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    }
+  ]
+}

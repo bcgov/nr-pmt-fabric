@@ -1,0 +1,493 @@
+{
+  "properties": {
+    "jobMode": "Batch",
+    "source": {
+      "type": "OracleTable",
+      "connectionSettings": {
+        "type": "Oracle",
+        "externalReferences": {
+          "connection": "dba63a9d-2ead-43fa-bdfc-9daae968799e"
+        }
+      }
+    },
+    "destination": {
+      "type": "LakehouseTable",
+      "connectionSettings": {
+        "type": "Lakehouse",
+        "typeProperties": {
+          "workspaceId": "00000000-0000-0000-0000-000000000000",
+          "artifactId": "a4c99642-feeb-81e8-46b6-ca11201b9b7d",
+          "rootFolder": "Tables"
+        },
+        "externalReferences": {
+          "connection": "bc8539f0-7142-4559-844f-ef25c76ac5da"
+        }
+      }
+    },
+    "policy": {
+      "timeout": "0.12:00:00"
+    }
+  },
+  "activities": [
+    {
+      "id": "7faf703d-c016-424f-bd6a-a942eb69c6b4",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "ATS",
+            "table": "ATS_AVG_PROCESSING_TIME_VW"
+          }
+        },
+        "destination": {
+          "writeBehavior": "Append",
+          "datasetSettings": {
+            "schema": "ats_replication",
+            "table": "ats_avg_processing_time_vw"
+          }
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator",
+          "mappings": [
+            {
+              "source": {
+                "name": "MANAGING_FCBC_REGION_ID",
+                "type": "Decimal",
+                "scale": 0,
+                "precision": 38
+              },
+              "destination": {
+                "name": "MANAGING_FCBC_REGION_ID",
+                "physicalType": "decimal",
+                "scale": 0,
+                "precision": 38
+              }
+            },
+            {
+              "source": {
+                "name": "AUTHORIZATION_INSTRUMENT_ID",
+                "type": "Decimal",
+                "scale": 0,
+                "precision": 38
+              },
+              "destination": {
+                "name": "AUTHORIZATION_INSTRUMENT_ID",
+                "physicalType": "decimal",
+                "scale": 0,
+                "precision": 38
+              }
+            },
+            {
+              "source": {
+                "name": "PARTNER_AGENCY_ID",
+                "type": "Decimal",
+                "scale": 0,
+                "precision": 38
+              },
+              "destination": {
+                "name": "PARTNER_AGENCY_ID",
+                "physicalType": "decimal",
+                "scale": 0,
+                "precision": 38
+              }
+            },
+            {
+              "source": {
+                "name": "PROJECT_ID",
+                "type": "Decimal",
+                "scale": 0,
+                "precision": 38
+              },
+              "destination": {
+                "name": "PROJECT_ID",
+                "physicalType": "decimal",
+                "scale": 0,
+                "precision": 38
+              }
+            },
+            {
+              "source": {
+                "name": "AUTHORIZATION_ID",
+                "type": "Decimal",
+                "scale": 0,
+                "precision": 38
+              },
+              "destination": {
+                "name": "AUTHORIZATION_ID",
+                "physicalType": "decimal",
+                "scale": 0,
+                "precision": 38
+              }
+            },
+            {
+              "source": {
+                "name": "SUBREGIONAL_OFFICE_ID",
+                "type": "Decimal",
+                "scale": 0,
+                "precision": 38
+              },
+              "destination": {
+                "name": "SUBREGIONAL_OFFICE_ID",
+                "physicalType": "decimal",
+                "scale": 0,
+                "precision": 38
+              }
+            },
+            {
+              "source": {
+                "name": "SECONDARY_OFFICE_ID",
+                "type": "Decimal",
+                "scale": 0,
+                "precision": 38
+              },
+              "destination": {
+                "name": "SECONDARY_OFFICE_ID",
+                "physicalType": "decimal",
+                "scale": 0,
+                "precision": 38
+              }
+            },
+            {
+              "source": {
+                "name": "PROJECT_STATUS_CODE",
+                "type": "String"
+              },
+              "destination": {
+                "name": "PROJECT_STATUS_CODE",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "REGION_NAME",
+                "type": "String"
+              },
+              "destination": {
+                "name": "REGION_NAME",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "SUBREGIONAL_OFFICE_NAME",
+                "type": "String"
+              },
+              "destination": {
+                "name": "SUBREGIONAL_OFFICE_NAME",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "SECONDARY_OFFICE_NAME",
+                "type": "String"
+              },
+              "destination": {
+                "name": "SECONDARY_OFFICE_NAME",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "BUSINESS_AREA",
+                "type": "String"
+              },
+              "destination": {
+                "name": "BUSINESS_AREA",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "AUTHORIZATION_TYPE",
+                "type": "String"
+              },
+              "destination": {
+                "name": "AUTHORIZATION_TYPE",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "PROJECT_NAME",
+                "type": "String"
+              },
+              "destination": {
+                "name": "PROJECT_NAME",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "FCBC_ASSIGNED_TO",
+                "type": "String"
+              },
+              "destination": {
+                "name": "FCBC_ASSIGNED_TO",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "PARTNER_AGENCY_CONTACT",
+                "type": "String"
+              },
+              "destination": {
+                "name": "PARTNER_AGENCY_CONTACT",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "AUTHORIZATION_STATUS",
+                "type": "String"
+              },
+              "destination": {
+                "name": "AUTHORIZATION_STATUS",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "FILE_NUMBER",
+                "type": "String"
+              },
+              "destination": {
+                "name": "FILE_NUMBER",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "APPLICATION_RECEIVED_DATE",
+                "type": "DateTime"
+              },
+              "destination": {
+                "name": "APPLICATION_RECEIVED_DATE",
+                "physicalType": "timestamp"
+              }
+            },
+            {
+              "source": {
+                "name": "APPLICATION_ACCEPTED_DATE",
+                "type": "DateTime"
+              },
+              "destination": {
+                "name": "APPLICATION_ACCEPTED_DATE",
+                "physicalType": "timestamp"
+              }
+            },
+            {
+              "source": {
+                "name": "ACCEPTANCE_NET_TIME",
+                "type": "Decimal",
+                "scale": 127,
+                "precision": 38
+              },
+              "destination": {
+                "name": "ACCEPTANCE_NET_TIME",
+                "physicalType": "decimal",
+                "scale": 0,
+                "precision": 38
+              }
+            },
+            {
+              "source": {
+                "name": "APPLICATION_REJECTED_DATE",
+                "type": "DateTime"
+              },
+              "destination": {
+                "name": "APPLICATION_REJECTED_DATE",
+                "physicalType": "timestamp"
+              }
+            },
+            {
+              "source": {
+                "name": "AUTHORIZATION_DUE_DATE",
+                "type": "DateTime"
+              },
+              "destination": {
+                "name": "AUTHORIZATION_DUE_DATE",
+                "physicalType": "timestamp"
+              }
+            },
+            {
+              "source": {
+                "name": "FCBC_PROCESS_COMPLETE_DATE",
+                "type": "DateTime"
+              },
+              "destination": {
+                "name": "FCBC_PROCESS_COMPLETE_DATE",
+                "physicalType": "timestamp"
+              }
+            },
+            {
+              "source": {
+                "name": "FIRST_NATION_CONSULTATION_LEAD",
+                "type": "String"
+              },
+              "destination": {
+                "name": "FIRST_NATION_CONSULTATION_LEAD",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "FIRST_NATION_START_DATE",
+                "type": "DateTime"
+              },
+              "destination": {
+                "name": "FIRST_NATION_START_DATE",
+                "physicalType": "timestamp"
+              }
+            },
+            {
+              "source": {
+                "name": "FIRST_NATION_COMPLETION_DATE",
+                "type": "DateTime"
+              },
+              "destination": {
+                "name": "FIRST_NATION_COMPLETION_DATE",
+                "physicalType": "timestamp"
+              }
+            },
+            {
+              "source": {
+                "name": "FIRST_NATION_NET_TIME",
+                "type": "Decimal",
+                "scale": 127,
+                "precision": 38
+              },
+              "destination": {
+                "name": "FIRST_NATION_NET_TIME",
+                "physicalType": "decimal",
+                "scale": 0,
+                "precision": 38
+              }
+            },
+            {
+              "source": {
+                "name": "TECH_REVIEW_COMPLETION_DATE",
+                "type": "DateTime"
+              },
+              "destination": {
+                "name": "TECH_REVIEW_COMPLETION_DATE",
+                "physicalType": "timestamp"
+              }
+            },
+            {
+              "source": {
+                "name": "TECH_REVIEW_NET_TIME",
+                "type": "Decimal",
+                "scale": 127,
+                "precision": 38
+              },
+              "destination": {
+                "name": "TECH_REVIEW_NET_TIME",
+                "physicalType": "decimal",
+                "scale": 0,
+                "precision": 38
+              }
+            },
+            {
+              "source": {
+                "name": "TENURE_ADMINISTRATION_LEAD",
+                "type": "String"
+              },
+              "destination": {
+                "name": "TENURE_ADMINISTRATION_LEAD",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "HAS_ADJUDICATION",
+                "type": "String"
+              },
+              "destination": {
+                "name": "HAS_ADJUDICATION",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "ADJUDICATION_DATE",
+                "type": "DateTime"
+              },
+              "destination": {
+                "name": "ADJUDICATION_DATE",
+                "physicalType": "timestamp"
+              }
+            },
+            {
+              "source": {
+                "name": "TOTAL_PROCESSING_TIME",
+                "type": "Decimal",
+                "scale": 127,
+                "precision": 38
+              },
+              "destination": {
+                "name": "TOTAL_PROCESSING_TIME",
+                "physicalType": "decimal",
+                "scale": 0,
+                "precision": 38
+              }
+            },
+            {
+              "source": {
+                "name": "TOTAL_ON_HOLD_TIME",
+                "type": "Decimal",
+                "scale": 127,
+                "precision": 38
+              },
+              "destination": {
+                "name": "TOTAL_ON_HOLD_TIME",
+                "physicalType": "integer"
+              }
+            },
+            {
+              "source": {
+                "name": "NET_PROCESSING_TIME",
+                "type": "Decimal",
+                "scale": 127,
+                "precision": 38
+              },
+              "destination": {
+                "name": "NET_PROCESSING_TIME",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "FCBC_NET_PROCESSING_TIME",
+                "type": "Decimal",
+                "scale": 127,
+                "precision": 38
+              },
+              "destination": {
+                "name": "FCBC_NET_PROCESSING_TIME",
+                "physicalType": "integer"
+              }
+            },
+            {
+              "source": {
+                "name": "COMMENTS",
+                "type": "String"
+              },
+              "destination": {
+                "name": "COMMENTS",
+                "physicalType": "string"
+              }
+            }
+          ]
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    }
+  ]
+}

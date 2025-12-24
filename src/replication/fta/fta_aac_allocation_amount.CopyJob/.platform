@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "CopyJob",
+    "displayName": "fta_aac_allocation_amount"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "9123b55b-a341-b28c-4947-f2eb2d7df889"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "CopyJob",
+    "displayName": "vfcbc_businessarea"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "6db95065-9683-b5fd-4897-863a50cd6074"
+  }
+}
