@@ -1,0 +1,12 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Lakehouse",
+    "displayName": "permitting_lakehouse",
+    "description": "The permitting lakehouse holds replicated data from permitting systems in the Natural Resource Sector. Data is split out into raw replicated data, transformed staged data, prepped analytics data and snapshots of historic data.\nAlso includes the transformation logic and data for the PIES ETL Module to move json into PEACH"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "c2beb312-79c4-9a0f-4c49-a090669db923"
+  }
+}
