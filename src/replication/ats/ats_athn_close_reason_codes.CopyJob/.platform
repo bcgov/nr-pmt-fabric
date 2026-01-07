@@ -1,0 +1,12 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "CopyJob",
+    "displayName": "ats_athn_close_reason_codes",
+    "description": ""
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "8eb7e8d4-6ead-9f76-4605-fe1243f56f89"
+  }
+}
