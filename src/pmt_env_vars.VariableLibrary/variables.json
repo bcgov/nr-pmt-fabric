@@ -1,0 +1,23 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/variableLibrary/definition/variables/1.0.0/schema.json",
+  "variables": [
+    {
+      "name": "pmt-ats-odb",
+      "note": "",
+      "type": "String",
+      "value": "27efbb9f-e2bf-434f-88da-7efd288122bc"
+    },
+    {
+      "name": "pmt-elic-odb",
+      "note": "",
+      "type": "String",
+      "value": "c95648e7-7d00-4ace-956d-ad6243540991"
+    },
+    {
+      "name": "pmt-tantalis-odb",
+      "note": "",
+      "type": "String",
+      "value": "6b66347d-2536-45d6-a6f3-e237b677bc65"
+    }
+  ]
+}

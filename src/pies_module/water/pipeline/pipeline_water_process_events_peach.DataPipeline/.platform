@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "DataPipeline",
+    "displayName": "pipeline_water_process_events_peach"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "1f9fb295-f550-99dd-4580-c60265dab3d9"
+  }
+}

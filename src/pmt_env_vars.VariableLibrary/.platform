@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "VariableLibrary",
+    "displayName": "pmt_env_vars"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "d7a87251-bc0f-afe1-4f22-8e744b7a131b"
+  }
+}
