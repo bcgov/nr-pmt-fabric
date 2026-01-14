@@ -18,6 +18,18 @@
       "note": "",
       "type": "String",
       "value": "6b66347d-2536-45d6-a6f3-e237b677bc65"
+    },
+    {
+      "name": "pmt-lakehouse-id",
+      "note": "",
+      "type": "String",
+      "value": "201b9b7d-ca11-46b6-81e8-feeba4c99642"
+    },
+    {
+      "name": "pmt-workspace-id",
+      "note": "",
+      "type": "String",
+      "value": "79dafa8a-b966-4240-80f7-2e9d46baa5c3"
     }
   ]
 }

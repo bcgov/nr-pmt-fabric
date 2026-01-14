@@ -18,8 +18,14 @@
       "connectionSettings": {
         "type": "Lakehouse",
         "typeProperties": {
-          "workspaceId": "00000000-0000-0000-0000-000000000000",
-          "artifactId": "a4c99642-feeb-81e8-46b6-ca11201b9b7d",
+          "workspaceIdVariableLibrary": {
+            "variableName": "pmt-workspace-id",
+            "libraryName": "pmt_env_vars"
+          },
+          "artifactIdVariableLibrary": {
+            "variableName": "pmt-lakehouse-id",
+            "libraryName": "pmt_env_vars"
+          },
           "rootFolder": "Tables"
         }
       }
@@ -43,7 +49,7 @@
           "writeBehavior": "Overwrite",
           "datasetSettings": {
             "schema": "ats_replication",
-            "table": "ats_athn_close_reason_codes"
+            "table": "ats_replication.ats_athn_close_reason_codes"
           }
         },
         "enableStaging": false,
@@ -72,7 +78,7 @@
           "writeBehavior": "Overwrite",
           "datasetSettings": {
             "schema": "ats_replication",
-            "table": "ats_athn_on_hold_reasons_code"
+            "table": "ats_replication.ats_athn_on_hold_reasons_code"
           }
         },
         "enableStaging": false,
@@ -101,7 +107,7 @@
           "writeBehavior": "Overwrite",
           "datasetSettings": {
             "schema": "ats_replication",
-            "table": "ats_authorizations"
+            "table": "ats_replication.ats_authorizations"
           }
         },
         "enableStaging": false,
@@ -130,7 +136,7 @@
           "writeBehavior": "Overwrite",
           "datasetSettings": {
             "schema": "ats_replication",
-            "table": "ats_authorizations_on_hold"
+            "table": "ats_replication.ats_authorizations_on_hold"
           }
         },
         "enableStaging": false,
@@ -159,444 +165,12 @@
           "writeBehavior": "Overwrite",
           "datasetSettings": {
             "schema": "ats_replication",
-            "table": "ats_avg_processing_time_vw"
+            "table": "ats_replication.ats_avg_processing_time_vw"
           }
         },
         "enableStaging": false,
         "translator": {
-          "type": "TabularTranslator",
-          "mappings": [
-            {
-              "source": {
-                "name": "MANAGING_FCBC_REGION_ID",
-                "type": "Decimal",
-                "scale": 0,
-                "precision": 38
-              },
-              "destination": {
-                "name": "MANAGING_FCBC_REGION_ID",
-                "physicalType": "decimal",
-                "scale": 18,
-                "precision": 38
-              }
-            },
-            {
-              "source": {
-                "name": "AUTHORIZATION_INSTRUMENT_ID",
-                "type": "Decimal",
-                "scale": 0,
-                "precision": 38
-              },
-              "destination": {
-                "name": "AUTHORIZATION_INSTRUMENT_ID",
-                "physicalType": "decimal",
-                "scale": 18,
-                "precision": 38
-              }
-            },
-            {
-              "source": {
-                "name": "PARTNER_AGENCY_ID",
-                "type": "Decimal",
-                "scale": 0,
-                "precision": 38
-              },
-              "destination": {
-                "name": "PARTNER_AGENCY_ID",
-                "physicalType": "decimal",
-                "scale": 18,
-                "precision": 38
-              }
-            },
-            {
-              "source": {
-                "name": "PROJECT_ID",
-                "type": "Decimal",
-                "scale": 0,
-                "precision": 38
-              },
-              "destination": {
-                "name": "PROJECT_ID",
-                "physicalType": "decimal",
-                "scale": 18,
-                "precision": 38
-              }
-            },
-            {
-              "source": {
-                "name": "AUTHORIZATION_ID",
-                "type": "Decimal",
-                "scale": 0,
-                "precision": 38
-              },
-              "destination": {
-                "name": "AUTHORIZATION_ID",
-                "physicalType": "decimal",
-                "scale": 18,
-                "precision": 38
-              }
-            },
-            {
-              "source": {
-                "name": "SUBREGIONAL_OFFICE_ID",
-                "type": "Decimal",
-                "scale": 0,
-                "precision": 38
-              },
-              "destination": {
-                "name": "SUBREGIONAL_OFFICE_ID",
-                "physicalType": "decimal",
-                "scale": 18,
-                "precision": 38
-              }
-            },
-            {
-              "source": {
-                "name": "SECONDARY_OFFICE_ID",
-                "type": "Decimal",
-                "scale": 0,
-                "precision": 38
-              },
-              "destination": {
-                "name": "SECONDARY_OFFICE_ID",
-                "physicalType": "decimal",
-                "scale": 18,
-                "precision": 38
-              }
-            },
-            {
-              "source": {
-                "name": "PROJECT_STATUS_CODE",
-                "type": "String"
-              },
-              "destination": {
-                "name": "PROJECT_STATUS_CODE",
-                "physicalType": "string"
-              }
-            },
-            {
-              "source": {
-                "name": "REGION_NAME",
-                "type": "String"
-              },
-              "destination": {
-                "name": "REGION_NAME",
-                "physicalType": "string"
-              }
-            },
-            {
-              "source": {
-                "name": "SUBREGIONAL_OFFICE_NAME",
-                "type": "String"
-              },
-              "destination": {
-                "name": "SUBREGIONAL_OFFICE_NAME",
-                "physicalType": "string"
-              }
-            },
-            {
-              "source": {
-                "name": "SECONDARY_OFFICE_NAME",
-                "type": "String"
-              },
-              "destination": {
-                "name": "SECONDARY_OFFICE_NAME",
-                "physicalType": "string"
-              }
-            },
-            {
-              "source": {
-                "name": "BUSINESS_AREA",
-                "type": "String"
-              },
-              "destination": {
-                "name": "BUSINESS_AREA",
-                "physicalType": "string"
-              }
-            },
-            {
-              "source": {
-                "name": "AUTHORIZATION_TYPE",
-                "type": "String"
-              },
-              "destination": {
-                "name": "AUTHORIZATION_TYPE",
-                "physicalType": "string"
-              }
-            },
-            {
-              "source": {
-                "name": "PROJECT_NAME",
-                "type": "String"
-              },
-              "destination": {
-                "name": "PROJECT_NAME",
-                "physicalType": "string"
-              }
-            },
-            {
-              "source": {
-                "name": "FCBC_ASSIGNED_TO",
-                "type": "String"
-              },
-              "destination": {
-                "name": "FCBC_ASSIGNED_TO",
-                "physicalType": "string"
-              }
-            },
-            {
-              "source": {
-                "name": "PARTNER_AGENCY_CONTACT",
-                "type": "String"
-              },
-              "destination": {
-                "name": "PARTNER_AGENCY_CONTACT",
-                "physicalType": "string"
-              }
-            },
-            {
-              "source": {
-                "name": "AUTHORIZATION_STATUS",
-                "type": "String"
-              },
-              "destination": {
-                "name": "AUTHORIZATION_STATUS",
-                "physicalType": "string"
-              }
-            },
-            {
-              "source": {
-                "name": "FILE_NUMBER",
-                "type": "String"
-              },
-              "destination": {
-                "name": "FILE_NUMBER",
-                "physicalType": "string"
-              }
-            },
-            {
-              "source": {
-                "name": "APPLICATION_RECEIVED_DATE",
-                "type": "DateTime"
-              },
-              "destination": {
-                "name": "APPLICATION_RECEIVED_DATE",
-                "physicalType": "timestamp"
-              }
-            },
-            {
-              "source": {
-                "name": "APPLICATION_ACCEPTED_DATE",
-                "type": "DateTime"
-              },
-              "destination": {
-                "name": "APPLICATION_ACCEPTED_DATE",
-                "physicalType": "timestamp"
-              }
-            },
-            {
-              "source": {
-                "name": "ACCEPTANCE_NET_TIME",
-                "type": "Decimal",
-                "scale": 127,
-                "precision": 38
-              },
-              "destination": {
-                "name": "ACCEPTANCE_NET_TIME",
-                "physicalType": "decimal",
-                "scale": 18,
-                "precision": 38
-              }
-            },
-            {
-              "source": {
-                "name": "APPLICATION_REJECTED_DATE",
-                "type": "DateTime"
-              },
-              "destination": {
-                "name": "APPLICATION_REJECTED_DATE",
-                "physicalType": "timestamp"
-              }
-            },
-            {
-              "source": {
-                "name": "AUTHORIZATION_DUE_DATE",
-                "type": "DateTime"
-              },
-              "destination": {
-                "name": "AUTHORIZATION_DUE_DATE",
-                "physicalType": "timestamp"
-              }
-            },
-            {
-              "source": {
-                "name": "FCBC_PROCESS_COMPLETE_DATE",
-                "type": "DateTime"
-              },
-              "destination": {
-                "name": "FCBC_PROCESS_COMPLETE_DATE",
-                "physicalType": "timestamp"
-              }
-            },
-            {
-              "source": {
-                "name": "FIRST_NATION_CONSULTATION_LEAD",
-                "type": "String"
-              },
-              "destination": {
-                "name": "FIRST_NATION_CONSULTATION_LEAD",
-                "physicalType": "string"
-              }
-            },
-            {
-              "source": {
-                "name": "FIRST_NATION_START_DATE",
-                "type": "DateTime"
-              },
-              "destination": {
-                "name": "FIRST_NATION_START_DATE",
-                "physicalType": "timestamp"
-              }
-            },
-            {
-              "source": {
-                "name": "FIRST_NATION_COMPLETION_DATE",
-                "type": "DateTime"
-              },
-              "destination": {
-                "name": "FIRST_NATION_COMPLETION_DATE",
-                "physicalType": "timestamp"
-              }
-            },
-            {
-              "source": {
-                "name": "FIRST_NATION_NET_TIME",
-                "type": "Decimal",
-                "scale": 127,
-                "precision": 38
-              },
-              "destination": {
-                "name": "FIRST_NATION_NET_TIME",
-                "physicalType": "decimal",
-                "scale": 18,
-                "precision": 38
-              }
-            },
-            {
-              "source": {
-                "name": "TECH_REVIEW_COMPLETION_DATE",
-                "type": "DateTime"
-              },
-              "destination": {
-                "name": "TECH_REVIEW_COMPLETION_DATE",
-                "physicalType": "timestamp"
-              }
-            },
-            {
-              "source": {
-                "name": "TECH_REVIEW_NET_TIME",
-                "type": "Decimal",
-                "scale": 127,
-                "precision": 38
-              },
-              "destination": {
-                "name": "TECH_REVIEW_NET_TIME",
-                "physicalType": "decimal",
-                "scale": 18,
-                "precision": 38
-              }
-            },
-            {
-              "source": {
-                "name": "TENURE_ADMINISTRATION_LEAD",
-                "type": "String"
-              },
-              "destination": {
-                "name": "TENURE_ADMINISTRATION_LEAD",
-                "physicalType": "string"
-              }
-            },
-            {
-              "source": {
-                "name": "HAS_ADJUDICATION",
-                "type": "String"
-              },
-              "destination": {
-                "name": "HAS_ADJUDICATION",
-                "physicalType": "string"
-              }
-            },
-            {
-              "source": {
-                "name": "ADJUDICATION_DATE",
-                "type": "DateTime"
-              },
-              "destination": {
-                "name": "ADJUDICATION_DATE",
-                "physicalType": "timestamp"
-              }
-            },
-            {
-              "source": {
-                "name": "TOTAL_PROCESSING_TIME",
-                "type": "Decimal",
-                "scale": 127,
-                "precision": 38
-              },
-              "destination": {
-                "name": "TOTAL_PROCESSING_TIME",
-                "physicalType": "decimal",
-                "scale": 18,
-                "precision": 38
-              }
-            },
-            {
-              "source": {
-                "name": "TOTAL_ON_HOLD_TIME",
-                "type": "Decimal",
-                "scale": 127,
-                "precision": 38
-              },
-              "destination": {
-                "name": "TOTAL_ON_HOLD_TIME",
-                "physicalType": "integer"
-              }
-            },
-            {
-              "source": {
-                "name": "NET_PROCESSING_TIME",
-                "type": "Decimal",
-                "scale": 127,
-                "precision": 38
-              },
-              "destination": {
-                "name": "NET_PROCESSING_TIME",
-                "physicalType": "string"
-              }
-            },
-            {
-              "source": {
-                "name": "FCBC_NET_PROCESSING_TIME",
-                "type": "Decimal",
-                "scale": 127,
-                "precision": 38
-              },
-              "destination": {
-                "name": "FCBC_NET_PROCESSING_TIME",
-                "physicalType": "integer"
-              }
-            },
-            {
-              "source": {
-                "name": "COMMENTS",
-                "type": "String"
-              },
-              "destination": {
-                "name": "COMMENTS",
-                "physicalType": "string"
-              }
-            }
-          ]
+          "type": "TabularTranslator"
         },
         "typeConversionSettings": {
           "typeConversion": {
@@ -620,164 +194,12 @@
           "writeBehavior": "Overwrite",
           "datasetSettings": {
             "schema": "ats_replication",
-            "table": "ats_clients"
+            "table": "ats_replication.ats_clients"
           }
         },
         "enableStaging": false,
         "translator": {
-          "type": "TabularTranslator",
-          "mappings": [
-            {
-              "source": {
-                "name": "CLIENT_ID",
-                "type": "Decimal",
-                "scale": 0,
-                "precision": 38
-              },
-              "destination": {
-                "name": "CLIENT_ID",
-                "physicalType": "decimal",
-                "scale": 18,
-                "precision": 38
-              }
-            },
-            {
-              "source": {
-                "name": "ADDRESS_ID",
-                "type": "Decimal",
-                "scale": 0,
-                "precision": 38
-              },
-              "destination": {
-                "name": "ADDRESS_ID",
-                "physicalType": "decimal",
-                "scale": 18,
-                "precision": 38
-              }
-            },
-            {
-              "source": {
-                "name": "BUSINESS_ORGANIZATION_CODE",
-                "type": "String"
-              },
-              "destination": {
-                "name": "BUSINESS_ORGANIZATION_CODE",
-                "physicalType": "string"
-              }
-            },
-            {
-              "source": {
-                "name": "FIRST_NAME",
-                "type": "String"
-              },
-              "destination": {
-                "name": "FIRST_NAME",
-                "physicalType": "string"
-              }
-            },
-            {
-              "source": {
-                "name": "SURNAME",
-                "type": "String"
-              },
-              "destination": {
-                "name": "SURNAME",
-                "physicalType": "string"
-              }
-            },
-            {
-              "source": {
-                "name": "COMPANY_NAME",
-                "type": "String"
-              },
-              "destination": {
-                "name": "COMPANY_NAME",
-                "physicalType": "string"
-              }
-            },
-            {
-              "source": {
-                "name": "ORGANIZATION_NUMBER",
-                "type": "String"
-              },
-              "destination": {
-                "name": "ORGANIZATION_NUMBER",
-                "physicalType": "string"
-              }
-            },
-            {
-              "source": {
-                "name": "CONFIRMED_IND",
-                "type": "String"
-              },
-              "destination": {
-                "name": "CONFIRMED_IND",
-                "physicalType": "string"
-              }
-            },
-            {
-              "source": {
-                "name": "WHO_CREATED",
-                "type": "String"
-              },
-              "destination": {
-                "name": "WHO_CREATED",
-                "physicalType": "string"
-              }
-            },
-            {
-              "source": {
-                "name": "WHEN_CREATED",
-                "type": "DateTime"
-              },
-              "destination": {
-                "name": "WHEN_CREATED",
-                "physicalType": "timestamp"
-              }
-            },
-            {
-              "source": {
-                "name": "WHO_UPDATED",
-                "type": "String"
-              },
-              "destination": {
-                "name": "WHO_UPDATED",
-                "physicalType": "string"
-              }
-            },
-            {
-              "source": {
-                "name": "WHEN_UPDATED",
-                "type": "DateTime"
-              },
-              "destination": {
-                "name": "WHEN_UPDATED",
-                "physicalType": "timestamp"
-              }
-            },
-            {
-              "source": {
-                "name": "MANAGING_FCBC_REGION_ID",
-                "type": "Decimal",
-                "scale": 127,
-                "precision": 38
-              },
-              "destination": {
-                "name": "MANAGING_FCBC_REGION_ID",
-                "physicalType": "float"
-              }
-            },
-            {
-              "source": {
-                "name": "OPT_OUT_OF_BC_STAT_SURVEY_IND",
-                "type": "String"
-              },
-              "destination": {
-                "name": "OPT_OUT_OF_BC_STAT_SURVEY_IND",
-                "physicalType": "string"
-              }
-            }
-          ]
+          "type": "TabularTranslator"
         },
         "typeConversionSettings": {
           "typeConversion": {
@@ -801,7 +223,7 @@
           "writeBehavior": "Overwrite",
           "datasetSettings": {
             "schema": "ats_replication",
-            "table": "ats_enqry_enqry_mthd_cds_xref"
+            "table": "ats_replication.ats_enqry_enqry_mthd_cds_xref"
           }
         },
         "enableStaging": false,
@@ -830,7 +252,7 @@
           "writeBehavior": "Overwrite",
           "datasetSettings": {
             "schema": "ats_replication",
-            "table": "ats_enqry_enqry_type_cd_xref"
+            "table": "ats_replication.ats_enqry_enqry_type_cd_xref"
           }
         },
         "enableStaging": false,
@@ -859,7 +281,7 @@
           "writeBehavior": "Overwrite",
           "datasetSettings": {
             "schema": "ats_replication",
-            "table": "ats_enqry_partner_agency_xref"
+            "table": "ats_replication.ats_enqry_partner_agency_xref"
           }
         },
         "enableStaging": false,
@@ -888,152 +310,12 @@
           "writeBehavior": "Overwrite",
           "datasetSettings": {
             "schema": "ats_replication",
-            "table": "ats_enquiries"
+            "table": "ats_replication.ats_enquiries"
           }
         },
         "enableStaging": false,
         "translator": {
-          "type": "TabularTranslator",
-          "mappings": [
-            {
-              "source": {
-                "name": "ENQUIRY_ID",
-                "type": "Decimal",
-                "scale": 0,
-                "precision": 38
-              },
-              "destination": {
-                "name": "ENQUIRY_ID",
-                "physicalType": "decimal",
-                "scale": 18,
-                "precision": 38
-              }
-            },
-            {
-              "source": {
-                "name": "CLIENT_ID",
-                "type": "Decimal",
-                "scale": 0,
-                "precision": 38
-              },
-              "destination": {
-                "name": "CLIENT_ID",
-                "physicalType": "decimal",
-                "scale": 18,
-                "precision": 38
-              }
-            },
-            {
-              "source": {
-                "name": "CONTACT_SURNAME",
-                "type": "String"
-              },
-              "destination": {
-                "name": "CONTACT_SURNAME",
-                "physicalType": "string"
-              }
-            },
-            {
-              "source": {
-                "name": "CONTACT_FIRST_NAME",
-                "type": "String"
-              },
-              "destination": {
-                "name": "CONTACT_FIRST_NAME",
-                "physicalType": "string"
-              }
-            },
-            {
-              "source": {
-                "name": "NOTES",
-                "type": "String"
-              },
-              "destination": {
-                "name": "NOTES",
-                "physicalType": "string"
-              }
-            },
-            {
-              "source": {
-                "name": "MANAGING_FCBC_REGION_ID",
-                "type": "Decimal",
-                "scale": 127,
-                "precision": 38
-              },
-              "destination": {
-                "name": "MANAGING_FCBC_REGION_ID",
-                "physicalType": "float"
-              }
-            },
-            {
-              "source": {
-                "name": "SUBREGIONAL_OFFICE_ID",
-                "type": "Decimal",
-                "scale": 0,
-                "precision": 38
-              },
-              "destination": {
-                "name": "SUBREGIONAL_OFFICE_ID",
-                "physicalType": "decimal",
-                "scale": 18,
-                "precision": 38
-              }
-            },
-            {
-              "source": {
-                "name": "SECONDARY_OFFICE_ID",
-                "type": "Decimal",
-                "scale": 0,
-                "precision": 38
-              },
-              "destination": {
-                "name": "SECONDARY_OFFICE_ID",
-                "physicalType": "decimal",
-                "scale": 18,
-                "precision": 38
-              }
-            },
-            {
-              "source": {
-                "name": "WHO_CREATED",
-                "type": "String"
-              },
-              "destination": {
-                "name": "WHO_CREATED",
-                "physicalType": "string"
-              }
-            },
-            {
-              "source": {
-                "name": "WHEN_CREATED",
-                "type": "DateTime"
-              },
-              "destination": {
-                "name": "WHEN_CREATED",
-                "physicalType": "timestamp"
-              }
-            },
-            {
-              "source": {
-                "name": "WHO_UPDATED",
-                "type": "String"
-              },
-              "destination": {
-                "name": "WHO_UPDATED",
-                "physicalType": "string"
-              }
-            },
-            {
-              "source": {
-                "name": "WHEN_UPDATED",
-                "type": "DateTime"
-              },
-              "destination": {
-                "name": "WHEN_UPDATED",
-                "physicalType": "timestamp"
-              }
-            }
-          ]
+          "type": "TabularTranslator"
         },
         "typeConversionSettings": {
           "typeConversion": {
@@ -1057,7 +339,7 @@
           "writeBehavior": "Overwrite",
           "datasetSettings": {
             "schema": "ats_replication",
-            "table": "ats_enquiry_method_codes"
+            "table": "ats_replication.ats_enquiry_method_codes"
           }
         },
         "enableStaging": false,
@@ -1086,7 +368,7 @@
           "writeBehavior": "Overwrite",
           "datasetSettings": {
             "schema": "ats_replication",
-            "table": "ats_enquiry_type_codes"
+            "table": "ats_replication.ats_enquiry_type_codes"
           }
         },
         "enableStaging": false,
@@ -1115,7 +397,7 @@
           "writeBehavior": "Overwrite",
           "datasetSettings": {
             "schema": "ats_replication",
-            "table": "ats_mfr_project_xref"
+            "table": "ats_replication.ats_mfr_project_xref"
           }
         },
         "enableStaging": false,
@@ -1144,7 +426,7 @@
           "writeBehavior": "Overwrite",
           "datasetSettings": {
             "schema": "ats_replication",
-            "table": "ats_partner_agencies"
+            "table": "ats_replication.ats_partner_agencies"
           }
         },
         "enableStaging": false,
@@ -1173,7 +455,7 @@
           "writeBehavior": "Overwrite",
           "datasetSettings": {
             "schema": "ats_replication",
-            "table": "ats_project_client_xref"
+            "table": "ats_replication.ats_project_client_xref"
           }
         },
         "enableStaging": false,
@@ -1202,7 +484,7 @@
           "writeBehavior": "Overwrite",
           "datasetSettings": {
             "schema": "ats_replication",
-            "table": "ats_projects"
+            "table": "ats_replication.ats_projects"
           }
         },
         "enableStaging": false,
@@ -1231,7 +513,7 @@
           "writeBehavior": "Overwrite",
           "datasetSettings": {
             "schema": "ats_replication",
-            "table": "ats_subregional_offices"
+            "table": "ats_replication.ats_subregional_offices"
           }
         },
         "enableStaging": false,
@@ -1260,338 +542,12 @@
           "writeBehavior": "Overwrite",
           "datasetSettings": {
             "schema": "ats_replication",
-            "table": "ats_target_turnaround_vw"
+            "table": "ats_replication.ats_target_turnaround_vw"
           }
         },
         "enableStaging": false,
         "translator": {
-          "type": "TabularTranslator",
-          "mappings": [
-            {
-              "source": {
-                "name": "AUTHORIZATION_ID",
-                "type": "Decimal",
-                "scale": 0,
-                "precision": 38
-              },
-              "destination": {
-                "name": "AUTHORIZATION_ID",
-                "physicalType": "decimal",
-                "scale": 18,
-                "precision": 38
-              }
-            },
-            {
-              "source": {
-                "name": "MANAGING_FCBC_REGION_ID",
-                "type": "Decimal",
-                "scale": 0,
-                "precision": 38
-              },
-              "destination": {
-                "name": "MANAGING_FCBC_REGION_ID",
-                "physicalType": "decimal",
-                "scale": 18,
-                "precision": 38
-              }
-            },
-            {
-              "source": {
-                "name": "REGION_NAME",
-                "type": "String"
-              },
-              "destination": {
-                "name": "REGION_NAME",
-                "physicalType": "string"
-              }
-            },
-            {
-              "source": {
-                "name": "FCBC_ASSIGNED_TO",
-                "type": "String"
-              },
-              "destination": {
-                "name": "FCBC_ASSIGNED_TO",
-                "physicalType": "string"
-              }
-            },
-            {
-              "source": {
-                "name": "PROJECT_ID",
-                "type": "Decimal",
-                "scale": 0,
-                "precision": 38
-              },
-              "destination": {
-                "name": "PROJECT_ID",
-                "physicalType": "decimal",
-                "scale": 18,
-                "precision": 38
-              }
-            },
-            {
-              "source": {
-                "name": "PROJECT_STATUS_CODE",
-                "type": "String"
-              },
-              "destination": {
-                "name": "PROJECT_STATUS_CODE",
-                "physicalType": "string"
-              }
-            },
-            {
-              "source": {
-                "name": "PROJECT_NAME",
-                "type": "String"
-              },
-              "destination": {
-                "name": "PROJECT_NAME",
-                "physicalType": "string"
-              }
-            },
-            {
-              "source": {
-                "name": "AUTHORIZATION_INSTRUMENT_ID",
-                "type": "Decimal",
-                "scale": 0,
-                "precision": 38
-              },
-              "destination": {
-                "name": "AUTHORIZATION_INSTRUMENT_ID",
-                "physicalType": "decimal",
-                "scale": 18,
-                "precision": 38
-              }
-            },
-            {
-              "source": {
-                "name": "AUTHORIZATION_INSTRUMENT_NAME",
-                "type": "String"
-              },
-              "destination": {
-                "name": "AUTHORIZATION_INSTRUMENT_NAME",
-                "physicalType": "string"
-              }
-            },
-            {
-              "source": {
-                "name": "PARTNER_AGENCY_ID",
-                "type": "Decimal",
-                "scale": 0,
-                "precision": 38
-              },
-              "destination": {
-                "name": "PARTNER_AGENCY_ID",
-                "physicalType": "decimal",
-                "scale": 18,
-                "precision": 38
-              }
-            },
-            {
-              "source": {
-                "name": "AGENCY_NAME",
-                "type": "String"
-              },
-              "destination": {
-                "name": "AGENCY_NAME",
-                "physicalType": "string"
-              }
-            },
-            {
-              "source": {
-                "name": "PARTNER_AGENCY_CONTACT",
-                "type": "String"
-              },
-              "destination": {
-                "name": "PARTNER_AGENCY_CONTACT",
-                "physicalType": "string"
-              }
-            },
-            {
-              "source": {
-                "name": "APPLICATION_ACCEPTED_DATE",
-                "type": "DateTime"
-              },
-              "destination": {
-                "name": "APPLICATION_ACCEPTED_DATE",
-                "physicalType": "timestamp"
-              }
-            },
-            {
-              "source": {
-                "name": "AUTHORIZATION_DUE_DATE",
-                "type": "DateTime"
-              },
-              "destination": {
-                "name": "AUTHORIZATION_DUE_DATE",
-                "physicalType": "timestamp"
-              }
-            },
-            {
-              "source": {
-                "name": "DECISION_MADE_YN",
-                "type": "String"
-              },
-              "destination": {
-                "name": "DECISION_MADE_YN",
-                "physicalType": "string"
-              }
-            },
-            {
-              "source": {
-                "name": "ADJUDICATION_DATE",
-                "type": "DateTime"
-              },
-              "destination": {
-                "name": "ADJUDICATION_DATE",
-                "physicalType": "timestamp"
-              }
-            },
-            {
-              "source": {
-                "name": "AUTHORIZATION_STATUS_CODE",
-                "type": "String"
-              },
-              "destination": {
-                "name": "AUTHORIZATION_STATUS_CODE",
-                "physicalType": "string"
-              }
-            },
-            {
-              "source": {
-                "name": "AUTHORIZATION_STATUS",
-                "type": "String"
-              },
-              "destination": {
-                "name": "AUTHORIZATION_STATUS",
-                "physicalType": "string"
-              }
-            },
-            {
-              "source": {
-                "name": "ATHN_CLOSE_REASON_CODE",
-                "type": "String"
-              },
-              "destination": {
-                "name": "ATHN_CLOSE_REASON_CODE",
-                "physicalType": "string"
-              }
-            },
-            {
-              "source": {
-                "name": "TARGET_TAT",
-                "type": "Decimal",
-                "scale": 127,
-                "precision": 38
-              },
-              "destination": {
-                "name": "TARGET_TAT",
-                "physicalType": "float"
-              }
-            },
-            {
-              "source": {
-                "name": "NUM_OF_DAYS_SPENT_PROCESSING",
-                "type": "Decimal",
-                "scale": 127,
-                "precision": 38
-              },
-              "destination": {
-                "name": "NUM_OF_DAYS_SPENT_PROCESSING",
-                "physicalType": "float"
-              }
-            },
-            {
-              "source": {
-                "name": "NUM_OF_DYS_ON_HOLD",
-                "type": "Decimal",
-                "scale": 127,
-                "precision": 38
-              },
-              "destination": {
-                "name": "NUM_OF_DYS_ON_HOLD",
-                "physicalType": "float"
-              }
-            },
-            {
-              "source": {
-                "name": "NUM_OF_DYS_TO_PROCESS",
-                "type": "Decimal",
-                "scale": 127,
-                "precision": 38
-              },
-              "destination": {
-                "name": "NUM_OF_DYS_TO_PROCESS",
-                "physicalType": "float"
-              }
-            },
-            {
-              "source": {
-                "name": "LESS_THEN_TARGET_TAT",
-                "type": "Decimal",
-                "scale": 127,
-                "precision": 38
-              },
-              "destination": {
-                "name": "LESS_THEN_TARGET_TAT",
-                "physicalType": "float"
-              }
-            },
-            {
-              "source": {
-                "name": "LESS_THEN_TARGET_TAT_YN",
-                "type": "String"
-              },
-              "destination": {
-                "name": "LESS_THEN_TARGET_TAT_YN",
-                "physicalType": "string"
-              }
-            },
-            {
-              "source": {
-                "name": "OVER_TARGET_TAT",
-                "type": "Decimal",
-                "scale": 127,
-                "precision": 38
-              },
-              "destination": {
-                "name": "OVER_TARGET_TAT",
-                "physicalType": "float"
-              }
-            },
-            {
-              "source": {
-                "name": "OVER_TARGET_TAT_YN",
-                "type": "String"
-              },
-              "destination": {
-                "name": "OVER_TARGET_TAT_YN",
-                "physicalType": "string"
-              }
-            },
-            {
-              "source": {
-                "name": "OVER_TARGET_TAT_NO_DESC",
-                "type": "Decimal",
-                "scale": 127,
-                "precision": 38
-              },
-              "destination": {
-                "name": "OVER_TARGET_TAT_NO_DESC",
-                "physicalType": "float"
-              }
-            },
-            {
-              "source": {
-                "name": "OVER_TARGET_TAT_NO_DESC_YN",
-                "type": "String"
-              },
-              "destination": {
-                "name": "OVER_TARGET_TAT_NO_DESC_YN",
-                "physicalType": "string"
-              }
-            }
-          ]
+          "type": "TabularTranslator"
         },
         "typeConversionSettings": {
           "typeConversion": {
