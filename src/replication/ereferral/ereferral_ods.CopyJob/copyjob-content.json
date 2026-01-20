@@ -1,0 +1,224 @@
+{
+  "properties": {
+    "jobMode": "Batch",
+    "source": {
+      "type": "OracleTable",
+      "connectionSettings": {
+        "type": "Oracle",
+        "externalReferences": {
+          "connectionVariableLibrary": {
+            "variableName": "pmt-elic-odb",
+            "libraryName": "pmt_env_vars"
+          }
+        }
+      }
+    },
+    "destination": {
+      "type": "LakehouseTable",
+      "connectionSettings": {
+        "type": "Lakehouse",
+        "typeProperties": {
+          "workspaceId": "00000000-0000-0000-0000-000000000000",
+          "artifactId": "a4c99642-feeb-81e8-46b6-ca11201b9b7d",
+          "rootFolder": "Tables"
+        }
+      }
+    },
+    "policy": {
+      "timeout": "0.12:00:00"
+    }
+  },
+  "activities": [
+    {
+      "id": "2ae066fd-b5ff-463c-a532-18cdc3bfbbb2",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "CORRAL_GENERATED_VIEWS",
+            "table": "ER_AUTHORIZATION"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "ereferral_replication",
+            "table": "er_authorization"
+          }
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator",
+          "mappings": [
+            {
+              "source": {
+                "name": "OBJECTID",
+                "type": "Int64"
+              },
+              "destination": {
+                "name": "OBJECTID",
+                "physicalType": "long"
+              }
+            },
+            {
+              "source": {
+                "name": "AGENCYFILENUMBER",
+                "type": "String"
+              },
+              "destination": {
+                "name": "AGENCYFILENUMBER",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "AGENCYOBJECTID",
+                "type": "Int64"
+              },
+              "destination": {
+                "name": "AGENCYOBJECTID",
+                "physicalType": "long"
+              }
+            },
+            {
+              "source": {
+                "name": "AUTHORIZATIONAOI",
+                "type": "String"
+              },
+              "destination": {
+                "name": "AUTHORIZATIONAOI",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "AUTHREFERRALTYPEID",
+                "type": "Int64"
+              },
+              "destination": {
+                "name": "AUTHREFERRALTYPEID",
+                "physicalType": "long"
+              }
+            },
+            {
+              "source": {
+                "name": "PROJECTOBJECTID",
+                "type": "Int64"
+              },
+              "destination": {
+                "name": "PROJECTOBJECTID",
+                "physicalType": "long"
+              }
+            }
+          ]
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "21c89630-38cd-4a66-ba99-60dccc3beb23",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "CORRAL_GENERATED_VIEWS",
+            "table": "ER_AUTHORIZATION_REFERRAL"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "ereferral_replication",
+            "table": "er_authorization_referral"
+          }
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator",
+          "mappings": [
+            {
+              "source": {
+                "name": "RELATIONSHIPID",
+                "type": "Int64"
+              },
+              "destination": {
+                "name": "RELATIONSHIPID",
+                "physicalType": "long"
+              }
+            },
+            {
+              "source": {
+                "name": "AUTHORIZATIONOBJECTID",
+                "type": "Int64"
+              },
+              "destination": {
+                "name": "AUTHORIZATIONOBJECTID",
+                "physicalType": "long"
+              }
+            },
+            {
+              "source": {
+                "name": "REFERRALJOBID",
+                "type": "Int64"
+              },
+              "destination": {
+                "name": "REFERRALJOBID",
+                "physicalType": "long"
+              }
+            },
+            {
+              "source": {
+                "name": "AUTHORIZATIONAOI",
+                "type": "String"
+              },
+              "destination": {
+                "name": "AUTHORIZATIONAOI",
+                "physicalType": "string"
+              }
+            }
+          ]
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "807ac8af-25e6-4d0d-967f-a2dccacc0329",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "CORRAL_GENERATED_VIEWS",
+            "table": "ER_AGENCY"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "ereferral_replication",
+            "table": "er_agency"
+          }
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "CopyJob",
+    "displayName": "wma_ods"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "7019f54d-ef93-9cd2-48ce-22e300df8953"
+  }
+}
