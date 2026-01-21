@@ -5,31 +5,31 @@
       "name": "pmt-ats-odb",
       "note": "",
       "type": "String",
-      "value": "63e5dbe0-49f9-43b4-bc45-6092fd2409f0"
+      "value": "27efbb9f-e2bf-434f-88da-7efd288122bc"
     },
     {
       "name": "pmt-elic-odb",
       "note": "",
       "type": "String",
-      "value": "f3a91f9a-888b-4fd9-a400-931520c98818"
+      "value": "c95648e7-7d00-4ace-956d-ad6243540991"
     },
     {
       "name": "pmt-tantalis-odb",
       "note": "",
       "type": "String",
-      "value": "d687cee6-5ada-4788-83ba-afaffeb2fe29"
+      "value": "6b66347d-2536-45d6-a6f3-e237b677bc65"
     },
     {
       "name": "pmt-workspace-id",
       "note": "",
       "type": "String",
-      "value": "60f10f69-06b8-44a3-a3cf-1afd52d4d754"
+      "value": "79dafa8a-b966-4240-80f7-2e9d46baa5c3"
     },
     {
       "name": "pmt-lakehouse-id",
       "note": "",
       "type": "String",
-      "value": "964899a6-7e35-47cd-9eb3-429482e1b733"
+      "value": "201b9b7d-ca11-46b6-81e8-feeba4c99642"
     }
   ]
 }
