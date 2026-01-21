@@ -30,6 +30,12 @@
       "note": "",
       "type": "String",
       "value": "201b9b7d-ca11-46b6-81e8-feeba4c99642"
+    },
+    {
+      "name": "pmt-lexis-odb",
+      "note": "",
+      "type": "String",
+      "value": "76d75751-e831-4446-ab81-583b15ef22ed"
     }
   ]
 }

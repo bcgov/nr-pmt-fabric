@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "CopyJob",
+    "displayName": "lexis_ods"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "fb07ee6c-ea3a-84e4-469b-3579d9701cfe"
+  }
+}
