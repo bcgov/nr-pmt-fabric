@@ -39,7 +39,8 @@
           }
         },
         "destination": {
-          "writeBehavior": "Append",
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
           "datasetSettings": {
             "schema": "epups_replication",
             "table": "pu_activity"
@@ -67,7 +68,8 @@
           }
         },
         "destination": {
-          "writeBehavior": "Append",
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
           "datasetSettings": {
             "schema": "epups_replication",
             "table": "pu_activityauthtypexref"
@@ -95,7 +97,8 @@
           }
         },
         "destination": {
-          "writeBehavior": "Append",
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
           "datasetSettings": {
             "schema": "epups_replication",
             "table": "pu_activitycategory"
@@ -123,7 +126,8 @@
           }
         },
         "destination": {
-          "writeBehavior": "Append",
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
           "datasetSettings": {
             "schema": "epups_replication",
             "table": "pu_amend_renewal_transferjob"
@@ -151,7 +155,8 @@
           }
         },
         "destination": {
-          "writeBehavior": "Append",
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
           "datasetSettings": {
             "schema": "epups_replication",
             "table": "pu_applicationuseapplfeexref"
@@ -179,7 +184,8 @@
           }
         },
         "destination": {
-          "writeBehavior": "Append",
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
           "datasetSettings": {
             "schema": "epups_replication",
             "table": "pu_applicationuseauthtypexref"
@@ -207,7 +213,8 @@
           }
         },
         "destination": {
-          "writeBehavior": "Append",
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
           "datasetSettings": {
             "schema": "epups_replication",
             "table": "pu_authobjectcontactsxref"
@@ -235,7 +242,8 @@
           }
         },
         "destination": {
-          "writeBehavior": "Append",
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
           "datasetSettings": {
             "schema": "epups_replication",
             "table": "pu_authobjectcopermitteexref"
@@ -263,7 +271,8 @@
           }
         },
         "destination": {
-          "writeBehavior": "Append",
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
           "datasetSettings": {
             "schema": "epups_replication",
             "table": "pu_authobjectprotectedlandxref"
@@ -291,7 +300,8 @@
           }
         },
         "destination": {
-          "writeBehavior": "Append",
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
           "datasetSettings": {
             "schema": "epups_replication",
             "table": "pu_authobjprimaryactivityxref"
@@ -319,7 +329,8 @@
           }
         },
         "destination": {
-          "writeBehavior": "Append",
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
           "datasetSettings": {
             "schema": "epups_replication",
             "table": "pu_authobjreppurposedataxref"
@@ -347,7 +358,8 @@
           }
         },
         "destination": {
-          "writeBehavior": "Append",
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
           "datasetSettings": {
             "schema": "epups_replication",
             "table": "pu_authorization"
@@ -375,7 +387,8 @@
           }
         },
         "destination": {
-          "writeBehavior": "Append",
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
           "datasetSettings": {
             "schema": "epups_replication",
             "table": "pu_authorizationjob"
@@ -403,7 +416,8 @@
           }
         },
         "destination": {
-          "writeBehavior": "Append",
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
           "datasetSettings": {
             "schema": "epups_replication",
             "table": "pu_authorizationtype"
@@ -431,7 +445,8 @@
           }
         },
         "destination": {
-          "writeBehavior": "Append",
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
           "datasetSettings": {
             "schema": "epups_replication",
             "table": "pu_authtypemajorfeexref"
@@ -459,7 +474,8 @@
           }
         },
         "destination": {
-          "writeBehavior": "Append",
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
           "datasetSettings": {
             "schema": "epups_replication",
             "table": "pu_authtypeminorfeexref"
@@ -487,7 +503,8 @@
           }
         },
         "destination": {
-          "writeBehavior": "Append",
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
           "datasetSettings": {
             "schema": "epups_replication",
             "table": "pu_authtypetechrevtasktempxref"
@@ -515,7 +532,8 @@
           }
         },
         "destination": {
-          "writeBehavior": "Append",
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
           "datasetSettings": {
             "schema": "epups_replication",
             "table": "pu_authtypetransferfeexref"
@@ -543,7 +561,8 @@
           }
         },
         "destination": {
-          "writeBehavior": "Append",
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
           "datasetSettings": {
             "schema": "epups_replication",
             "table": "pu_draftauthorization"
@@ -571,7 +590,8 @@
           }
         },
         "destination": {
-          "writeBehavior": "Append",
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
           "datasetSettings": {
             "schema": "epups_replication",
             "table": "pu_expiredpermitreactivation"
@@ -599,7 +619,8 @@
           }
         },
         "destination": {
-          "writeBehavior": "Append",
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
           "datasetSettings": {
             "schema": "epups_replication",
             "table": "pu_managementarea"
@@ -627,7 +648,8 @@
           }
         },
         "destination": {
-          "writeBehavior": "Append",
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
           "datasetSettings": {
             "schema": "epups_replication",
             "table": "pu_mgmtareaprotectlandxref"
@@ -655,7 +677,8 @@
           }
         },
         "destination": {
-          "writeBehavior": "Append",
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
           "datasetSettings": {
             "schema": "epups_replication",
             "table": "pu_permitannualfeejob"
@@ -683,7 +706,8 @@
           }
         },
         "destination": {
-          "writeBehavior": "Append",
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
           "datasetSettings": {
             "schema": "epups_replication",
             "table": "pu_permitapplicationjob"
@@ -711,7 +735,8 @@
           }
         },
         "destination": {
-          "writeBehavior": "Append",
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
           "datasetSettings": {
             "schema": "epups_replication",
             "table": "pu_permitcancellationjob"
@@ -739,7 +764,8 @@
           }
         },
         "destination": {
-          "writeBehavior": "Append",
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
           "datasetSettings": {
             "schema": "epups_replication",
             "table": "pu_permitcancelwarningjob"
@@ -767,7 +793,8 @@
           }
         },
         "destination": {
-          "writeBehavior": "Append",
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
           "datasetSettings": {
             "schema": "epups_replication",
             "table": "pu_permitconditionnotifjob"
@@ -795,7 +822,8 @@
           }
         },
         "destination": {
-          "writeBehavior": "Append",
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
           "datasetSettings": {
             "schema": "epups_replication",
             "table": "pu_permitdatacollectionjob"
@@ -823,7 +851,8 @@
           }
         },
         "destination": {
-          "writeBehavior": "Append",
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
           "datasetSettings": {
             "schema": "epups_replication",
             "table": "pu_permitexpirationjob"
@@ -851,7 +880,8 @@
           }
         },
         "destination": {
-          "writeBehavior": "Append",
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
           "datasetSettings": {
             "schema": "epups_replication",
             "table": "pu_permitexpsectheadxref"
@@ -879,7 +909,8 @@
           }
         },
         "destination": {
-          "writeBehavior": "Append",
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
           "datasetSettings": {
             "schema": "epups_replication",
             "table": "pu_permitreinstatementjob"
@@ -907,7 +938,8 @@
           }
         },
         "destination": {
-          "writeBehavior": "Append",
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
           "datasetSettings": {
             "schema": "epups_replication",
             "table": "pu_permitstaffxref"
@@ -935,7 +967,8 @@
           }
         },
         "destination": {
-          "writeBehavior": "Append",
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
           "datasetSettings": {
             "schema": "epups_replication",
             "table": "pu_permitstateupdatejob"
@@ -963,7 +996,8 @@
           }
         },
         "destination": {
-          "writeBehavior": "Append",
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
           "datasetSettings": {
             "schema": "epups_replication",
             "table": "pu_permitsuspensionjob"
@@ -991,7 +1025,8 @@
           }
         },
         "destination": {
-          "writeBehavior": "Append",
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
           "datasetSettings": {
             "schema": "epups_replication",
             "table": "pu_protectedland"
@@ -1019,7 +1054,8 @@
           }
         },
         "destination": {
-          "writeBehavior": "Append",
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
           "datasetSettings": {
             "schema": "epups_replication",
             "table": "pu_purpose"
@@ -1047,7 +1083,8 @@
           }
         },
         "destination": {
-          "writeBehavior": "Append",
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
           "datasetSettings": {
             "schema": "epups_replication",
             "table": "pu_region"
@@ -1075,7 +1112,8 @@
           }
         },
         "destination": {
-          "writeBehavior": "Append",
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
           "datasetSettings": {
             "schema": "epups_replication",
             "table": "pu_regionmgmtareaxref"
@@ -1103,7 +1141,8 @@
           }
         },
         "destination": {
-          "writeBehavior": "Append",
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
           "datasetSettings": {
             "schema": "epups_replication",
             "table": "pu_regionparent"
@@ -1131,7 +1170,8 @@
           }
         },
         "destination": {
-          "writeBehavior": "Append",
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
           "datasetSettings": {
             "schema": "epups_replication",
             "table": "pu_renewalnotificationjob"
