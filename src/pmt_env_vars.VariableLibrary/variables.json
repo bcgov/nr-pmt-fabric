@@ -36,6 +36,18 @@
       "note": "",
       "type": "String",
       "value": "d8d0ebaf-9534-4775-821c-4ff751235ece"
+    },
+    {
+      "name": "fabric_env",
+      "note": "",
+      "type": "String",
+      "value": "PROD"
+    },
+    {
+      "name": "peach_api_url",
+      "note": "",
+      "type": "String",
+      "value": "https://nr-peach-prod-main-api.azurewebsites.net/api/v1/records/"
     }
   ]
 }
