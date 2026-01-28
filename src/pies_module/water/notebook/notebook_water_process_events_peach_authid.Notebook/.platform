@@ -2,10 +2,10 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
   "metadata": {
     "type": "Notebook",
-    "displayName": "Notebook_pmt_water_vfcbc_peach"
+    "displayName": "notebook_water_process_events_peach_authid"
   },
   "config": {
     "version": "2.0",
-    "logicalId": "ec776d45-03c0-a837-4547-c62ad5352db1"
+    "logicalId": "56c0b23f-24a1-9cd4-4ac3-4472b47c0507"
   }
 }

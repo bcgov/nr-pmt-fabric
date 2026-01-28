@@ -5,50 +5,35 @@
   "queryGroups": [],
   "documentLocale": "en-US",
   "queriesMetadata": {
+    "pmt-workspace-id": {
+      "queryId": "aeaca188-caf8-4d27-ad96-d41073a80795",
+      "queryName": "pmt-workspace-id",
+      "loadEnabled": false
+    },
+    "pmt-lakehouse-id": {
+      "queryId": "72719ac1-9ac1-4bea-b6ec-9c51c1ce744a",
+      "queryName": "pmt-lakehouse-id",
+      "loadEnabled": false
+    },
+    "pies_staging_water_jobnumber": {
+      "queryId": "fb4f7fe9-cf8a-47b3-a4bf-5cd42f33a698",
+      "queryName": "pies_staging_water_jobnumber",
+      "loadEnabled": false
+    },
+    "pies_staging_water_vfcbctracking": {
+      "queryId": "8b473954-83ca-4c0f-b4b5-826449c3c75b",
+      "queryName": "pies_staging_water_vfcbctracking",
+      "loadEnabled": false
+    },
+    "pies_staging_water_authid": {
+      "queryId": "f0888372-5525-43e4-ab8c-935ce8929205",
+      "queryName": "pies_staging_water_authid",
+      "loadEnabled": false
+    },
     "DefaultDestination": {
-      "queryId": "41b6c162-6788-4350-baf9-ac8cbf25da89",
+      "queryId": "b3b34830-9a6e-4010-b55f-24cb01889584",
       "queryName": "DefaultDestination",
       "isHidden": true,
-      "loadEnabled": false
-    },
-    "ATIS_WATERJOB_COMBINED_MV": {
-      "queryId": "b3887760-dc95-4b74-b811-b8e841bcbef7",
-      "queryName": "ATIS_WATERJOB_COMBINED_MV",
-      "loadEnabled": false
-    },
-    "ats_replication ats_authorizations": {
-      "queryId": "dbb733ca-4f67-4bbb-aae8-ecb689ac6d3b",
-      "queryName": "ats_replication ats_authorizations",
-      "loadEnabled": false
-    },
-    "VFCBC_APPLICATION_VW": {
-      "queryId": "d701f176-feef-4e11-a45f-4444549d7728",
-      "queryName": "VFCBC_APPLICATION_VW",
-      "loadEnabled": false
-    },
-    "VFCBC_ATSNUMBER_VW": {
-      "queryId": "ebe5cdad-1c8c-4f8d-927c-4495f9cfffe2",
-      "queryName": "VFCBC_ATSNUMBER_VW",
-      "loadEnabled": false
-    },
-    "waterjobview_leftjoin_vfcbc_application": {
-      "queryId": "8e6a6bbe-91a3-44cc-9908-54c186f55844",
-      "queryName": "waterjobview_leftjoin_vfcbc_application",
-      "loadEnabled": false
-    },
-    "query_jobnumber_piesid": {
-      "queryId": "32ed7b65-00de-4fb9-8b0f-c6808535a804",
-      "queryName": "query_jobnumber_piesid",
-      "loadEnabled": false
-    },
-    "query_trackingnumber_piesid": {
-      "queryId": "4f057c1b-128a-4870-a03c-4528a606c494",
-      "queryName": "query_trackingnumber_piesid",
-      "loadEnabled": false
-    },
-    "query_authorizationid_piesid": {
-      "queryId": "166f5b9f-cf33-4873-a1d1-4c3fffbe97be",
-      "queryName": "query_authorizationid_piesid",
       "loadEnabled": false
     }
   },
@@ -58,5 +43,6 @@
       "kind": "Lakehouse",
       "connectionId": "{\"ClusterId\":\"1f7baf71-1832-47ee-ba8c-e8f46696fbb5\",\"DatasourceId\":\"242c11af-5a94-4dc0-a80c-556166c29afe\"}"
     }
-  ]
+  ],
+  "parametric": true
 }
