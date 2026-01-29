@@ -8,14 +8,8 @@
 # META   },
 # META   "dependencies": {
 # META     "lakehouse": {
-# META       "default_lakehouse": "201b9b7d-ca11-46b6-81e8-feeba4c99642",
-# META       "default_lakehouse_name": "permitting_lakehouse",
-# META       "default_lakehouse_workspace_id": "79dafa8a-b966-4240-80f7-2e9d46baa5c3",
-# META       "known_lakehouses": [
-# META         {
-# META           "id": "201b9b7d-ca11-46b6-81e8-feeba4c99642"
-# META         }
-# META       ]
+# META       "default_lakehouse_name": "",
+# META       "default_lakehouse_workspace_id": ""
 # META     }
 # META   }
 # META }
@@ -31,8 +25,8 @@
 # Transform permit source data (Fabric table) into ProcessEventSet JSON Lines
 # for the NR-PIES specification; optionally POST each record to PEACH.
 #
-# This version reads from a Fabric table (Spark SQL) instead of CSV/Parquet,
-# and writes JSONL to a Lakehouse Files folder.
+# This version reads from a Fabric table (Delta) using explicit ABFS paths,
+# and writes JSONL to an explicit ABFS Lakehouse Files folder (CI/CD-safe).
 # ---------------------------------------------------------------------------
 
 from __future__ import annotations
@@ -73,7 +67,6 @@ except ImportError:  # pragma: no cover
     JSON_LOGGER_AVAILABLE = False
 
 
-
 def _get_notebookutils():
     """
     Fabric notebooks typically provide a global `notebookutils`.
@@ -108,10 +101,9 @@ def load_env_vars_from_variable_library(
                 if v is not None and str(v).strip() != "":
                     return str(v).strip()
             except Exception:
-                # fall through to env fallback below
                 pass
 
-
+        # 2) OS env fallback (note: hyphen keys won't exist in OS env; still fine)
         if env_fallback:
             v2 = os.getenv(key) or os.getenv(key.upper())
             if v2 is not None and str(v2).strip() != "":
@@ -124,9 +116,11 @@ def load_env_vars_from_variable_library(
         )
 
     env = {k: _get_required(k) for k in required_keys}
-    env["fabric_env"] = env["fabric_env"].strip().upper()
-    print(f"[ENV] fabric_env = {env['fabric_env']}")
+    if "fabric_env" in env:
+        env["fabric_env"] = env["fabric_env"].strip().upper()
 
+    if "fabric_env" in env:
+        print(f"[ENV] fabric_env = {env['fabric_env']}")
 
     if nb is not None:
         try:
@@ -136,6 +130,126 @@ def load_env_vars_from_variable_library(
             pass
 
     return env
+
+
+# ---------------------------------------------------------------------------
+# CI/CD helpers: ABFS base + Fabric FS read/copy
+# ---------------------------------------------------------------------------
+
+_GUID_RE = re.compile(r"^[0-9a-fA-F]{8}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{12}$")
+
+
+def _is_guid(s: str) -> bool:
+    return bool(s and _GUID_RE.match(s.strip()))
+
+
+def build_abfs_base(workspace_ref: str, lakehouse_ref: str) -> str:
+    """
+    Supports either:
+      - GUID style:  abfss://<workspace_guid>@.../<lakehouse_guid>
+      - Name style:  abfss://<workspace_name>@.../<lakehouse_name>.Lakehouse
+      - If lakehouse_ref already ends with .Lakehouse, keep it.
+    """
+    w = (workspace_ref or "").strip()
+    l = (lakehouse_ref or "").strip()
+
+    if not w or not l:
+        raise RuntimeError(f"Invalid workspace/lakehouse values: workspace={workspace_ref!r}, lakehouse={lakehouse_ref!r}")
+
+    # If lakehouse is a name, Fabric OneLake commonly uses "<name>.Lakehouse"
+    if not _is_guid(l) and not l.lower().endswith(".lakehouse"):
+        l = f"{l}.Lakehouse"
+
+    return f"abfss://{w}@onelake.dfs.fabric.microsoft.com/{l}"
+
+
+def _fs():
+    nb = _get_notebookutils()
+    if nb is None or not hasattr(nb, "fs"):
+        raise RuntimeError("Fabric notebookutils.fs is not available in this environment.")
+    return nb.fs
+
+
+def read_text_any(path_str: str) -> str:
+    """
+    Read text from:
+      - local mounted path (e.g., /lakehouse/...)
+      - ABFS path (abfss://...) via notebookutils.fs
+    """
+    p = (path_str or "").strip()
+    if p.lower().startswith("abfss://"):
+        # Try fs.open first; fall back to fs.head if needed
+        try:
+            fh = _fs().open(p, "r")
+            try:
+                return fh.read()
+            finally:
+                fh.close()
+        except Exception:
+            # head(size) exists in many Fabric/Synapse fs impls
+            try:
+                return _fs().head(p, 1024 * 1024 * 50)  # up to 50MB
+            except Exception as e:
+                raise RuntimeError(f"Failed to read ABFS text file: {p}. Error: {e}") from e
+
+    # Local path
+    return Path(p).read_text(encoding="utf-8")
+
+
+def ensure_dir_any(path_str: str) -> None:
+    """
+    Ensure directory exists for:
+      - local path: mkdir
+      - ABFS path: notebookutils.fs.mkdirs
+    """
+    p = (path_str or "").rstrip("/")
+    if p.lower().startswith("abfss://"):
+        try:
+            _fs().mkdirs(p)
+        except Exception:
+            # some impls use 'mkdir'
+            try:
+                _fs().mkdir(p)
+            except Exception as e:
+                raise RuntimeError(f"Failed to create ABFS directory: {p}. Error: {e}") from e
+    else:
+        Path(p).mkdir(parents=True, exist_ok=True)
+
+
+def copy_local_to_abfs(local_path: Path, abfs_path: str, *, overwrite: bool = True) -> None:
+    """
+    Copy a local file (driver filesystem) to ABFS via notebookutils.fs.cp if available.
+    Falls back to fs.put for smaller files if cp fails (may be slow/limited for huge files).
+    """
+    src = f"file:{local_path.as_posix()}"
+    dst = abfs_path
+
+    # Ensure parent exists
+    parent = dst.rsplit("/", 1)[0]
+    ensure_dir_any(parent)
+
+    # Try cp variants
+    try:
+        _fs().cp(src, dst, overwrite)  # some signatures support overwrite
+        return
+    except TypeError:
+        pass
+    except Exception:
+        pass
+
+    try:
+        _fs().cp(src, dst)  # signature without overwrite
+        return
+    except Exception:
+        pass
+
+    # Fallback: put content (OK for smaller outputs; not ideal for very large files)
+    try:
+        content = local_path.read_text(encoding="utf-8")
+        _fs().put(dst, content, overwrite)
+        return
+    except Exception as e:
+        raise RuntimeError(f"Failed to copy local file to ABFS. local={local_path} dst={dst}. Error: {e}") from e
 
 
 # ---------------------------------------------------------------------------
@@ -335,14 +449,7 @@ def _coerce(value: Any) -> Any:
     return value
 
 
-# -------------------- fail-fast on malformed rule tests --------------------
 def _compile_test(test: Dict[str, Any]) -> Callable[[Mapping], bool]:
-    """
-    Compile an atomic test node into a predicate.
-
-    Necessary fix: malformed test nodes (missing 'op'/'attr' or unknown 'op')
-    must fail-fast to prevent silent rule loss / missing events.
-    """
     op_name = test.get("op")
     attr = test.get("attr")
 
@@ -394,15 +501,7 @@ def _compile_logic(node: Dict[str, Any]) -> Callable[[Mapping], bool]:
     raise ETLError(f"Rule node missing 'and' or 'or' keys: {node!r}")
 
 
-# ---------------------------------------------------------------------------
-# Required-column extraction
-# ---------------------------------------------------------------------------
 def _collect_logic_attrs(node: Any, out: Set[str]) -> None:
-    """
-    Recursively collect all column references used by logic nodes:
-      - attr
-      - other_attr
-    """
     if isinstance(node, dict):
         if "attr" in node and node["attr"]:
             out.add(str(node["attr"]))
@@ -434,7 +533,6 @@ def _compute_required_cols_for_rule(definition: Dict[str, Any]) -> Set[str]:
     if logic is not None:
         _collect_logic_attrs(logic, cols)
 
-    # record_id/system_id are not required by rules but used in PES wrapper
     cols.add("PIESID")
     cols.add("system_id")
 
@@ -442,14 +540,11 @@ def _compute_required_cols_for_rule(definition: Dict[str, Any]) -> Set[str]:
 
 
 # ---------------------------------------------------------------------------
-# Loaders
+# Loaders (CI/CD-safe: can read from ABFS)
 # ---------------------------------------------------------------------------
-def load_rules(path: Path, *, system: Optional[str] = None) -> List[Dict[str, Any]]:
-    """
-    Load and compile rule definitions from rules.json.
-    """
-    logger.info("Loading rules from %s", path)
-    raw = json.loads(path.read_text(encoding="utf-8"))
+def load_rules(path_str: str, *, system: Optional[str] = None) -> List[Dict[str, Any]]:
+    logger.info("Loading rules from %s", path_str)
+    raw = json.loads(read_text_any(path_str))
     compiled: List[Dict[str, Any]] = []
 
     for key, definition in raw.items():
@@ -465,7 +560,6 @@ def load_rules(path: Path, *, system: Optional[str] = None) -> List[Dict[str, An
 
         required_cols = _compute_required_cols_for_rule(definition)
 
-        # Fail-fast with rule context if rules.json is malformed
         try:
             match_fn = _compile_logic(definition["logic"])
         except Exception as exc:
@@ -486,13 +580,10 @@ def load_rules(path: Path, *, system: Optional[str] = None) -> List[Dict[str, An
     return compiled
 
 
-def load_lifecycle(path: Optional[str]) -> Dict[str, Any]:
-    """
-    Load lifecycle map if *path* is provided; otherwise return {}.
-    """
-    if not path:
+def load_lifecycle(path_str: Optional[str]) -> Dict[str, Any]:
+    if not path_str:
         return {}
-    lifecycle = json.loads(Path(path).read_text(encoding="utf-8"))
+    lifecycle = json.loads(read_text_any(path_str))
     if not isinstance(lifecycle, dict):
         logger.warning("Lifecycle map is not a dict; got %s", type(lifecycle))
         return {}
@@ -501,17 +592,13 @@ def load_lifecycle(path: Optional[str]) -> Dict[str, Any]:
 
 
 # ---------------------------------------------------------------------------
-# Process-info resolver
+# Process-info resolver (unchanged)
 # ---------------------------------------------------------------------------
 def _resolve_process_info(
     status_key: str,
     rule_code_set: Any,
     lifecycle_map: Mapping[str, Any],
 ) -> Tuple[List[str], Dict[str, Any]]:
-    """
-    Return (code_set_list, status_dict).
-    Supports lifecycle entries as dict/list/str.
-    """
     if rule_code_set is not None:
         if isinstance(rule_code_set, list):
             cs = [str(x).strip() for x in rule_code_set if x]
@@ -538,7 +625,6 @@ def _resolve_process_info(
         status_blk = entry.get("status") or entry.get("STATUS") or entry.get("Status") or {}
         status_blk = status_blk if isinstance(status_blk, dict) else {}
 
-        # --------------------  guarantee non-empty code_set --------------------
         if not code_set:
             code_set = ["UNKNOWN"]
 
@@ -593,7 +679,6 @@ def _to_datetime_str(value: Optional[str]) -> Optional[str]:
     if _is_nullish(v):
         return None
 
-    # Pure date -> midnight UTC
     if len(v) == 10 and DATE_RE.match(v):
         try:
             year = int(v[:4])
@@ -625,10 +710,6 @@ def _to_datetime_str(value: Optional[str]) -> Optional[str]:
 
 
 def _to_int_no_decimal(value: Any) -> Any:
-    """
-    Convert numeric-like values such as '100141399.0' -> 100141399.
-    If conversion fails, return original value.
-    """
     if value is None:
         return None
     try:
@@ -638,25 +719,16 @@ def _to_int_no_decimal(value: Any) -> Any:
 
 
 # ---------------------------------------------------------------------------
-# Event builders
+# Event builders (unchanged)
 # ---------------------------------------------------------------------------
 def _build_event(
     row: Mapping[str, Any],
     rule: Mapping[str, Any],
     lifecycle_map: Mapping[str, Any],
 ) -> Dict[str, Any]:
-    """
-    Create one process_event.
-
-    Mode:
-      - If EVENT_TIME_MODE == "DATE": always write start_date/end_date.
-      - Else: write start_datetime/end_datetime (RFC3339), with fallback to DATE
-        when BOTH are present and end < start.
-    """
     status_key = rule["key"]
     code_set, stat_info = _resolve_process_info(status_key, rule.get("code_set"), lifecycle_map)
 
-    # --------------------  guarantee non-empty code_set at use site --------------------
     if not code_set:
         code_set = ["UNKNOWN"]
 
@@ -665,7 +737,6 @@ def _build_event(
 
     event_blk: Dict[str, Any] = {}
 
-    # DATE-only mode
     if EVENT_TIME_MODE == "DATE":
         sd = _to_date_str(start_raw)
         ed = _to_date_str(end_raw)
@@ -678,7 +749,6 @@ def _build_event(
         end_dt = _to_datetime_str(end_raw)
         use_datetime = True
 
-        # If both datetimes exist, validate ordering; fallback to DATE if invalid order.
         if start_dt and end_dt:
             try:
                 start_obj = datetime.fromisoformat(start_dt.replace("Z", "+00:00"))
@@ -706,8 +776,6 @@ def _build_event(
                 )
 
         if use_datetime:
-            # --------------------  per-side DATE fallback to prevent time loss --------------------
-            # If datetime parse fails for one side, try DATE for that side.
             if start_dt:
                 event_blk["start_datetime"] = start_dt
             else:
@@ -749,7 +817,6 @@ def _build_event(
         "code_system": DEFAULT_CODE_SYSTEM_URL,
     }
 
-    # status block: case-tolerant
     if stat_info:
         stat = stat_info.get("STATUS") or stat_info.get("Status") or stat_info.get("status")
         if stat is not None and not _is_nullish(stat):
@@ -821,11 +888,6 @@ def write_jsonl(
 
 
 def post_jsonl_to_api(out_path: Path, api_url: str, *, expected_lines: Optional[int] = None) -> None:
-    """
-    POST each JSON line one record per request, with retry + error bucket.
-    Uses a Session for performance.
-    Skips when file is empty.
-    """
     if expected_lines is not None and expected_lines == 0:
         logger.warning("Skipping POST: output file has 0 lines: %s", out_path)
         return
@@ -916,7 +978,6 @@ def post_jsonl_to_api(out_path: Path, api_url: str, *, expected_lines: Optional[
                         sent_ok = True
                         break
 
-                    # failure
                     total_failed += 1
                     if status in POST_RETRY_STATUSES:
                         logger.error(
@@ -970,7 +1031,7 @@ def _preflight_rules_vs_table_columns(
 
 
 # ---------------------------------------------------------------------------
-# Core engine
+# Core engine (unchanged)
 # ---------------------------------------------------------------------------
 def smart_engine_from_rows(
     rows: Iterable[Mapping[str, Any]],
@@ -988,7 +1049,7 @@ def smart_engine_from_rows(
 ) -> Tuple[Path, int]:
     start = time.perf_counter()
     row_count = 0
-    record_count = 0  # PES records written
+    record_count = 0
     event_count = 0
 
     rule_hits: Dict[str, int] = {r["key"]: 0 for r in rules}
@@ -1058,11 +1119,15 @@ def smart_engine_from_rows(
     return out_path, lines
 
 
+# ---------------------------------------------------------------------------
+# Fabric entry point (CI/CD-safe: no dbo.*, no default lakehouse)
+# ---------------------------------------------------------------------------
 def run_fabric_from_table(
     table_name: str,
+    table_abfs_path: str,
     rules_path: str,
     lifecycle_path: Optional[str],
-    output_dir: str,
+    output_dir_abfs: str,
     output_filename: str = "events.jsonl",
     *,
     post_to_api: bool = False,
@@ -1072,19 +1137,29 @@ def run_fabric_from_table(
     version: str = "0.1.0",
 ) -> Tuple[Path, int]:
     """
-    Entry point for Fabric: read from Spark table and emit JSONL.
+    Entry point for Fabric:
+      - read from explicit ABFS Delta table path
+      - stage output locally
+      - copy output (+ log + error bucket if exists) to ABFS output dir
     """
     cfg = Config()
-    out_dir_path = Path(output_dir)
-    log_path = out_dir_path / (Path(output_filename).stem + ".log")
+
+    # Stage locally so Python open() works, then copy to ABFS
+    stage_dir = Path("/tmp") / f"pies_etl_stage_{uuid.uuid4().hex}"
+    stage_dir.mkdir(parents=True, exist_ok=True)
+
+    log_path = stage_dir / (Path(output_filename).stem + ".log")
     _init_logging(cfg, log_path)
 
-    rules = load_rules(Path(rules_path), system=None)
+    rules = load_rules(rules_path, system=None)
     lifecycle_map = load_lifecycle(lifecycle_path)
 
-    logger.info("Reading Fabric table: %s", table_name)
+    logger.info("CI/CD SAFE: reading Delta table via ABFS (ignoring dbo binding).")
+    logger.info("Requested table_name (for reference only): %s", table_name)
+    logger.info("Delta table ABFS path: %s", table_abfs_path)
 
-    df = spark.sql(f"SELECT * FROM {table_name}")  # type: ignore[name-defined]
+    # Read Delta table explicitly (no spark.sql dbo.*)
+    df = spark.read.format("delta").load(table_abfs_path)  # type: ignore[name-defined]
 
     try:
         table_cols = list(df.columns)
@@ -1095,11 +1170,12 @@ def run_fabric_from_table(
 
     rows = (CaseInsensitiveRow(r.asDict(recursive=True)) for r in df.toLocalIterator())
 
-    return smart_engine_from_rows(
+    # Write locally (so post_to_api can stream from local file)
+    local_out_path, lines = smart_engine_from_rows(
         rows=rows,
         rules=rules,
         lifecycle_map=lifecycle_map,
-        out_dir=out_dir_path,
+        out_dir=stage_dir,
         outfile=output_filename,
         cfg=cfg,
         default_system_id=default_system_id,
@@ -1109,35 +1185,80 @@ def run_fabric_from_table(
         api_url=api_url,
     )
 
+    # Copy outputs to ABFS
+    ensure_dir_any(output_dir_abfs)
+    remote_out_path = output_dir_abfs.rstrip("/") + "/" + output_filename
+    copy_local_to_abfs(local_out_path, remote_out_path, overwrite=True)
+    logger.info("Copied output JSONL to ABFS: %s", remote_out_path)
+
+    # Copy log
+    remote_log_path = output_dir_abfs.rstrip("/") + "/" + log_path.name
+    copy_local_to_abfs(log_path, remote_log_path, overwrite=True)
+    logger.info("Copied log to ABFS: %s", remote_log_path)
+
+    # Copy error bucket if exists
+    err_local = local_out_path.with_name(local_out_path.stem + "_errors.jsonl")
+    if err_local.exists():
+        remote_err = output_dir_abfs.rstrip("/") + "/" + err_local.name
+        copy_local_to_abfs(err_local, remote_err, overwrite=True)
+        logger.info("Copied error bucket to ABFS: %s", remote_err)
+
+    return local_out_path, lines
+
 
 # ---------------------------------------------------------------------------
-# Fabric Notebook: configure and run
+# Fabric Notebook: configure and run (CI/CD SAFE SECTION)
 # ---------------------------------------------------------------------------
 
 # Spark config: allow ancient dates/timestamps in Parquet without failing
 spark.conf.set("spark.sql.parquet.datetimeRebaseModeInRead", "CORRECTED")  # type: ignore[name-defined]
 spark.conf.set("spark.sql.parquet.int96RebaseModeInRead", "CORRECTED")     # type: ignore[name-defined]
 
-# Adjust these paths/names for your Fabric Lakehouse
-TABLE_NAME = "dbo.pies_staging_water_jobnumber"
-
-# Lakehouse Files paths
-RULES_PATH = "/lakehouse/default/Files/pies_module/water/water_lifecyle_rules/rules.json"
-LIFECYCLE_PATH = "/lakehouse/default/Files/pies_module/water/water_lifecyle_mapping/lifecycle_map.json"
-
-# Output folder + file
-OUTPUT_DIR = "/lakehouse/default/Files/pies_module/water/water_events_peach"
-timestamp = datetime.now().strftime("%Y%m%d")
-OUTPUT_FILENAME = f"water_events_jobnumber_{timestamp}.jsonl"
-
-# ENV for posting
+# -------------------------
+# CI/CD SAFE: ENV + ABFS BASE
+# -------------------------
 ENV = load_env_vars_from_variable_library(
     "pmt_env_vars",
-    required_keys=("fabric_env", "peach_api_url"),
+    required_keys=(
+        "fabric_env",
+        "peach_api_url",
+        "pmt-workspace-id",
+        "pmt-lakehouse-id",
+    ),
     env_fallback=True,
 )
+
 FABRIC_ENV = ENV["fabric_env"]
 API_URL = ENV["peach_api_url"]
+
+WORKSPACE_REF = ENV["pmt-workspace-id"]
+LAKEHOUSE_REF = ENV["pmt-lakehouse-id"]
+
+ABFS_BASE = build_abfs_base(WORKSPACE_REF, LAKEHOUSE_REF)
+
+print(f"[ENV] fabric_env={FABRIC_ENV}")
+print(f"[ENV] workspace_ref={WORKSPACE_REF}")
+print(f"[ENV] lakehouse_ref={LAKEHOUSE_REF}")
+print(f"[ENV] abfs_base={ABFS_BASE}")
+
+# -------------------------
+# Change here
+# -------------------------
+TABLE_NAME = "dbo.pies_staging_water_jobnumber"
+
+# CI/CD safe
+TABLE_SHORT = TABLE_NAME.split(".")[-1]
+TABLE_ABFS_PATH = f"{ABFS_BASE}/Tables/dbo/{TABLE_SHORT}"
+
+
+# Rules & lifecycle (explicit ABFS paths)
+RULES_PATH = f"{ABFS_BASE}/Files/pies_module/water/water_lifecyle_rules/rules.json"
+LIFECYCLE_PATH = f"{ABFS_BASE}/Files/pies_module/water/water_lifecyle_mapping/lifecycle_map.json"
+
+# Output folder + file
+timestamp = datetime.now().strftime("%Y%m%d")
+OUTPUT_DIR_ABFS = f"{ABFS_BASE}/Files/pies_module/water/water_events_peach/{FABRIC_ENV.lower()}"
+OUTPUT_FILENAME = f"water_events_jobnumber_{FABRIC_ENV.lower()}_{timestamp}.jsonl"
 
 POST_TO_API = True  # set False to only write JSONL (no POST)
 
@@ -1145,12 +1266,13 @@ DEFAULT_SYSTEM_ID = "ITSM-6197"
 RECORD_KIND = "Permit"
 PES_VERSION = "0.1.0"
 
-# Run
+# Run (CI/CD SAFE)
 run_fabric_from_table(
-    table_name=TABLE_NAME,
-    rules_path=RULES_PATH,
-    lifecycle_path=LIFECYCLE_PATH,
-    output_dir=OUTPUT_DIR,
+    table_name=TABLE_NAME,                 
+    table_abfs_path=TABLE_ABFS_PATH,      
+    rules_path=RULES_PATH,                
+    lifecycle_path=LIFECYCLE_PATH,         
+    output_dir_abfs=OUTPUT_DIR_ABFS,       
     output_filename=OUTPUT_FILENAME,
     post_to_api=POST_TO_API,
     api_url=API_URL,
@@ -1159,13 +1281,12 @@ run_fabric_from_table(
     version=PES_VERSION,
 )
 
-# Make new file (checklist):
-# 1) change TABLE_NAME
+# Checklist (only change these when making a new dataset):
+# 1) TABLE_NAME
 # 2) OUTPUT_FILENAME pattern
-# 3) RULES_PATH
-# 4) LIFECYCLE_PATH
-# 5) DEFAULT_SYSTEM_ID / RECORD_KIND / PES_VERSION
-# 6) Header comments
+# 3) RULES_PATH / LIFECYCLE_PATH (only if different module)
+# 4) DEFAULT_SYSTEM_ID / RECORD_KIND / PES_VERSION
+# 5) Header comments
 
 
 # METADATA ********************
