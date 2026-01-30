@@ -5,13 +5,23 @@
   "queryGroups": [],
   "documentLocale": "en-US",
   "queriesMetadata": {
-    "pmt_lands_dataflow_authorizationid_piesid": {
-      "queryId": "ee660b23-d768-460f-876c-dc2f5cd3c8a8",
-      "queryName": "pmt_lands_dataflow_authorizationid_piesid",
+    "pmt-workspace-id": {
+      "queryId": "abdd5a48-9ac3-4bfc-97b0-98cf706525db",
+      "queryName": "pmt-workspace-id",
+      "loadEnabled": false
+    },
+    "pmt-lakehouse-id": {
+      "queryId": "95fbfbf4-f348-4b3d-80be-f83d3a489c85",
+      "queryName": "pmt-lakehouse-id",
+      "loadEnabled": false
+    },
+    "pies_staging_lands_dispids": {
+      "queryId": "025fec79-b114-4d7e-82ab-dfddede1b324",
+      "queryName": "pies_staging_lands_dispids",
       "loadEnabled": false
     },
     "DefaultDestination": {
-      "queryId": "526094cf-42b9-49f7-ad51-2c9d2c0da8fa",
+      "queryId": "7969df50-428d-4b2c-887a-f3b9dd872d45",
       "queryName": "DefaultDestination",
       "isHidden": true,
       "loadEnabled": false

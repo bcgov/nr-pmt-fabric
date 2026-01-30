@@ -1104,9 +1104,6 @@ def smart_engine_from_rows(
         topn = sorted(rule_hits.items(), key=lambda kv: kv[1], reverse=True)[: cfg.log_rule_hit_topn]
         logger.info("Rule hit counts (top %d): %s", cfg.log_rule_hit_topn, topn)
 
-    if post_to_api and api_url:
-        post_jsonl_to_api(out_path, api_url, expected_lines=lines)
-
     dur = time.perf_counter() - start
     logger.info(
         "Done. Source rows=%d  Output records=%d  Total events=%d  Elapsed=%.2fs  Output=%s",
@@ -1170,7 +1167,7 @@ def run_fabric_from_table(
 
     rows = (CaseInsensitiveRow(r.asDict(recursive=True)) for r in df.toLocalIterator())
 
-    # Write locally (so post_to_api can stream from local file)
+    # Write locally
     local_out_path, lines = smart_engine_from_rows(
         rows=rows,
         rules=rules,
@@ -1181,15 +1178,20 @@ def run_fabric_from_table(
         default_system_id=default_system_id,
         record_kind=record_kind,
         version=version,
-        post_to_api=post_to_api,
-        api_url=api_url,
+        post_to_api=False,
+        api_url=None,
     )
+
+
 
     # Copy outputs to ABFS
     ensure_dir_any(output_dir_abfs)
     remote_out_path = output_dir_abfs.rstrip("/") + "/" + output_filename
     copy_local_to_abfs(local_out_path, remote_out_path, overwrite=True)
     logger.info("Copied output JSONL to ABFS: %s", remote_out_path)
+    if post_to_api and api_url:
+        logger.info("Starting POST AFTER ABFS copy (artifact already saved).")
+        post_jsonl_to_api(local_out_path, api_url, expected_lines=lines)
 
     # Copy log
     remote_log_path = output_dir_abfs.rstrip("/") + "/" + log_path.name
