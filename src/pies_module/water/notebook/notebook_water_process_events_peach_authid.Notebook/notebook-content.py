@@ -1104,8 +1104,6 @@ def smart_engine_from_rows(
         topn = sorted(rule_hits.items(), key=lambda kv: kv[1], reverse=True)[: cfg.log_rule_hit_topn]
         logger.info("Rule hit counts (top %d): %s", cfg.log_rule_hit_topn, topn)
 
-    if post_to_api and api_url:
-        post_jsonl_to_api(out_path, api_url, expected_lines=lines)
 
     dur = time.perf_counter() - start
     logger.info(
@@ -1181,8 +1179,8 @@ def run_fabric_from_table(
         default_system_id=default_system_id,
         record_kind=record_kind,
         version=version,
-        post_to_api=post_to_api,
-        api_url=api_url,
+        post_to_api=False,
+        api_url=None,
     )
 
     # Copy outputs to ABFS
@@ -1190,7 +1188,8 @@ def run_fabric_from_table(
     remote_out_path = output_dir_abfs.rstrip("/") + "/" + output_filename
     copy_local_to_abfs(local_out_path, remote_out_path, overwrite=True)
     logger.info("Copied output JSONL to ABFS: %s", remote_out_path)
-
+    if post_to_api and api_url:
+        post_jsonl_to_api(local_out_path, api_url, expected_lines=lines)
     # Copy log
     remote_log_path = output_dir_abfs.rstrip("/") + "/" + log_path.name
     copy_local_to_abfs(log_path, remote_log_path, overwrite=True)
