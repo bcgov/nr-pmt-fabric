@@ -36,36 +36,6 @@
       "note": "",
       "type": "String",
       "value": "76d75751-e831-4446-ab81-583b15ef22ed"
-    },
-    {
-      "name": "fabric_env",
-      "note": "",
-      "type": "String",
-      "value": "NONPROD"
-    },
-    {
-      "name": "peach_api_url",
-      "note": "",
-      "type": "String",
-      "value": "https://nr-peach-test-main-api.azurewebsites.net/api/v1/records/"
-    },
-    {
-      "name": "pmt-fta-odb",
-      "note": "",
-      "type": "String",
-      "value": "a1052ebf-2b20-484f-b22a-780ebb22dfc3"
-    },
-    {
-      "name": "pmt-rrs-odb",
-      "note": "",
-      "type": "String",
-      "value": "d6b0bab8-f0a7-4ce6-a3e6-29867455e360"
-    },
-    {
-      "name": "pmt-lakehouse-name",
-      "note": "",
-      "type": "String",
-      "value": "permitting_lakehouse"
     }
   ]
 }
