@@ -1150,4 +1150,8 @@ shared pies_staging_water_authid = let
         Table.SelectRows(Cleaned, each [PIESID] <> null and Text.Trim(Text.From([PIESID])) <> "")
 in
     Output;
-shared DefaultDestination = Lakehouse.Contents([EnableFolding = false]){[workspaceId = "60f10f69-06b8-44a3-a3cf-1afd52d4d754"]}[Data]{[lakehouseId = "964899a6-7e35-47cd-9eb3-429482e1b733"]}[Data];
+shared DefaultDestination =
+    Lakehouse.Contents([EnableFolding = false])
+    {[workspaceId = Text.From(#"pmt-workspace-id")]}[Data]
+    {[lakehouseId = Text.From(#"pmt-lakehouse-id")]}[Data];
+
