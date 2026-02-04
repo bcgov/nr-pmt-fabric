@@ -13,19 +13,6 @@
           "05:00"
         ]
       }
-    },
-    {
-      "enabled": true,
-      "jobType": "Execute",
-      "configuration": {
-        "type": "Daily",
-        "startDateTime": "2026-01-29T00:00:00",
-        "endDateTime": "2035-12-29T23:59:00",
-        "localTimeZoneId": "Pacific Standard Time",
-        "times": [
-          "05:00"
-        ]
-      }
     }
   ]
 }
