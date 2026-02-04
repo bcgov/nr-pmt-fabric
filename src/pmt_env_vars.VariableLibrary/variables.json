@@ -48,6 +48,12 @@
       "note": "",
       "type": "String",
       "value": "https://nr-peach-prod-main-api.azurewebsites.net/api/v1/records/"
+    },
+    {
+      "name": "pmt-lakehouse-name",
+      "note": "",
+      "type": "String",
+      "value": "permitting_lakehouse"
     }
   ]
 }
