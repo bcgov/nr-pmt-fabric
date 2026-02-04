@@ -4,7 +4,7 @@
       {
         "type": "RefreshDataflow",
         "typeProperties": {
-          "dataflowId": "7909ae39-c611-98a2-45a4-51fe149c59f1",
+          "dataflowId": "bdc847d8-3041-bca3-4b36-42f00752a08a",
           "workspaceId": "00000000-0000-0000-0000-000000000000",
           "notifyOption": "NoNotification",
           "dataflowType": "DataflowFabric"
@@ -22,7 +22,7 @@
       {
         "type": "TridentNotebook",
         "typeProperties": {
-          "notebookId": "b60227a8-3af1-94ff-4f46-a213bf348a4f",
+          "notebookId": "27c3da74-914d-9a32-4e77-c761fac397e5",
           "workspaceId": "00000000-0000-0000-0000-000000000000"
         },
         "policy": {
