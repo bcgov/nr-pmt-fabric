@@ -6,10 +6,7 @@
       "connectionSettings": {
         "type": "Oracle",
         "externalReferences": {
-          "connectionVariableLibrary": {
-            "variableName": "pmt-elic-odb",
-            "libraryName": "pmt_env_vars"
-          }
+          "connection": "c95648e7-7d00-4ace-956d-ad6243540991"
         }
       }
     },
@@ -30,7 +27,7 @@
   },
   "activities": [
     {
-      "id": "4d342252-8df5-47c3-872a-76c8b0eb237b",
+      "id": "66986609-8f47-48b0-822f-691ebeef8c87",
       "properties": {
         "source": {
           "datasetSettings": {
@@ -59,7 +56,7 @@
       }
     },
     {
-      "id": "13c1557e-d941-4776-bbf8-f849e83f8d67",
+      "id": "fbb92d12-d62e-4347-8430-ba78990962c0",
       "properties": {
         "source": {
           "datasetSettings": {
@@ -111,18 +108,6 @@
             },
             {
               "source": {
-                "name": "ATSLINKID",
-                "type": "Decimal",
-                "scale": 127,
-                "precision": 38
-              },
-              "destination": {
-                "name": "ATSLINKID",
-                "physicalType": "float"
-              }
-            },
-            {
-              "source": {
                 "name": "ATSPROJECTNUMBER",
                 "type": "String"
               },
@@ -322,7 +307,7 @@
       }
     },
     {
-      "id": "b8fd756a-b406-4275-a863-e9e97012bfbe",
+      "id": "ae0d4e75-d4b7-4ada-bd3e-36da661f208a",
       "properties": {
         "source": {
           "datasetSettings": {
@@ -364,32 +349,6 @@
             },
             {
               "source": {
-                "name": "LANDSFILENUMBER",
-                "type": "Decimal",
-                "scale": 127,
-                "precision": 38
-              },
-              "destination": {
-                "name": "LANDSFILENUMBER",
-                "physicalType": "double"
-              }
-            },
-            {
-              "source": {
-                "name": "DISPOSITION_TRANSACTION_SID",
-                "type": "Decimal",
-                "scale": 127,
-                "precision": 38
-              },
-              "destination": {
-                "name": "DISPOSITION_TRANSACTION_SID",
-                "physicalType": "decimal",
-                "scale": 18,
-                "precision": 38
-              }
-            },
-            {
-              "source": {
                 "name": "DISPOSITION_TRANSACTION_STRING",
                 "type": "String"
               },
@@ -409,7 +368,7 @@
       }
     },
     {
-      "id": "a8a4807b-81f3-4f51-bd4f-657abb482614",
+      "id": "687ebc14-bebd-4814-8dcf-b91803033929",
       "properties": {
         "source": {
           "datasetSettings": {
@@ -438,7 +397,7 @@
       }
     },
     {
-      "id": "3ec7a065-c3fb-417b-8cc8-10173773a113",
+      "id": "e3345e06-fc24-49ef-aa53-20b066034068",
       "properties": {
         "source": {
           "datasetSettings": {
@@ -467,7 +426,7 @@
       }
     },
     {
-      "id": "44325845-4f71-429a-80d3-6e8530ad9168",
+      "id": "45f8c596-f041-4f63-9e9e-ef3500e68b12",
       "properties": {
         "source": {
           "datasetSettings": {
@@ -480,7 +439,7 @@
           "writeBehavior": "Overwrite",
           "datasetSettings": {
             "schema": "vfcbc_replication",
-            "table": "vfcbc_crownlandtenure"
+            "table": "vfcbc_crownlandstenureapparea"
           }
         },
         "enableStaging": false,
@@ -496,7 +455,7 @@
       }
     },
     {
-      "id": "c9662fc6-41c0-43ae-9852-e11892bd4b4b",
+      "id": "2c2f963d-f050-483d-911d-8d95e2278421",
       "properties": {
         "source": {
           "datasetSettings": {
