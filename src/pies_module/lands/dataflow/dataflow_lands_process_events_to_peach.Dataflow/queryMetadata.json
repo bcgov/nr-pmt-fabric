@@ -1,0 +1,30 @@
+{
+  "formatVersion": "202502",
+  "computeEngineSettings": {},
+  "name": "dataflow_lands_process_events_to_peach",
+  "queryGroups": [],
+  "documentLocale": "en-US",
+  "queriesMetadata": {
+    "pmt-workspace-id": {
+      "queryId": "77cc87e7-ee24-4d7c-a8ac-9a478d6c4440",
+      "queryName": "pmt-workspace-id",
+      "loadEnabled": false
+    },
+    "pmt-lakehouse-id": {
+      "queryId": "95e43c8a-fa93-486f-98e9-1d17d61243a6",
+      "queryName": "pmt-lakehouse-id",
+      "loadEnabled": false
+    },
+    "pies_staging_lands_dispids": {
+      "queryId": "b24420e5-eb48-4448-91c8-55299058a699",
+      "queryName": "pies_staging_lands_dispids"
+    }
+  },
+  "connections": [
+    {
+      "path": "Lakehouse",
+      "kind": "Lakehouse",
+      "connectionId": "{\"ClusterId\":\"1f7baf71-1832-47ee-ba8c-e8f46696fbb5\",\"DatasourceId\":\"242c11af-5a94-4dc0-a80c-556166c29afe\"}"
+    }
+  ]
+}
