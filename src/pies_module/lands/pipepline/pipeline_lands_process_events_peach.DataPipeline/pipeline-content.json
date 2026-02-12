@@ -4,7 +4,7 @@
       {
         "type": "RefreshDataflow",
         "typeProperties": {
-          "dataflowId": "bdc847d8-3041-bca3-4b36-42f00752a08a",
+          "dataflowId": "2921741e-37a2-9a9b-4ef4-049e9fe4c7c9",
           "workspaceId": "00000000-0000-0000-0000-000000000000",
           "notifyOption": "NoNotification",
           "dataflowType": "DataflowFabric"

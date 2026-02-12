@@ -29,20 +29,10 @@
       {
         "type": "RefreshDataflow",
         "typeProperties": {
-          "dataflowId": "2e2da05c-33d8-9cb4-4c25-4b7d9e5b9ab5",
+          "dataflowId": "7f651b01-7a1a-91bf-4324-77f6958d5add",
           "workspaceId": "00000000-0000-0000-0000-000000000000",
           "notifyOption": "NoNotification",
-          "dataflowType": "DataflowFabric",
-          "parameters": {
-            "pmt-workspace-id": {
-              "value": "79dafa8a-b966-4240-80f7-2e9d46baa5c3",
-              "type": "String"
-            },
-            "pmt-lakehouse-id": {
-              "value": "201b9b7d-ca11-46b6-81e8-feeba4c99642",
-              "type": "String"
-            }
-          }
+          "dataflowType": "DataflowFabric"
         },
         "policy": {
           "timeout": "0.12:00:00",

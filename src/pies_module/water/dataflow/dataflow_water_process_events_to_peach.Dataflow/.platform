@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Dataflow",
+    "displayName": "dataflow_water_process_events_to_peach"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "7f651b01-7a1a-91bf-4324-77f6958d5add"
+  }
+}
