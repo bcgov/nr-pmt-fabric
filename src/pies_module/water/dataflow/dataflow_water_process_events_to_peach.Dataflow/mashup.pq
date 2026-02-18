@@ -12,7 +12,7 @@ shared pies_staging_water_jobnumber = let
     // ============================================================
     // Lakehouse navigation
     // ============================================================
-    Source = Lakehouse.Contents([workspaceId = WorkspaceId]),
+    Source = Lakehouse.Contents(null),
     WS = Source{[workspaceId = WorkspaceId]}[Data],
     LH = WS{[lakehouseId = LakehouseId]}[Data],
 
@@ -392,7 +392,7 @@ shared pies_staging_water_vfcbctracking = let
     // Lakehouse navigation
     // ============================================================
 
-    Source = Lakehouse.Contents([workspaceId = WorkspaceId]),
+    Source = Lakehouse.Contents(null),
     WS = Source{[workspaceId = WorkspaceId]}[Data],
     LH = WS{[lakehouseId = LakehouseId]}[Data],
     GetLHById = (id as text, friendly as text) as table =>
@@ -772,7 +772,7 @@ shared pies_staging_water_authid = let
     // Lakehouse navigation
     // ============================================================
 
-    Source = Lakehouse.Contents([workspaceId = WorkspaceId]),
+    Source = Lakehouse.Contents(null),
     WS = Source{[workspaceId = WorkspaceId]}[Data],
     LH = WS{[lakehouseId = LakehouseId]}[Data],
     GetLHById = (id as text, friendly as text) as table =>
