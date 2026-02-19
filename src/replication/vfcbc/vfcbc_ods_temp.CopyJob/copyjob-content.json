@@ -40,7 +40,7 @@
           "writeBehavior": "Overwrite",
           "datasetSettings": {
             "schema": "vfcbc_replication",
-            "table": "vfcbc_application"
+            "table": "vfcbc_replication"
           },
           "applyVOrder": false
         },
@@ -253,6 +253,270 @@
         "enableStaging": false,
         "translator": {
           "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "ce1a752d-42cc-426b-8270-214a4df4d3e7",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "CORRAL_GENERATED_VIEWS",
+            "table": "VFCBC_APPLICATION_VW"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "vfcbc_replication",
+            "table": "vfcbc_replication_vw"
+          },
+          "applyVOrder": false
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator",
+          "mappings": [
+            {
+              "source": {
+                "name": "JOBID",
+                "type": "Int64"
+              },
+              "destination": {
+                "name": "JOBID",
+                "physicalType": "long"
+              }
+            },
+            {
+              "source": {
+                "name": "TRACKINGNUMBER",
+                "type": "String"
+              },
+              "destination": {
+                "name": "TRACKINGNUMBER",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "BUSINESSAREANUMBER",
+                "type": "String"
+              },
+              "destination": {
+                "name": "BUSINESSAREANUMBER",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "ATSLINKID",
+                "type": "Decimal",
+                "scale": 127,
+                "precision": 38
+              },
+              "destination": {
+                "name": "ATSLINKID",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "ATSPROJECTNUMBER",
+                "type": "String"
+              },
+              "destination": {
+                "name": "ATSPROJECTNUMBER",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "EXTERNALREFERENCE",
+                "type": "String"
+              },
+              "destination": {
+                "name": "EXTERNALREFERENCE",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "EXTERNALJOBNUMBER",
+                "type": "String"
+              },
+              "destination": {
+                "name": "EXTERNALJOBNUMBER",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "EXTERNALJOBNUMBER2",
+                "type": "String"
+              },
+              "destination": {
+                "name": "EXTERNALJOBNUMBER2",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "MINENUMBER",
+                "type": "String"
+              },
+              "destination": {
+                "name": "MINENUMBER",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "LANDSFILENUMBER",
+                "type": "String"
+              },
+              "destination": {
+                "name": "LANDSFILENUMBER",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "SUBMITTER",
+                "type": "String"
+              },
+              "destination": {
+                "name": "SUBMITTER",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "APPLICANT",
+                "type": "String"
+              },
+              "destination": {
+                "name": "APPLICANT",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "AUTHORIZATIONTYPE",
+                "type": "String"
+              },
+              "destination": {
+                "name": "AUTHORIZATIONTYPE",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "APPLICATIONTYPE",
+                "type": "String"
+              },
+              "destination": {
+                "name": "APPLICATIONTYPE",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "CREATEDDATE",
+                "type": "DateTime"
+              },
+              "destination": {
+                "name": "CREATEDDATE",
+                "physicalType": "timestamp"
+              }
+            },
+            {
+              "source": {
+                "name": "STATUS",
+                "type": "String"
+              },
+              "destination": {
+                "name": "STATUS",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "OFFICE",
+                "type": "String"
+              },
+              "destination": {
+                "name": "OFFICE",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "BUSINESSAREA",
+                "type": "String"
+              },
+              "destination": {
+                "name": "BUSINESSAREA",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "SUBMITTEDBYTYPE",
+                "type": "String"
+              },
+              "destination": {
+                "name": "SUBMITTEDBYTYPE",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "STATUSSHOWNTOCLIENT",
+                "type": "String"
+              },
+              "destination": {
+                "name": "STATUSSHOWNTOCLIENT",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "SUBMITTEDDATE",
+                "type": "DateTime"
+              },
+              "destination": {
+                "name": "SUBMITTEDDATE",
+                "physicalType": "timestamp"
+              }
+            },
+            {
+              "source": {
+                "name": "RECEIVEDDATE",
+                "type": "DateTime"
+              },
+              "destination": {
+                "name": "RECEIVEDDATE",
+                "physicalType": "timestamp"
+              }
+            },
+            {
+              "source": {
+                "name": "DATECOMPLETED",
+                "type": "DateTime"
+              },
+              "destination": {
+                "name": "DATECOMPLETED",
+                "physicalType": "timestamp"
+              }
+            }
+          ]
         },
         "typeConversionSettings": {
           "typeConversion": {
