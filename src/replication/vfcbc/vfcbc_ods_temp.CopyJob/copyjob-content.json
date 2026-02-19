@@ -40,7 +40,7 @@
           "writeBehavior": "Overwrite",
           "datasetSettings": {
             "schema": "vfcbc_replication",
-            "table": "vfcbc_replication"
+            "table": "vfcbc_application"
           },
           "applyVOrder": false
         },
@@ -276,7 +276,7 @@
           "writeBehavior": "Overwrite",
           "datasetSettings": {
             "schema": "vfcbc_replication",
-            "table": "vfcbc_replication_vw"
+            "table": "vfcbc_application_vw"
           },
           "applyVOrder": false
         },
