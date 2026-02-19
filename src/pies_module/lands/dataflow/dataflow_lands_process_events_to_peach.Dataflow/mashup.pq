@@ -216,7 +216,6 @@ shared pies_staging_lands_dispids = let
         )
 in
     Cleanup;
-shared DefaultDestination =
-    Lakehouse.Contents([EnableFolding = false])
+shared DefaultDestination = Lakehouse.Contents([EnableFolding = false])
     {[workspaceId = Text.From(#"pmt-workspace-id")]}[Data]
     {[lakehouseId = Text.From(#"pmt-lakehouse-id")]}[Data];
