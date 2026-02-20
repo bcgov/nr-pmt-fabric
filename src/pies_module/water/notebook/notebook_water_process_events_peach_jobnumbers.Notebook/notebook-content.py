@@ -20,7 +20,7 @@
 # Province of British Columbia – Natural Resource Information & Digital Services, CSBC
 #
 # ---------------------------------------------------------------------------
-# ETL mapping - job number (Fabric notebook version)
+# ETL mapping -Water job number (Fabric notebook version)
 # ---------------------------------------------------------------------------
 # Transform permit source data (Fabric table) into ProcessEventSet JSON Lines
 # for the NR-PIES specification; optionally POST each record to PEACH.
@@ -46,10 +46,181 @@ import sys
 import time
 import uuid
 
-import requests  # optional API posting
+import requests
 from collections.abc import Mapping as _Mapping
 
+# Fabric Key Vault helper
+try:
+    from notebookutils import mssparkutils
+except Exception:
+    mssparkutils = None
 
+
+# =============================================================================
+# SWITCHES (TURN ON/OFF HERE)
+# =============================================================================
+POST_TO_API = True
+USE_PEACH_AUTH = True
+
+
+# =============================================================================
+# ENV (GLOBAL)
+# =============================================================================
+ENV: dict[str, str] = {}
+
+
+def _env_pick(env: Mapping[str, str], key: str) -> Optional[str]:
+    # exact
+    v = env.get(key)
+    if v is not None and str(v).strip() != "":
+        return str(v).strip()
+    # upper/lower convenience
+    v = env.get(key.upper())
+    if v is not None and str(v).strip() != "":
+        return str(v).strip()
+    v = env.get(key.lower())
+    if v is not None and str(v).strip() != "":
+        return str(v).strip()
+    return None
+
+
+def env_get_any(env: Mapping[str, str], *keys: str, default: str) -> str:
+    for k in keys:
+        v = _env_pick(env, k)
+        if v is not None:
+            return v
+    return default
+
+
+def env_get_int(env: Mapping[str, str], *keys: str, default: int) -> int:
+    s = None
+    for k in keys:
+        s = _env_pick(env, k)
+        if s is not None:
+            break
+    if s is None:
+        return default
+    try:
+        return int(str(s).strip())
+    except Exception:
+        return default
+
+
+def env_get_bool(env: Mapping[str, str], *keys: str, default: bool) -> bool:
+    s = None
+    for k in keys:
+        s = _env_pick(env, k)
+        if s is not None:
+            break
+    if s is None:
+        return default
+    v = str(s).strip().lower()
+    if v in ("1", "true", "t", "yes", "y", "on"):
+        return True
+    if v in ("0", "false", "f", "no", "n", "off"):
+        return False
+    return default
+
+
+# =============================================================================
+# PEACH AUTH CONFIG (loaded from ENV later; defaults applied if missing)
+# =============================================================================
+# NOTE: These are assigned in the Fabric Notebook section after ENV is loaded.
+PEACH_TOKEN_URL = ""
+PEACH_KEYVAULT_URL = ""
+PEACH_CLIENT_ID = ""
+PEACH_SECRET_NAME = ""
+
+
+# =============================================================================
+# OAuth Token Manager (requests-based, no Authlib)
+# =============================================================================
+class PeachTokenManager:
+    """
+    Client Credentials token cache for Keycloak OIDC token endpoint.
+    Uses requests (form post). Refreshes automatically near expiry.
+    """
+    def __init__(
+        self,
+        *,
+        token_url: str,
+        client_id: str,
+        client_secret: str,
+        refresh_skew_seconds: int = 30,
+        timeout_seconds: int = 30,
+    ):
+        self.token_url = token_url
+        self.client_id = client_id
+        self.client_secret = client_secret
+        self.refresh_skew_seconds = refresh_skew_seconds
+        self.timeout_seconds = timeout_seconds
+
+        self._access_token: Optional[str] = None
+        self._expires_at: float = 0.0
+
+    def _fetch_token(self) -> Tuple[str, float]:
+        # Keycloak standard: x-www-form-urlencoded
+        data = {
+            "grant_type": "client_credentials",
+            "client_id": self.client_id,
+            "client_secret": self.client_secret,
+        }
+        resp = requests.post(self.token_url, data=data, timeout=self.timeout_seconds)
+        if resp.status_code < 200 or resp.status_code >= 300:
+            raise RuntimeError(
+                f"Token fetch failed: HTTP {resp.status_code}. "
+                f"token_url={self.token_url}. "
+                f"resp_text={resp.text[:500]}"
+            )
+        payload = resp.json()
+        token = payload.get("access_token")
+        expires_in = int(payload.get("expires_in", 0) or 0)
+        if not token:
+            raise RuntimeError(f"Token fetch succeeded but access_token missing. payload_keys={list(payload.keys())}")
+        expires_at = time.time() + expires_in
+        return token, expires_at
+
+    def refresh(self) -> None:
+        token, expires_at = self._fetch_token()
+        self._access_token = token
+        self._expires_at = expires_at
+
+    def get_access_token(self) -> str:
+        if not self._access_token:
+            self.refresh()
+            return self._access_token  # type: ignore[return-value]
+
+        if self._expires_at <= (time.time() + self.refresh_skew_seconds):
+            self.refresh()
+
+        return self._access_token
+
+    def auth_headers(self) -> Dict[str, str]:
+        return {"Authorization": f"Bearer {self.get_access_token()}"}
+
+
+def build_peach_token_manager_from_keyvault(
+    *,
+    keyvault_url: str,
+    secret_name: str,
+    token_url: str,
+    client_id: str,
+) -> PeachTokenManager:
+    if mssparkutils is None:
+        raise RuntimeError("mssparkutils is not available. This must run inside Fabric notebooks.")
+    client_secret = mssparkutils.credentials.getSecret(keyvault_url, secret_name)
+    if not client_secret or str(client_secret).strip() == "":
+        raise RuntimeError(f"Key Vault secret is empty: keyvault_url={keyvault_url} secret_name={secret_name}")
+    return PeachTokenManager(
+        token_url=token_url,
+        client_id=client_id,
+        client_secret=str(client_secret),
+    )
+
+
+# =============================================================================
+# JSON dumping (orjson optional)
+# =============================================================================
 try:
     import orjson as _oj
 
@@ -87,9 +258,13 @@ def load_env_vars_from_variable_library(
     """
     Load required variables from Fabric Variable Library.
 
-    This version:
-      - uses Variable Library when available (Fabric)
-      - optionally falls back to OS ENV for local/unit testing
+    FIXED:
+      - fabric_env will default to 'DEV' if missing (prevents hard failure)
+      - other keys still must exist
+
+    NOTE:
+      - This is the ONLY place we do OS env fallback (os.getenv).
+      - All other code must read config from the returned ENV dict.
     """
     nb = _get_notebookutils()
 
@@ -103,11 +278,15 @@ def load_env_vars_from_variable_library(
             except Exception:
                 pass
 
-        # 2) OS env fallback (note: hyphen keys won't exist in OS env; still fine)
+        # 2) OS env fallback (centralized here only)
         if env_fallback:
             v2 = os.getenv(key) or os.getenv(key.upper())
             if v2 is not None and str(v2).strip() != "":
                 return str(v2).strip()
+
+        # 3) Default for fabric_env only
+        if key == "fabric_env":
+            return "DEV"
 
         raise RuntimeError(
             f"Missing/empty variable '{key}'. "
@@ -130,6 +309,40 @@ def load_env_vars_from_variable_library(
             pass
 
     return env
+
+
+def load_optional_env_vars_from_variable_library(
+    library_name: str = "pmt_env_vars",
+    optional_keys: tuple[str, ...] = (),
+    *,
+    env_fallback: bool = True,
+) -> dict[str, str]:
+    """
+    Load OPTIONAL variables from Fabric Variable Library.
+    - Missing keys are skipped (no hard fail).
+    - Optional OS env fallback is still centralized here only.
+    """
+    nb = _get_notebookutils()
+    out: dict[str, str] = {}
+
+    for key in optional_keys:
+        v = None
+
+        # 1) Fabric Variable Library
+        if nb is not None:
+            try:
+                v = nb.variableLibrary.get(f"$(/**/{library_name}/{key})")
+            except Exception:
+                v = None
+
+        # 2) OS env fallback (centralized here only)
+        if (v is None or str(v).strip() == "") and env_fallback:
+            v = os.getenv(key) or os.getenv(key.upper())
+
+        if v is not None and str(v).strip() != "":
+            out[key] = str(v).strip()
+
+    return out
 
 
 # ---------------------------------------------------------------------------
@@ -156,7 +369,6 @@ def build_abfs_base(workspace_ref: str, lakehouse_ref: str) -> str:
     if not w or not l:
         raise RuntimeError(f"Invalid workspace/lakehouse values: workspace={workspace_ref!r}, lakehouse={lakehouse_ref!r}")
 
-    # If lakehouse is a name, Fabric OneLake commonly uses "<name>.Lakehouse"
     if not _is_guid(l) and not l.lower().endswith(".lakehouse"):
         l = f"{l}.Lakehouse"
 
@@ -171,14 +383,8 @@ def _fs():
 
 
 def read_text_any(path_str: str) -> str:
-    """
-    Read text from:
-      - local mounted path (e.g., /lakehouse/...)
-      - ABFS path (abfss://...) via notebookutils.fs
-    """
     p = (path_str or "").strip()
     if p.lower().startswith("abfss://"):
-        # Try fs.open first; fall back to fs.head if needed
         try:
             fh = _fs().open(p, "r")
             try:
@@ -186,28 +392,20 @@ def read_text_any(path_str: str) -> str:
             finally:
                 fh.close()
         except Exception:
-            # head(size) exists in many Fabric/Synapse fs impls
             try:
-                return _fs().head(p, 1024 * 1024 * 50)  # up to 50MB
+                return _fs().head(p, 1024 * 1024 * 50)
             except Exception as e:
                 raise RuntimeError(f"Failed to read ABFS text file: {p}. Error: {e}") from e
 
-    # Local path
     return Path(p).read_text(encoding="utf-8")
 
 
 def ensure_dir_any(path_str: str) -> None:
-    """
-    Ensure directory exists for:
-      - local path: mkdir
-      - ABFS path: notebookutils.fs.mkdirs
-    """
     p = (path_str or "").rstrip("/")
     if p.lower().startswith("abfss://"):
         try:
             _fs().mkdirs(p)
         except Exception:
-            # some impls use 'mkdir'
             try:
                 _fs().mkdir(p)
             except Exception as e:
@@ -217,20 +415,14 @@ def ensure_dir_any(path_str: str) -> None:
 
 
 def copy_local_to_abfs(local_path: Path, abfs_path: str, *, overwrite: bool = True) -> None:
-    """
-    Copy a local file (driver filesystem) to ABFS via notebookutils.fs.cp if available.
-    Falls back to fs.put for smaller files if cp fails (may be slow/limited for huge files).
-    """
     src = f"file:{local_path.as_posix()}"
     dst = abfs_path
 
-    # Ensure parent exists
     parent = dst.rsplit("/", 1)[0]
     ensure_dir_any(parent)
 
-    # Try cp variants
     try:
-        _fs().cp(src, dst, overwrite)  # some signatures support overwrite
+        _fs().cp(src, dst, overwrite)
         return
     except TypeError:
         pass
@@ -238,12 +430,11 @@ def copy_local_to_abfs(local_path: Path, abfs_path: str, *, overwrite: bool = Tr
         pass
 
     try:
-        _fs().cp(src, dst)  # signature without overwrite
+        _fs().cp(src, dst)
         return
     except Exception:
         pass
 
-    # Fallback: put content (OK for smaller outputs; not ideal for very large files)
     try:
         content = local_path.read_text(encoding="utf-8")
         _fs().put(dst, content, overwrite)
@@ -256,20 +447,17 @@ def copy_local_to_abfs(local_path: Path, abfs_path: str, *, overwrite: bool = Tr
 # uuid7 fallback (NR-PIES-safe)
 # ---------------------------------------------------------------------------
 def uuid7() -> uuid.UUID:
-    """
-    Generate a UUIDv7-like value (time-ordered) without external dependencies.
-    """
     ts_ms = int(time.time() * 1000)
     ts_bytes = ts_ms.to_bytes(6, "big")
 
     rand_a = secrets.randbits(12)
-    time_hi_and_version = (0x7 << 12) | rand_a  # version=7
+    time_hi_and_version = (0x7 << 12) | rand_a
     thv_bytes = time_hi_and_version.to_bytes(2, "big")
 
     rand_b = secrets.randbits(62)
     top6 = (rand_b >> 56) & 0x3F
     rem56 = rand_b & ((1 << 56) - 1)
-    variant_byte = top6 | 0x80  # 10xxxxxx
+    variant_byte = top6 | 0x80
     rem56_bytes = rem56.to_bytes(7, "big")
 
     uuid_bytes = ts_bytes + thv_bytes + bytes([variant_byte]) + rem56_bytes
@@ -277,24 +465,19 @@ def uuid7() -> uuid.UUID:
 
 
 # ---------------------------------------------------------------------------
-# Constants
+# Constants (non-env)
 # ---------------------------------------------------------------------------
 DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}")
 BYTES_IN_MIB = 1_048_576
 
-DEFAULT_CODE_SYSTEM_URL = (
-    "https://bcgov.github.io/nr-pies/docs/spec/code_system/application_process"
-)
+DEFAULT_CODE_SYSTEM_URL = "https://bcgov.github.io/nr-pies/docs/spec/code_system/application_process"
 
-# POST behaviour (timeout + retry)
-POST_TIMEOUT_SECONDS = int(os.getenv("PEACH_POST_TIMEOUT", "30"))
-POST_MAX_RETRIES = int(os.getenv("PEACH_POST_MAX_RETRIES", "3"))
 POST_RETRY_STATUSES = {408, 429, 500, 502, 503, 504}
 
-# Event time mode:
-#   - DATETIME: start_datetime/end_datetime RFC3339
-#   - DATE:     start_date/end_date YYYY-MM-DD
-EVENT_TIME_MODE = os.getenv("EVENT_TIME_MODE", "DATETIME").strip().upper()  # DATETIME|DATE
+# These are set from ENV in the Fabric Notebook section (bottom)
+POST_TIMEOUT_SECONDS = 30
+POST_MAX_RETRIES = 3
+EVENT_TIME_MODE = "DATETIME"  # DATETIME|DATE
 
 
 # ---------------------------------------------------------------------------
@@ -308,9 +491,6 @@ class ETLError(RuntimeError):
 # Null/case helpers
 # ---------------------------------------------------------------------------
 def _is_nullish(v: Any) -> bool:
-    """
-    Treat None / blank / "null"/"NULL" / "NaT" as null-ish.
-    """
     if v is None:
         return True
     try:
@@ -325,10 +505,6 @@ def _is_nullish(v: Any) -> bool:
 
 
 class CaseInsensitiveRow(_Mapping):
-    """
-    Mapping wrapper that makes key access case-insensitive for string keys.
-    """
-
     def __init__(self, data: Mapping[str, Any]):
         self._data = dict(data)
         self._lower_map = {str(k).lower(): k for k in self._data.keys()}
@@ -361,23 +537,39 @@ class CaseInsensitiveRow(_Mapping):
 
 
 # ---------------------------------------------------------------------------
-# Configuration
+# Configuration (all values sourced from ENV at runtime)
 # ---------------------------------------------------------------------------
 @dataclass
 class Config:
-    small_mb: int = int(os.getenv("ETL_SMALL_MIB", "100"))
-    medium_mb: int = int(os.getenv("ETL_MEDIUM_MIB", "200"))
-    chunk_rows: int = int(os.getenv("ETL_CHUNK_ROWS", "100000"))
+    # Defaults (will be overridden by ENV if provided)
+    small_mb: int = 100
+    medium_mb: int = 200
+    chunk_rows: int = 100000
 
-    # logging
-    log_level: str = os.getenv("LOG_LEVEL", "INFO")
-    log_json: bool = bool(int(os.getenv("LOG_JSON", "0")))
+    log_level: str = "INFO"
+    log_json: bool = False
 
-    # diagnostics / safety
-    max_rows: int = int(os.getenv("ETL_MAX_ROWS", "0"))  # 0 = no cap
-    log_first_n_rows: int = int(os.getenv("ETL_LOG_FIRST_N_ROWS", "0"))  # 0 = off
-    log_rule_hit_topn: int = int(os.getenv("ETL_RULE_HIT_TOPN", "15"))
-    fail_on_empty_output: bool = bool(int(os.getenv("ETL_FAIL_ON_EMPTY_OUTPUT", "0")))
+    max_rows: int = 0
+    log_first_n_rows: int = 0
+    log_rule_hit_topn: int = 15
+    fail_on_empty_output: bool = False
+
+    def __post_init__(self) -> None:
+        # Pull from ENV (no direct os.getenv)
+        self.small_mb = env_get_int(ENV, "ETL_SMALL_MIB", "etl_small_mib", default=self.small_mb)
+        self.medium_mb = env_get_int(ENV, "ETL_MEDIUM_MIB", "etl_medium_mib", default=self.medium_mb)
+        self.chunk_rows = env_get_int(ENV, "ETL_CHUNK_ROWS", "etl_chunk_rows", default=self.chunk_rows)
+
+        self.log_level = env_get_any(ENV, "LOG_LEVEL", "log_level", default=self.log_level)
+        self.log_json = env_get_bool(ENV, "LOG_JSON", "log_json", default=self.log_json)
+
+        self.max_rows = env_get_int(ENV, "ETL_MAX_ROWS", "etl_max_rows", default=self.max_rows)
+        self.log_first_n_rows = env_get_int(ENV, "ETL_LOG_FIRST_N_ROWS", "etl_log_first_n_rows", default=self.log_first_n_rows)
+        self.log_rule_hit_topn = env_get_int(ENV, "ETL_RULE_HIT_TOPN", "etl_rule_hit_topn", default=self.log_rule_hit_topn)
+        self.fail_on_empty_output = env_get_bool(ENV, "ETL_FAIL_ON_EMPTY_OUTPUT", "etl_fail_on_empty_output", default=self.fail_on_empty_output)
+
+        # Normalize
+        self.log_level = (self.log_level or "INFO").strip().upper()
 
     @property
     def small_bytes(self) -> int:
@@ -395,8 +587,8 @@ def _init_logging(cfg: Config, log_path: Optional[Path] = None) -> None:
     console_level = getattr(logging, cfg.log_level.upper(), logging.INFO)
 
     root = logging.getLogger()
-    root.setLevel(logging.DEBUG)  # capture everything; handlers filter
-    root.handlers.clear()  # important in notebooks
+    root.setLevel(logging.DEBUG)
+    root.handlers.clear()
 
     console_handler = logging.StreamHandler(sys.stdout)
     if cfg.log_json and JSON_LOGGER_AVAILABLE:
@@ -438,9 +630,6 @@ _OP: Mapping[str, Callable] = {
 
 
 def _coerce(value: Any) -> Any:
-    """
-    Coerce YYYY-MM-DD strings into datetime objects for comparisons.
-    """
     if isinstance(value, str) and DATE_RE.match(value):
         try:
             return datetime.fromisoformat(value.replace("Z", ""))
@@ -539,20 +728,13 @@ def _compute_required_cols_for_rule(definition: Dict[str, Any]) -> Set[str]:
     return cols
 
 
-# ---------------------------------------------------------------------------
-# Loaders (CI/CD-safe: can read from ABFS)
-# ---------------------------------------------------------------------------
 def load_rules(path_str: str, *, system: Optional[str] = None) -> List[Dict[str, Any]]:
     logger.info("Loading rules from %s", path_str)
     raw = json.loads(read_text_any(path_str))
     compiled: List[Dict[str, Any]] = []
 
     for key, definition in raw.items():
-        if (
-            system
-            and definition.get("source")
-            and str(definition["source"]).lower() != system.lower()
-        ):
+        if system and definition.get("source") and str(definition["source"]).lower() != system.lower():
             continue
 
         start_attr = (definition.get("start_date") or {}).get("attr") or definition.get("start_attr")
@@ -591,9 +773,6 @@ def load_lifecycle(path_str: Optional[str]) -> Dict[str, Any]:
     return lifecycle
 
 
-# ---------------------------------------------------------------------------
-# Process-info resolver (unchanged)
-# ---------------------------------------------------------------------------
 def _resolve_process_info(
     status_key: str,
     rule_code_set: Any,
@@ -718,9 +897,6 @@ def _to_int_no_decimal(value: Any) -> Any:
         return value
 
 
-# ---------------------------------------------------------------------------
-# Event builders (unchanged)
-# ---------------------------------------------------------------------------
 def _build_event(
     row: Mapping[str, Any],
     rule: Mapping[str, Any],
@@ -866,9 +1042,6 @@ def _build_pes(
     }
 
 
-# ---------------------------------------------------------------------------
-# Writer & optional API posting
-# ---------------------------------------------------------------------------
 def write_jsonl(
     records: Iterable[Dict[str, Any]],
     out_dir: Path,
@@ -887,7 +1060,13 @@ def write_jsonl(
     return out_path, line_count
 
 
-def post_jsonl_to_api(out_path: Path, api_url: str, *, expected_lines: Optional[int] = None) -> None:
+def post_jsonl_to_api(
+    out_path: Path,
+    api_url: str,
+    *,
+    expected_lines: Optional[int] = None,
+    token_mgr: Optional[PeachTokenManager] = None,  # <-- auth optional
+) -> None:
     if expected_lines is not None and expected_lines == 0:
         logger.warning("Skipping POST: output file has 0 lines: %s", out_path)
         return
@@ -930,11 +1109,13 @@ def post_jsonl_to_api(out_path: Path, api_url: str, *, expected_lines: Optional[
                 record_id = record.get("record_id", "UNKNOWN")
                 attempt = 0
                 sent_ok = False
+                refreshed_once = False
 
                 while attempt < POST_MAX_RETRIES and not sent_ok:
                     attempt += 1
                     try:
-                        resp = sess.post(api_url, json=record, timeout=POST_TIMEOUT_SECONDS)
+                        headers = token_mgr.auth_headers() if token_mgr else None
+                        resp = sess.post(api_url, json=record, headers=headers, timeout=POST_TIMEOUT_SECONDS)
                     except Exception as e:
                         if attempt < POST_MAX_RETRIES:
                             logger.warning(
@@ -959,6 +1140,21 @@ def post_jsonl_to_api(out_path: Path, api_url: str, *, expected_lines: Optional[
                         break
 
                     status = resp.status_code
+
+                    # If auth fails, refresh token ONCE and retry
+                    if token_mgr and status in (401, 403) and (not refreshed_once) and attempt < POST_MAX_RETRIES:
+                        logger.warning(
+                            "POST auth failed status=%s record_id=%s (line %d). Refreshing token and retrying once.",
+                            status, record_id, line_no
+                        )
+                        try:
+                            token_mgr.refresh()
+                            refreshed_once = True
+                            time.sleep(1)
+                            continue
+                        except Exception as e:
+                            logger.error("Token refresh failed: %s", e)
+                            # fall through to normal error handling
 
                     if status in POST_RETRY_STATUSES and attempt < POST_MAX_RETRIES:
                         logger.warning(
@@ -989,10 +1185,11 @@ def post_jsonl_to_api(out_path: Path, api_url: str, *, expected_lines: Optional[
                         )
                     else:
                         logger.error(
-                            "POST non-retryable status %s record_id=%s (line %d) -> error bucket",
+                            "POST non-retryable status %s record_id=%s (line %d) -> error bucket. resp=%s",
                             status,
                             record_id,
                             line_no,
+                            (resp.text or "")[:300],
                         )
                     _write_error_entry(record, line_no, record_id, error=f"HTTP {status}", status_code=status)
                     break
@@ -1007,9 +1204,6 @@ def post_jsonl_to_api(out_path: Path, api_url: str, *, expected_lines: Optional[
         logger.warning("Some records failed and were written to: %s", error_path)
 
 
-# ---------------------------------------------------------------------------
-# Preflight: compare table columns vs rules required columns
-# ---------------------------------------------------------------------------
 def _preflight_rules_vs_table_columns(
     table_columns: List[str],
     rules: List[Mapping[str, Any]],
@@ -1030,9 +1224,6 @@ def _preflight_rules_vs_table_columns(
         logger.info("Preflight: all rule-referenced columns exist in the table schema.")
 
 
-# ---------------------------------------------------------------------------
-# Core engine (unchanged)
-# ---------------------------------------------------------------------------
 def smart_engine_from_rows(
     rows: Iterable[Mapping[str, Any]],
     rules: List[Mapping[str, Any]],
@@ -1044,8 +1235,6 @@ def smart_engine_from_rows(
     default_system_id: str = "ITSM-6117",
     record_kind: str = "Permit",
     version: str = "0.1.0",
-    post_to_api: bool = False,
-    api_url: Optional[str] = None,
 ) -> Tuple[Path, int]:
     start = time.perf_counter()
     row_count = 0
@@ -1116,9 +1305,6 @@ def smart_engine_from_rows(
     return out_path, lines
 
 
-# ---------------------------------------------------------------------------
-# Fabric entry point (CI/CD-safe: no dbo.*, no default lakehouse)
-# ---------------------------------------------------------------------------
 def run_fabric_from_table(
     table_name: str,
     table_abfs_path: str,
@@ -1129,19 +1315,13 @@ def run_fabric_from_table(
     *,
     post_to_api: bool = False,
     api_url: Optional[str] = None,
+    token_mgr: Optional[PeachTokenManager] = None,  # <-- add
     default_system_id: str = "ITSM-6117",
     record_kind: str = "Permit",
     version: str = "0.1.0",
 ) -> Tuple[Path, int]:
-    """
-    Entry point for Fabric:
-      - read from explicit ABFS Delta table path
-      - stage output locally
-      - copy output (+ log + error bucket if exists) to ABFS output dir
-    """
     cfg = Config()
 
-    # Stage locally so Python open() works, then copy to ABFS
     stage_dir = Path("/tmp") / f"pies_etl_stage_{uuid.uuid4().hex}"
     stage_dir.mkdir(parents=True, exist_ok=True)
 
@@ -1155,7 +1335,6 @@ def run_fabric_from_table(
     logger.info("Requested table_name (for reference only): %s", table_name)
     logger.info("Delta table ABFS path: %s", table_abfs_path)
 
-    # Read Delta table explicitly (no spark.sql dbo.*)
     df = spark.read.format("delta").load(table_abfs_path)  # type: ignore[name-defined]
 
     try:
@@ -1167,7 +1346,6 @@ def run_fabric_from_table(
 
     rows = (CaseInsensitiveRow(r.asDict(recursive=True)) for r in df.toLocalIterator())
 
-    # Write locally
     local_out_path, lines = smart_engine_from_rows(
         rows=rows,
         rules=rules,
@@ -1178,27 +1356,21 @@ def run_fabric_from_table(
         default_system_id=default_system_id,
         record_kind=record_kind,
         version=version,
-        post_to_api=False,
-        api_url=None,
     )
 
-
-
-    # Copy outputs to ABFS
     ensure_dir_any(output_dir_abfs)
     remote_out_path = output_dir_abfs.rstrip("/") + "/" + output_filename
     copy_local_to_abfs(local_out_path, remote_out_path, overwrite=True)
     logger.info("Copied output JSONL to ABFS: %s", remote_out_path)
+
     if post_to_api and api_url:
         logger.info("Starting POST AFTER ABFS copy (artifact already saved).")
-        post_jsonl_to_api(local_out_path, api_url, expected_lines=lines)
+        post_jsonl_to_api(local_out_path, api_url, expected_lines=lines, token_mgr=token_mgr)
 
-    # Copy log
     remote_log_path = output_dir_abfs.rstrip("/") + "/" + log_path.name
     copy_local_to_abfs(log_path, remote_log_path, overwrite=True)
     logger.info("Copied log to ABFS: %s", remote_log_path)
 
-    # Copy error bucket if exists
     err_local = local_out_path.with_name(local_out_path.stem + "_errors.jsonl")
     if err_local.exists():
         remote_err = output_dir_abfs.rstrip("/") + "/" + err_local.name
@@ -1216,9 +1388,7 @@ def run_fabric_from_table(
 spark.conf.set("spark.sql.parquet.datetimeRebaseModeInRead", "CORRECTED")  # type: ignore[name-defined]
 spark.conf.set("spark.sql.parquet.int96RebaseModeInRead", "CORRECTED")     # type: ignore[name-defined]
 
-# -------------------------
-# CI/CD SAFE: ENV + ABFS BASE
-# -------------------------
+# REQUIRED env vars (must exist)
 ENV = load_env_vars_from_variable_library(
     "pmt_env_vars",
     required_keys=(
@@ -1230,11 +1400,89 @@ ENV = load_env_vars_from_variable_library(
     env_fallback=True,
 )
 
+# OPTIONAL env vars (do not hard-fail if missing)
+ENV.update(
+    load_optional_env_vars_from_variable_library(
+        "pmt_env_vars",
+        optional_keys=(
+            # PEACH auth config (recommend lowercase keys in variable library)
+            "peach_token_url",
+            "peach_keyvault_url",
+            "peach_client_id",
+            "peach_secret_name",
+
+            # Back-compat if you used uppercase keys in the library or OS env
+            "PEACH_TOKEN_URL",
+            "PEACH_KEYVAULT_URL",
+            "PEACH_CLIENT_ID",
+            "PEACH_SECRET_NAME",
+
+            # Posting/retry/time-mode (optional)
+            "peach_post_timeout",
+            "peach_post_max_retries",
+            "event_time_mode",
+
+            "PEACH_POST_TIMEOUT",
+            "PEACH_POST_MAX_RETRIES",
+            "EVENT_TIME_MODE",
+
+            # ETL config (optional)
+            "etl_small_mib",
+            "etl_medium_mib",
+            "etl_chunk_rows",
+            "log_level",
+            "log_json",
+            "etl_max_rows",
+            "etl_log_first_n_rows",
+            "etl_rule_hit_topn",
+            "etl_fail_on_empty_output",
+
+            "ETL_SMALL_MIB",
+            "ETL_MEDIUM_MIB",
+            "ETL_CHUNK_ROWS",
+            "LOG_LEVEL",
+            "LOG_JSON",
+            "ETL_MAX_ROWS",
+            "ETL_LOG_FIRST_N_ROWS",
+            "ETL_RULE_HIT_TOPN",
+            "ETL_FAIL_ON_EMPTY_OUTPUT",
+        ),
+        env_fallback=True,
+    )
+)
+
 FABRIC_ENV = ENV["fabric_env"]
 API_URL = ENV["peach_api_url"]
 
 WORKSPACE_REF = ENV["pmt-workspace-id"]
 LAKEHOUSE_REF = ENV["pmt-lakehouse-id"]
+
+# Set runtime constants from ENV (NO os.getenv here)
+POST_TIMEOUT_SECONDS = env_get_int(ENV, "peach_post_timeout", "PEACH_POST_TIMEOUT", default=30)
+POST_MAX_RETRIES = env_get_int(ENV, "peach_post_max_retries", "PEACH_POST_MAX_RETRIES", default=3)
+EVENT_TIME_MODE = env_get_any(ENV, "event_time_mode", "EVENT_TIME_MODE", default="DATETIME").strip().upper()
+
+# PEACH auth vars from ENV with defaults
+PEACH_TOKEN_URL = env_get_any(
+    ENV,
+    "peach_token_url", "PEACH_TOKEN_URL",
+    default="https://dev.loginproxy.gov.bc.ca/auth/realms/permittingexchange/protocol/openid-connect/token",
+)
+PEACH_KEYVAULT_URL = env_get_any(
+    ENV,
+    "peach_keyvault_url", "PEACH_KEYVAULT_URL",
+    default="https://permittingfabrickv.vault.azure.net/",
+)
+PEACH_CLIENT_ID = env_get_any(
+    ENV,
+    "peach_client_id", "PEACH_CLIENT_ID",
+    default="dev-w1zhang",
+)
+PEACH_SECRET_NAME = env_get_any(
+    ENV,
+    "peach_secret_name", "PEACH_SECRET_NAME",
+    default=PEACH_CLIENT_ID,
+)
 
 ABFS_BASE = build_abfs_base(WORKSPACE_REF, LAKEHOUSE_REF)
 
@@ -1242,53 +1490,67 @@ print(f"[ENV] fabric_env={FABRIC_ENV}")
 print(f"[ENV] workspace_ref={WORKSPACE_REF}")
 print(f"[ENV] lakehouse_ref={LAKEHOUSE_REF}")
 print(f"[ENV] abfs_base={ABFS_BASE}")
+print(f"[ENV] peach_api_url={API_URL}")
+print(f"[ENV] peach_token_url={PEACH_TOKEN_URL}")
+print(f"[ENV] peach_keyvault_url={PEACH_KEYVAULT_URL}")
+print(f"[ENV] peach_client_id={PEACH_CLIENT_ID}")
+print(f"[ENV] PEACH_POST_TIMEOUT={POST_TIMEOUT_SECONDS}  PEACH_POST_MAX_RETRIES={POST_MAX_RETRIES}  EVENT_TIME_MODE={EVENT_TIME_MODE}")
+print(f"[SWITCH] POST_TO_API={POST_TO_API}  USE_PEACH_AUTH={USE_PEACH_AUTH}")
 
 # -------------------------
 # Change here
 # -------------------------
 TABLE_NAME = "dbo.pies_staging_water_jobnumber"
 
-# CI/CD safe
 TABLE_SHORT = TABLE_NAME.split(".")[-1]
 TABLE_ABFS_PATH = f"{ABFS_BASE}/Tables/dbo/{TABLE_SHORT}"
 
-
-# Rules & lifecycle (explicit ABFS paths)
 RULES_PATH = f"{ABFS_BASE}/Files/pies_module/water/water_lifecyle_rules/rules.json"
 LIFECYCLE_PATH = f"{ABFS_BASE}/Files/pies_module/water/water_lifecyle_mapping/lifecycle_map.json"
 
-# Output folder + file
 timestamp = datetime.now().strftime("%Y%m%d")
 OUTPUT_DIR_ABFS = f"{ABFS_BASE}/Files/pies_module/water/water_events_peach/{FABRIC_ENV.lower()}"
 OUTPUT_FILENAME = f"water_events_jobnumber_{FABRIC_ENV.lower()}_{timestamp}.jsonl"
-
-POST_TO_API = True  # set False to only write JSONL (no POST)
 
 DEFAULT_SYSTEM_ID = "ITSM-6197"
 RECORD_KIND = "Permit"
 PES_VERSION = "0.1.0"
 
+# Build token manager ONLY if auth is enabled
+token_mgr = None
+if POST_TO_API and USE_PEACH_AUTH:
+    token_mgr = build_peach_token_manager_from_keyvault(
+        keyvault_url=PEACH_KEYVAULT_URL,
+        secret_name=PEACH_SECRET_NAME,
+        token_url=PEACH_TOKEN_URL,
+        client_id=PEACH_CLIENT_ID,
+    )
+    logger.info("PEACH auth enabled for POST. client_id=%s token_host=%s", PEACH_CLIENT_ID, PEACH_TOKEN_URL.split("/")[2])
+
 # Run (CI/CD SAFE)
 run_fabric_from_table(
-    table_name=TABLE_NAME,                 
-    table_abfs_path=TABLE_ABFS_PATH,      
-    rules_path=RULES_PATH,                
-    lifecycle_path=LIFECYCLE_PATH,         
-    output_dir_abfs=OUTPUT_DIR_ABFS,       
+    table_name=TABLE_NAME,
+    table_abfs_path=TABLE_ABFS_PATH,
+    rules_path=RULES_PATH,
+    lifecycle_path=LIFECYCLE_PATH,
+    output_dir_abfs=OUTPUT_DIR_ABFS,
     output_filename=OUTPUT_FILENAME,
     post_to_api=POST_TO_API,
     api_url=API_URL,
+    token_mgr=token_mgr,  # None if auth disabled
     default_system_id=DEFAULT_SYSTEM_ID,
     record_kind=RECORD_KIND,
     version=PES_VERSION,
 )
 
-# Checklist (only change these when making a new dataset):
+# Checklist:
 # 1) TABLE_NAME
 # 2) OUTPUT_FILENAME pattern
-# 3) RULES_PATH / LIFECYCLE_PATH (only if different module)
+# 3) RULES_PATH / LIFECYCLE_PATH
 # 4) DEFAULT_SYSTEM_ID / RECORD_KIND / PES_VERSION
-# 5) Header comments
+# 5) Switches: POST_TO_API / USE_PEACH_AUTH
+# 6) Variable Library keys (pmt_env_vars): fabric_env, peach_api_url, pmt-workspace-id, pmt-lakehouse-id
+#    Optional: peach_token_url, peach_keyvault_url, peach_client_id, peach_secret_name, peach_post_timeout, peach_post_max_retries, event_time_mode
 
 
 # METADATA ********************
