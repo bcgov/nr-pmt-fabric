@@ -1486,15 +1486,7 @@ PEACH_SECRET_NAME = env_get_any(
 
 ABFS_BASE = build_abfs_base(WORKSPACE_REF, LAKEHOUSE_REF)
 
-print(f"[ENV] fabric_env={FABRIC_ENV}")
-print(f"[ENV] workspace_ref={WORKSPACE_REF}")
-print(f"[ENV] lakehouse_ref={LAKEHOUSE_REF}")
-print(f"[ENV] abfs_base={ABFS_BASE}")
-print(f"[ENV] peach_api_url={API_URL}")
-print(f"[ENV] peach_token_url={PEACH_TOKEN_URL}")
-print(f"[ENV] peach_keyvault_url={PEACH_KEYVAULT_URL}")
-print(f"[ENV] peach_client_id={PEACH_CLIENT_ID}")
-print(f"[ENV] peach_secret_name={PEACH_SECRET_NAME}")
+
 print(f"[ENV] PEACH_POST_TIMEOUT={POST_TIMEOUT_SECONDS}  PEACH_POST_MAX_RETRIES={POST_MAX_RETRIES}  EVENT_TIME_MODE={EVENT_TIME_MODE}")
 print(f"[SWITCH] POST_TO_API={POST_TO_API}  USE_PEACH_AUTH={USE_PEACH_AUTH}")
 
