@@ -323,7 +323,9 @@
               },
               "destination": {
                 "name": "ATSLINKID",
-                "physicalType": "string"
+                "physicalType": "decimal",
+                "scale": 18,
+                "precision": 38
               }
             },
             {
