@@ -6,10 +6,7 @@
       "connectionSettings": {
         "type": "Oracle",
         "externalReferences": {
-          "connectionVariableLibrary": {
-            "variableName": "pmt-fta-odb",
-            "libraryName": "pmt_env_vars"
-          }
+          "connection": "a1052ebf-2b20-484f-b22a-780ebb22dfc3"
         }
       }
     },
@@ -291,35 +288,6 @@
       }
     },
     {
-      "id": "79e95d2f-9989-4738-8b7a-3b0648424afe",
-      "properties": {
-        "source": {
-          "datasetSettings": {
-            "schema": "THE",
-            "table": "CUT_BLOCK_GEOM"
-          }
-        },
-        "destination": {
-          "partitionOption": "None",
-          "writeBehavior": "Overwrite",
-          "datasetSettings": {
-            "schema": "fta_replication",
-            "table": "fta_cut_block_geom"
-          }
-        },
-        "enableStaging": false,
-        "translator": {
-          "type": "TabularTranslator"
-        },
-        "typeConversionSettings": {
-          "typeConversion": {
-            "allowDataTruncation": true,
-            "treatBooleanAsNumber": false
-          }
-        }
-      }
-    },
-    {
       "id": "5105e977-d58a-45ca-a4a0-aafe5a215732",
       "properties": {
         "source": {
@@ -494,64 +462,6 @@
       }
     },
     {
-      "id": "2c930141-18a7-424a-af96-d5ce9cd7816b",
-      "properties": {
-        "source": {
-          "datasetSettings": {
-            "schema": "THE",
-            "table": "HARVEST_AUTHORITY_AMEND_GEOM"
-          }
-        },
-        "destination": {
-          "partitionOption": "None",
-          "writeBehavior": "Overwrite",
-          "datasetSettings": {
-            "schema": "fta_replication",
-            "table": "fta_harvest_authority_amend_geom"
-          }
-        },
-        "enableStaging": false,
-        "translator": {
-          "type": "TabularTranslator"
-        },
-        "typeConversionSettings": {
-          "typeConversion": {
-            "allowDataTruncation": true,
-            "treatBooleanAsNumber": false
-          }
-        }
-      }
-    },
-    {
-      "id": "0ef37dd5-8b0d-4018-9382-e5f920ea2e2d",
-      "properties": {
-        "source": {
-          "datasetSettings": {
-            "schema": "THE",
-            "table": "HARVEST_AUTHORITY_GEOM"
-          }
-        },
-        "destination": {
-          "partitionOption": "None",
-          "writeBehavior": "Overwrite",
-          "datasetSettings": {
-            "schema": "fta_replication",
-            "table": "fta_harvest_authority_geom"
-          }
-        },
-        "enableStaging": false,
-        "translator": {
-          "type": "TabularTranslator"
-        },
-        "typeConversionSettings": {
-          "typeConversion": {
-            "allowDataTruncation": true,
-            "treatBooleanAsNumber": false
-          }
-        }
-      }
-    },
-    {
       "id": "5f46069b-0079-4678-93ce-7bc5b80a4549",
       "properties": {
         "source": {
@@ -657,7 +567,379 @@
         },
         "enableStaging": false,
         "translator": {
-          "type": "TabularTranslator"
+          "type": "TabularTranslator",
+          "mappings": [
+            {
+              "source": {
+                "name": "HVA_SKEY",
+                "type": "Int64"
+              },
+              "destination": {
+                "name": "HVA_SKEY",
+                "physicalType": "long"
+              }
+            },
+            {
+              "source": {
+                "name": "FOREST_FILE_ID",
+                "type": "String"
+              },
+              "destination": {
+                "name": "FOREST_FILE_ID",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "CUTTING_PERMIT_ID",
+                "type": "String"
+              },
+              "destination": {
+                "name": "CUTTING_PERMIT_ID",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "HARVESTING_AUTHORITY_ID",
+                "type": "String"
+              },
+              "destination": {
+                "name": "HARVESTING_AUTHORITY_ID",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "FOREST_DISTRICT",
+                "type": "Int64"
+              },
+              "destination": {
+                "name": "FOREST_DISTRICT",
+                "physicalType": "long"
+              }
+            },
+            {
+              "source": {
+                "name": "DISTRICT_ADMN_ZONE",
+                "type": "String"
+              },
+              "destination": {
+                "name": "DISTRICT_ADMN_ZONE",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "GEOGRAPHIC_DISTRICT",
+                "type": "Int64"
+              },
+              "destination": {
+                "name": "GEOGRAPHIC_DISTRICT",
+                "physicalType": "long"
+              }
+            },
+            {
+              "source": {
+                "name": "MGMT_UNIT_ID",
+                "type": "String"
+              },
+              "destination": {
+                "name": "MGMT_UNIT_ID",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "MGMT_UNIT_TYPE_CODE",
+                "type": "String"
+              },
+              "destination": {
+                "name": "MGMT_UNIT_TYPE_CODE",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "LICENCE_TO_CUT_CODE",
+                "type": "String"
+              },
+              "destination": {
+                "name": "LICENCE_TO_CUT_CODE",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "HARVEST_TYPE_CODE",
+                "type": "String"
+              },
+              "destination": {
+                "name": "HARVEST_TYPE_CODE",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "HARVEST_AUTH_STATUS_CODE",
+                "type": "String"
+              },
+              "destination": {
+                "name": "HARVEST_AUTH_STATUS_CODE",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "TENURE_TERM",
+                "type": "Int32"
+              },
+              "destination": {
+                "name": "TENURE_TERM",
+                "physicalType": "integer"
+              }
+            },
+            {
+              "source": {
+                "name": "EXTEND_COUNT",
+                "type": "Int64"
+              },
+              "destination": {
+                "name": "EXTEND_COUNT",
+                "physicalType": "long"
+              }
+            },
+            {
+              "source": {
+                "name": "HARVEST_AUTH_EXTEND_REAS_CODE",
+                "type": "String"
+              },
+              "destination": {
+                "name": "HARVEST_AUTH_EXTEND_REAS_CODE",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "QUOTA_TYPE_CODE",
+                "type": "String"
+              },
+              "destination": {
+                "name": "QUOTA_TYPE_CODE",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "CROWN_LANDS_REGION_CODE",
+                "type": "String"
+              },
+              "destination": {
+                "name": "CROWN_LANDS_REGION_CODE",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "SALVAGE_TYPE_CODE",
+                "type": "String"
+              },
+              "destination": {
+                "name": "SALVAGE_TYPE_CODE",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "CASCADE_SPLIT_CODE",
+                "type": "String"
+              },
+              "destination": {
+                "name": "CASCADE_SPLIT_CODE",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "CATASTROPHIC_IND",
+                "type": "String"
+              },
+              "destination": {
+                "name": "CATASTROPHIC_IND",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "CROWN_GRANTED_IND",
+                "type": "String"
+              },
+              "destination": {
+                "name": "CROWN_GRANTED_IND",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "CRUISE_BASED_IND",
+                "type": "String"
+              },
+              "destination": {
+                "name": "CRUISE_BASED_IND",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "DECIDUOUS_IND",
+                "type": "String"
+              },
+              "destination": {
+                "name": "DECIDUOUS_IND",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "BCAA_FOLIO_NUMBER",
+                "type": "String"
+              },
+              "destination": {
+                "name": "BCAA_FOLIO_NUMBER",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "LOCATION",
+                "type": "String"
+              },
+              "destination": {
+                "name": "LOCATION",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "HIGHER_LEVEL_PLAN_REFERENCE",
+                "type": "String"
+              },
+              "destination": {
+                "name": "HIGHER_LEVEL_PLAN_REFERENCE",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "HARVEST_AREA",
+                "type": "Double"
+              },
+              "destination": {
+                "name": "HARVEST_AREA",
+                "physicalType": "double"
+              }
+            },
+            {
+              "source": {
+                "name": "REVISION_COUNT",
+                "type": "Int32"
+              },
+              "destination": {
+                "name": "REVISION_COUNT",
+                "physicalType": "integer"
+              }
+            },
+            {
+              "source": {
+                "name": "ENTRY_USERID",
+                "type": "String"
+              },
+              "destination": {
+                "name": "ENTRY_USERID",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "ENTRY_TIMESTAMP",
+                "type": "DateTime"
+              },
+              "destination": {
+                "name": "ENTRY_TIMESTAMP",
+                "physicalType": "timestamp"
+              }
+            },
+            {
+              "source": {
+                "name": "UPDATE_USERID",
+                "type": "String"
+              },
+              "destination": {
+                "name": "UPDATE_USERID",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "UPDATE_TIMESTAMP",
+                "type": "DateTime"
+              },
+              "destination": {
+                "name": "UPDATE_TIMESTAMP",
+                "physicalType": "timestamp"
+              }
+            },
+            {
+              "source": {
+                "name": "IS_WASTE_ASSESSMENT_REQUIRED",
+                "type": "String"
+              },
+              "destination": {
+                "name": "IS_WASTE_ASSESSMENT_REQUIRED",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "IS_CP_EXTENSN_APPL_FEE_WAIVED",
+                "type": "String"
+              },
+              "destination": {
+                "name": "IS_CP_EXTENSN_APPL_FEE_WAIVED",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "IS_CP_EXTENSION_APPL_FEE_PAID",
+                "type": "String"
+              },
+              "destination": {
+                "name": "IS_CP_EXTENSION_APPL_FEE_PAID",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "IS_WITHIN_FIBRE_RECOVERY_ZONE",
+                "type": "String"
+              },
+              "destination": {
+                "name": "IS_WITHIN_FIBRE_RECOVERY_ZONE",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "HARVESTING_AUTHORITY_GUID",
+                "type": "Byte[]"
+              },
+              "destination": {
+                "name": "HARVESTING_AUTHORITY_GUID",
+                "physicalType": "binary"
+              }
+            }
+          ]
         },
         "typeConversionSettings": {
           "typeConversion": {
@@ -1295,7 +1577,339 @@
         },
         "enableStaging": false,
         "translator": {
-          "type": "TabularTranslator"
+          "type": "TabularTranslator",
+          "mappings": [
+            {
+              "source": {
+                "name": "TIMBER_MARK",
+                "type": "String"
+              },
+              "destination": {
+                "name": "TIMBER_MARK",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "FOREST_FILE_ID",
+                "type": "String"
+              },
+              "destination": {
+                "name": "FOREST_FILE_ID",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "CUTTING_PERMIT_ID",
+                "type": "String"
+              },
+              "destination": {
+                "name": "CUTTING_PERMIT_ID",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "FOREST_DISTRICT",
+                "type": "Int64"
+              },
+              "destination": {
+                "name": "FOREST_DISTRICT",
+                "physicalType": "long"
+              }
+            },
+            {
+              "source": {
+                "name": "GEOGRAPHIC_DISTRCT",
+                "type": "Int64"
+              },
+              "destination": {
+                "name": "GEOGRAPHIC_DISTRCT",
+                "physicalType": "long"
+              }
+            },
+            {
+              "source": {
+                "name": "CASCADE_SPLIT_CODE",
+                "type": "String"
+              },
+              "destination": {
+                "name": "CASCADE_SPLIT_CODE",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "QUOTA_TYPE_CODE",
+                "type": "String"
+              },
+              "destination": {
+                "name": "QUOTA_TYPE_CODE",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "DECIDUOUS_IND",
+                "type": "String"
+              },
+              "destination": {
+                "name": "DECIDUOUS_IND",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "CATASTROPHIC_IND",
+                "type": "String"
+              },
+              "destination": {
+                "name": "CATASTROPHIC_IND",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "CROWN_GRANTED_IND",
+                "type": "String"
+              },
+              "destination": {
+                "name": "CROWN_GRANTED_IND",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "CRUISE_BASED_IND",
+                "type": "String"
+              },
+              "destination": {
+                "name": "CRUISE_BASED_IND",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "CERTIFICATE",
+                "type": "String"
+              },
+              "destination": {
+                "name": "CERTIFICATE",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "HDBS_TIMBER_MARK",
+                "type": "String"
+              },
+              "destination": {
+                "name": "HDBS_TIMBER_MARK",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "VM_TIMBER_MARK",
+                "type": "String"
+              },
+              "destination": {
+                "name": "VM_TIMBER_MARK",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "TENURE_TERM",
+                "type": "Int32"
+              },
+              "destination": {
+                "name": "TENURE_TERM",
+                "physicalType": "integer"
+              }
+            },
+            {
+              "source": {
+                "name": "BCAA_FOLIO_NUMBER",
+                "type": "String"
+              },
+              "destination": {
+                "name": "BCAA_FOLIO_NUMBER",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "ACTIVATED_USERID",
+                "type": "String"
+              },
+              "destination": {
+                "name": "ACTIVATED_USERID",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "AMENDED_USERID",
+                "type": "String"
+              },
+              "destination": {
+                "name": "AMENDED_USERID",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "DISTRICT_ADMN_ZONE",
+                "type": "String"
+              },
+              "destination": {
+                "name": "DISTRICT_ADMN_ZONE",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "LANDS_REGION",
+                "type": "String"
+              },
+              "destination": {
+                "name": "LANDS_REGION",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "CROWN_GRANTED_ACQ_DESC",
+                "type": "String"
+              },
+              "destination": {
+                "name": "CROWN_GRANTED_ACQ_DESC",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "MARK_STATUS_ST",
+                "type": "String"
+              },
+              "destination": {
+                "name": "MARK_STATUS_ST",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "MARK_EXTEND_RSN_CD",
+                "type": "String"
+              },
+              "destination": {
+                "name": "MARK_EXTEND_RSN_CD",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "MARK_EXTEND_COUNT",
+                "type": "Int64"
+              },
+              "destination": {
+                "name": "MARK_EXTEND_COUNT",
+                "physicalType": "long"
+              }
+            },
+            {
+              "source": {
+                "name": "MARKNG_INSTRMNT_CD",
+                "type": "String"
+              },
+              "destination": {
+                "name": "MARKNG_INSTRMNT_CD",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "MARKING_METHOD_CD",
+                "type": "String"
+              },
+              "destination": {
+                "name": "MARKING_METHOD_CD",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "ENTRY_USERID",
+                "type": "String"
+              },
+              "destination": {
+                "name": "ENTRY_USERID",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "ENTRY_TIMESTAMP",
+                "type": "DateTime"
+              },
+              "destination": {
+                "name": "ENTRY_TIMESTAMP",
+                "physicalType": "timestamp"
+              }
+            },
+            {
+              "source": {
+                "name": "UPDATE_USERID",
+                "type": "String"
+              },
+              "destination": {
+                "name": "UPDATE_USERID",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "UPDATE_TIMESTAMP",
+                "type": "DateTime"
+              },
+              "destination": {
+                "name": "UPDATE_TIMESTAMP",
+                "physicalType": "timestamp"
+              }
+            },
+            {
+              "source": {
+                "name": "REVISION_COUNT",
+                "type": "Int32"
+              },
+              "destination": {
+                "name": "REVISION_COUNT",
+                "physicalType": "integer"
+              }
+            },
+            {
+              "source": {
+                "name": "SMALL_PATCH_SALVAGE_IND",
+                "type": "String"
+              },
+              "destination": {
+                "name": "SMALL_PATCH_SALVAGE_IND",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "SALVAGE_TYPE_CODE",
+                "type": "String"
+              },
+              "destination": {
+                "name": "SALVAGE_TYPE_CODE",
+                "physicalType": "string"
+              }
+            }
+          ]
         },
         "typeConversionSettings": {
           "typeConversion": {
