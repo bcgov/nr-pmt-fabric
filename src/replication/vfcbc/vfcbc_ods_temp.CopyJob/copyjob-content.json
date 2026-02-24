@@ -216,7 +216,7 @@
           "writeBehavior": "Overwrite",
           "datasetSettings": {
             "schema": "vfcbc_replication",
-            "table": "vfcbc_crownlandstenureapparea"
+            "table": "vfcbc_crownlandtenureapparea"
           },
           "applyVOrder": false
         },
