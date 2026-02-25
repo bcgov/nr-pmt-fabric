@@ -29,13 +29,25 @@ shared pies_staging_lands_dispids = let
     // -----------------------------
     // Helper: normalize keys (trim, cast to text, remove trailing ".0", blank -> null)
     // -----------------------------
+
     NormalizeKey = (v as any) as nullable text =>
         let
             t0 = if v = null then "" else Text.Trim(Text.From(v)),
-            t1 = if Text.EndsWith(t0, ".0") then Text.BeforeDelimiter(t0, ".") else t0,
-            t2 = Text.Trim(t1)
+            t1 = Text.Replace(t0, ",", ""),
+            t2 =
+                if Text.Contains(t1, ".") then
+                    let
+                        parts = Text.Split(t1, "."),
+                        leftPart = parts{0},
+                        rightPart = if List.Count(parts) > 1 then parts{1} else "",
+                        rightNoZeros = Text.TrimEnd(rightPart, {"0"})
+                    in
+                        if rightNoZeros = "" then leftPart else t1
+                else
+                    t1,
+            t3 = Text.Trim(t2)
         in
-            if t2 = "" then null else t2,
+            if t3 = "" then null else t3,
 
     // -----------------------------
     // Expand helper: DO NOT rename unless there is a name conflict
