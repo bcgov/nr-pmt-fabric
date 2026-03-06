@@ -291,35 +291,6 @@
       }
     },
     {
-      "id": "79e95d2f-9989-4738-8b7a-3b0648424afe",
-      "properties": {
-        "source": {
-          "datasetSettings": {
-            "schema": "THE",
-            "table": "CUT_BLOCK_GEOM"
-          }
-        },
-        "destination": {
-          "partitionOption": "None",
-          "writeBehavior": "Overwrite",
-          "datasetSettings": {
-            "schema": "fta_replication",
-            "table": "fta_cut_block_geom"
-          }
-        },
-        "enableStaging": false,
-        "translator": {
-          "type": "TabularTranslator"
-        },
-        "typeConversionSettings": {
-          "typeConversion": {
-            "allowDataTruncation": true,
-            "treatBooleanAsNumber": false
-          }
-        }
-      }
-    },
-    {
       "id": "5105e977-d58a-45ca-a4a0-aafe5a215732",
       "properties": {
         "source": {
@@ -479,64 +450,6 @@
           "datasetSettings": {
             "schema": "fta_replication",
             "table": "fta_harvest_auth_status_code"
-          }
-        },
-        "enableStaging": false,
-        "translator": {
-          "type": "TabularTranslator"
-        },
-        "typeConversionSettings": {
-          "typeConversion": {
-            "allowDataTruncation": true,
-            "treatBooleanAsNumber": false
-          }
-        }
-      }
-    },
-    {
-      "id": "2c930141-18a7-424a-af96-d5ce9cd7816b",
-      "properties": {
-        "source": {
-          "datasetSettings": {
-            "schema": "THE",
-            "table": "HARVEST_AUTHORITY_AMEND_GEOM"
-          }
-        },
-        "destination": {
-          "partitionOption": "None",
-          "writeBehavior": "Overwrite",
-          "datasetSettings": {
-            "schema": "fta_replication",
-            "table": "fta_harvest_authority_amend_geom"
-          }
-        },
-        "enableStaging": false,
-        "translator": {
-          "type": "TabularTranslator"
-        },
-        "typeConversionSettings": {
-          "typeConversion": {
-            "allowDataTruncation": true,
-            "treatBooleanAsNumber": false
-          }
-        }
-      }
-    },
-    {
-      "id": "0ef37dd5-8b0d-4018-9382-e5f920ea2e2d",
-      "properties": {
-        "source": {
-          "datasetSettings": {
-            "schema": "THE",
-            "table": "HARVEST_AUTHORITY_GEOM"
-          }
-        },
-        "destination": {
-          "partitionOption": "None",
-          "writeBehavior": "Overwrite",
-          "datasetSettings": {
-            "schema": "fta_replication",
-            "table": "fta_harvest_authority_geom"
           }
         },
         "enableStaging": false,
