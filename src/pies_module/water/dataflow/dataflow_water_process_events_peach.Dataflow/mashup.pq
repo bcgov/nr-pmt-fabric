@@ -1152,7 +1152,5 @@ in
     Output;
 shared DefaultDestination =
     Lakehouse.Contents([EnableFolding = false])
-    {[workspaceId = #"pmt-workspace-id"]}[Data]
-    {[lakehouseId = #"pmt-lakehouse-id"]}[Data];
-
-
+    {[workspaceId = Text.From(#"pmt-workspace-id")]}[Data]
+    {[lakehouseId = Text.From(#"pmt-lakehouse-id")]}[Data];
