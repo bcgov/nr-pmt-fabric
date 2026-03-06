@@ -1,13 +1,23 @@
 [StagingDefinition = [Kind = "FastCopy"]]
 section Section1;
-shared #"pmt-workspace-id" = "60f10f69-06b8-44a3-a3cf-1afd52d4d754" meta [IsParameterQuery = true, IsParameterQueryRequired = false, Type = type text];
-shared #"pmt-lakehouse-id" = "964899a6-7e35-47cd-9eb3-429482e1b733" meta [IsParameterQuery = true, IsParameterQueryRequired = false, Type = type text];
+shared #"pmt-workspace-id" = "79dafa8a-b966-4240-80f7-2e9d46baa5c3" meta [IsParameterQuery = true, IsParameterQueryRequired = false, Type = type text];
+shared #"pmt-lakehouse-id" = "201b9b7d-ca11-46b6-81e8-feeba4c99642" meta [IsParameterQuery = true, IsParameterQueryRequired = false, Type = type text];
 shared pies_staging_water_jobnumber = let
     // ============================================================
     // Parameters
     // ============================================================
-    WorkspaceId = Text.From(#"pmt-workspace-id"),
-    LakehouseId = Text.From(#"pmt-lakehouse-id"),
+
+    WorkspaceId =
+        Variable.ValueOrDefault(
+            "$(/**/pmt-variable-library/pmt-workspace-id)",
+            "79dafa8a-b966-4240-80f7-2e9d46baa5c3"
+        ),
+
+    LakehouseId =
+        Variable.ValueOrDefault(
+            "$(/**/pmt-variable-library/pmt-lakehouse-id)",
+            "201b9b7d-ca11-46b6-81e8-feeba4c99642"
+        ),
 
     // ============================================================
     // Lakehouse navigation
@@ -385,9 +395,18 @@ shared pies_staging_water_vfcbctracking = let
     // ============================================================
     // Parameters
     // ============================================================
-    WorkspaceId = Text.From(#"pmt-workspace-id"),
-    LakehouseId = Text.From(#"pmt-lakehouse-id"),
 
+    WorkspaceId =
+        Variable.ValueOrDefault(
+            "$(/**/pmt-variable-library/pmt-workspace-id)",
+            "79dafa8a-b966-4240-80f7-2e9d46baa5c3"
+        ),
+
+    LakehouseId =
+        Variable.ValueOrDefault(
+            "$(/**/pmt-variable-library/pmt-lakehouse-id)",
+            "201b9b7d-ca11-46b6-81e8-feeba4c99642"
+        ),
     // ============================================================
     // Lakehouse navigation
     // ============================================================
@@ -765,9 +784,18 @@ shared pies_staging_water_authid = let
     // ============================================================
     // Parameters
     // ============================================================
-    WorkspaceId = Text.From(#"pmt-workspace-id"),
-    LakehouseId = Text.From(#"pmt-lakehouse-id"),
 
+    WorkspaceId =
+        Variable.ValueOrDefault(
+            "$(/**/pmt-variable-library/pmt-workspace-id)",
+            "79dafa8a-b966-4240-80f7-2e9d46baa5c3"
+        ),
+
+    LakehouseId =
+        Variable.ValueOrDefault(
+            "$(/**/pmt-variable-library/pmt-lakehouse-id)",
+            "201b9b7d-ca11-46b6-81e8-feeba4c99642"
+        ),
     // ============================================================
     // Lakehouse navigation
     // ============================================================
@@ -1147,6 +1175,9 @@ shared pies_staging_water_authid = let
         Table.SelectRows(Cleaned, each [PIESID] <> null and Text.Trim(Text.From([PIESID])) <> "")
 in
     Output;
-shared DefaultDestination = Lakehouse.Contents([EnableFolding = false])
-    {[workspaceId = Text.From(#"pmt-workspace-id")]}[Data]
-    {[lakehouseId = Text.From(#"pmt-lakehouse-id")]}[Data];
+shared DefaultDestination = let
+    Source = Lakehouse.Contents([EnableFolding = false]),
+    Workspace = Source{[workspaceId = Text.From(#"pmt-workspace-id")]}[Data],
+    Lakehouse = Workspace{[lakehouseId = Text.From(#"pmt-lakehouse-id")]}[Data]
+in
+    Lakehouse;
