@@ -6,9 +6,17 @@ shared pies_staging_lands_dispids = let
     // -----------------------------
     // Parameters
     // -----------------------------
-    WorkspaceId = Text.From(#"pmt-workspace-id"),
-    LakehouseId = Text.From(#"pmt-lakehouse-id"),
+    WorkspaceId =
+        Variable.ValueOrDefault(
+            "$(/**/pmt-variable-library/pmt-workspace-id)",
+            "79dafa8a-b966-4240-80f7-2e9d46baa5c3"
+        ),
 
+    LakehouseId =
+        Variable.ValueOrDefault(
+            "$(/**/pmt-variable-library/pmt-lakehouse-id)",
+            "201b9b7d-ca11-46b6-81e8-feeba4c99642"
+        ),
     // Optional: add a constant system_id so rules/preflight won't complain
     DEFAULT_SYSTEM_ID = "ITSM-6072",
 
