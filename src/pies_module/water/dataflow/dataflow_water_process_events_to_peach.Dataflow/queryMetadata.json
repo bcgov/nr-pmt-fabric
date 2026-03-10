@@ -17,15 +17,18 @@
     },
     "pies_staging_water_jobnumber": {
       "queryId": "9d4b46be-aae9-40c8-a326-3410e8f50d35",
-      "queryName": "pies_staging_water_jobnumber"
+      "queryName": "pies_staging_water_jobnumber",
+      "loadEnabled": false
     },
     "pies_staging_water_vfcbctracking": {
       "queryId": "743d6dcf-4481-4ee8-a8ed-5a9f5b30bc9d",
-      "queryName": "pies_staging_water_vfcbctracking"
+      "queryName": "pies_staging_water_vfcbctracking",
+      "loadEnabled": false
     },
     "pies_staging_water_authid": {
       "queryId": "f2d9bf74-d416-4feb-923c-c43b8e423cdc",
-      "queryName": "pies_staging_water_authid"
+      "queryName": "pies_staging_water_authid",
+      "loadEnabled": false
     },
     "DefaultDestination": {
       "queryId": "33d58623-ff41-4d9f-a107-654b93dc9796",
