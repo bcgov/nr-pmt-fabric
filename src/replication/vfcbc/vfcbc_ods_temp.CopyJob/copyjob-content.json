@@ -31,6 +31,242 @@
   },
   "activities": [
     {
+      "id": "66986609-8f47-48b0-822f-691ebeef8c87",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "CORRAL_GENERATED_VIEWS",
+            "table": "VFCBC_APPLICATION"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "vfcbc_replication",
+            "table": "vfcbc_application"
+          },
+          "applyVOrder": false
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "ae0d4e75-d4b7-4ada-bd3e-36da661f208a",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "CORRAL_GENERATED_VIEWS",
+            "table": "VFCBC_ATSNUMBER_VW"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "vfcbc_replication",
+            "table": "vfcbc_atsnumber_vw"
+          },
+          "applyVOrder": false
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator",
+          "mappings": [
+            {
+              "source": {
+                "name": "ATSLINKID",
+                "type": "Int64"
+              },
+              "destination": {
+                "name": "ATSLINKID",
+                "physicalType": "long"
+              }
+            },
+            {
+              "source": {
+                "name": "ATSAUTHORIZATIONNUMBER",
+                "type": "Int32"
+              },
+              "destination": {
+                "name": "ATSAUTHORIZATIONNUMBER",
+                "physicalType": "integer"
+              }
+            },
+            {
+              "source": {
+                "name": "LANDSFILENUMBER",
+                "type": "Decimal",
+                "scale": 127,
+                "precision": 38
+              },
+              "destination": {
+                "name": "LANDSFILENUMBER",
+                "physicalType": "integer"
+              }
+            },
+            {
+              "source": {
+                "name": "DISPOSITION_TRANSACTION_SID",
+                "type": "Decimal",
+                "scale": 127,
+                "precision": 38
+              },
+              "destination": {
+                "name": "DISPOSITION_TRANSACTION_SID",
+                "physicalType": "integer"
+              }
+            },
+            {
+              "source": {
+                "name": "DISPOSITION_TRANSACTION_STRING",
+                "type": "String"
+              },
+              "destination": {
+                "name": "DISPOSITION_TRANSACTION_STRING",
+                "physicalType": "string"
+              }
+            }
+          ]
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "687ebc14-bebd-4814-8dcf-b91803033929",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "CORRAL_GENERATED_VIEWS",
+            "table": "VFCBC_BUSINESS"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "vfcbc_replication",
+            "table": "vfcbc_business"
+          },
+          "applyVOrder": false
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "e3345e06-fc24-49ef-aa53-20b066034068",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "CORRAL_GENERATED_VIEWS",
+            "table": "VFCBC_BUSINESSAREA"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "vfcbc_replication",
+            "table": "vfcbc_businessarea"
+          },
+          "applyVOrder": false
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "45f8c596-f041-4f63-9e9e-ef3500e68b12",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "CORRAL_GENERATED_VIEWS",
+            "table": "VFCBC_CROWNLANDTENUREAPPAREA"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "vfcbc_replication",
+            "table": "vfcbc_crownlandtenureapparea"
+          },
+          "applyVOrder": false
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "2c2f963d-f050-483d-911d-8d95e2278421",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "CORRAL_GENERATED_VIEWS",
+            "table": "VFCBC_OFFICE"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "vfcbc_replication",
+            "table": "vfcbc_office"
+          },
+          "applyVOrder": false
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
       "id": "ce1a752d-42cc-426b-8270-214a4df4d3e7",
       "properties": {
         "source": {
