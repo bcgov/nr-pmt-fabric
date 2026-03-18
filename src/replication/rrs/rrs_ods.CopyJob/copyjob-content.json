@@ -1,0 +1,792 @@
+{
+  "properties": {
+    "jobMode": "Batch",
+    "source": {
+      "type": "OracleTable",
+      "connectionSettings": {
+        "type": "Oracle",
+        "externalReferences": {
+          "connectionVariableLibrary": {
+            "variableName": "pmt-rrs-odb",
+            "libraryName": "pmt_env_vars"
+          }
+        }
+      }
+    },
+    "destination": {
+      "type": "LakehouseTable",
+      "connectionSettings": {
+        "type": "Lakehouse",
+        "typeProperties": {
+          "workspaceId": "00000000-0000-0000-0000-000000000000",
+          "artifactId": "a4c99642-feeb-81e8-46b6-ca11201b9b7d",
+          "rootFolder": "Tables"
+        }
+      }
+    },
+    "policy": {
+      "timeout": "0.12:00:00"
+    }
+  },
+  "activities": [
+    {
+      "id": "f635b7ca-bc19-4db1-859e-4d895d27e659",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "APP_RRS",
+            "table": "RESOURCE_ROAD_CLIENT_SDW"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "rrs_replication",
+            "table": "rrs_resource_road_client_sdw_test"
+          }
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "23978d1f-97d6-410f-9170-cb46929bf925",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "APP_RRS",
+            "table": "RESOURCE_ROAD_TENURE"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "rrs_replication",
+            "table": "rrs_resource_road_tenure_test"
+          }
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "6a297104-7a38-41cf-a70e-f557803e504f",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "APP_RRS",
+            "table": "ROAD_APPL_MAP_FEATURE"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "rrs_replication",
+            "table": "rrs_road_appl_map_feature_test"
+          }
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "f2b228a7-811d-43ec-9806-21ebf4eeb3e6",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "APP_RRS",
+            "table": "ROAD_APPLICATION"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "rrs_replication",
+            "table": "rrs_road_application_test"
+          }
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "e2c67bcd-143d-4f5e-9e4f-f0302b20169a",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "APP_RRS",
+            "table": "ROAD_APPLICATION_STATUS_CODE"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "rrs_replication",
+            "table": "rrs_road_application_status_code_test"
+          }
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "a42ebfce-7ea0-4566-a97c-fa7718442737",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "APP_RRS",
+            "table": "ROAD_CLIENT_STATUS_CODE"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "rrs_replication",
+            "table": "rrs_road_client_status_code_test"
+          }
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "5b203ea1-ed69-49f5-a28d-5c4626c6fa7f",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "APP_RRS",
+            "table": "ROAD_EXTERNAL_SUBMSN_SDW"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "rrs_replication",
+            "table": "rrs_road_external_submsn_sdw_test"
+          }
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "37e909d3-2d49-4fa9-a7b1-468853b6be63",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "APP_RRS",
+            "table": "ROAD_FEATURE_CLASS_SDW"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "rrs_replication",
+            "table": "rrs_road_feature_class_sdw_test"
+          }
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "f60824b2-04c5-4ecf-a404-e2822d2edad8",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "APP_RRS",
+            "table": "ROAD_FOREST_MGT_UNIT_SDW"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "rrs_replication",
+            "table": "rrs_road_forest_mgt_unit_sdw_test"
+          }
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "2d0ba755-6634-4f03-9fb5-8203b0090df5",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "APP_RRS",
+            "table": "ROAD_ORG_UNIT_SDW"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "rrs_replication",
+            "table": "rrs_road_org_unit_sdw_test"
+          }
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "ad030dde-94ec-4284-8a06-952158861572",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "APP_RRS",
+            "table": "ROAD_REQUEST"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "rrs_replication",
+            "table": "rrs_road_request_test"
+          }
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "c3ace60e-5b67-43f8-b83b-d84c043db5ca",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "APP_RRS",
+            "table": "ROAD_SECTION"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "rrs_replication",
+            "table": "rrs_road_section_test"
+          }
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "c8ea6362-9410-459e-8af3-736d6b738306",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "APP_RRS",
+            "table": "ROAD_SECTION_STATUS_CODE"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "rrs_replication",
+            "table": "rrs_road_section_status_code_test"
+          }
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "312018d3-452b-405f-a01c-d0a2c867f7ca",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "APP_RRS",
+            "table": "ROAD_SUBMISSION"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "rrs_replication",
+            "table": "rrs_road_submission_test"
+          }
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "369f3e27-3837-433a-a2d4-fc8c82f62294",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "APP_RRS",
+            "table": "ROAD_TENURE_CLIENT"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "rrs_replication",
+            "table": "rrs_road_tenure_client_test"
+          }
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "235a25ba-e6f0-4765-bbcd-7db9f8d7ad46",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "APP_RRS",
+            "table": "ROAD_TENURE_STATUS_CODE"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "rrs_replication",
+            "table": "rrs_road_tenure_status_code_test"
+          }
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "72cb580d-11be-4ef6-8fc7-f37988dbc902",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "APP_RRS",
+            "table": "ROAD_TENURE_TYPE_CODE"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "rrs_replication",
+            "table": "rrs_road_tenure_type_code_test"
+          }
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "5a3b8215-9c03-4653-a7cc-9a21ca09d572",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "APP_RRS",
+            "table": "ROAD_USE_PERMIT"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "rrs_replication",
+            "table": "rrs_road_use_permit_test"
+          }
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "9b1e4609-1e24-4da1-a0c3-ad3578d96744",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "APP_RRS",
+            "table": "ROAD_USE_PERMIT_PURPOSE_CODE"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "rrs_replication",
+            "table": "rrs_road_use_permit_purpose_code_test"
+          }
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "28e964ea-24d0-4c65-b8a0-c478cfa12311",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "APP_RRS",
+            "table": "ROAD_USE_PERMIT_SECTION"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "rrs_replication",
+            "table": "rrs_road_use_permit_section_test"
+          }
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "bfcba141-9559-497a-84c5-f1257e9ddec3",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "APP_RRS",
+            "table": "ROAD_USE_PERMIT_STATUS_CODE"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "rrs_replication",
+            "table": "rrs_road_use_permit_status_code_test"
+          }
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator",
+          "mappings": [
+            {
+              "source": {
+                "name": "ROAD_USE_PERMIT_STATUS_CODE",
+                "type": "String"
+              },
+              "destination": {
+                "name": "ROAD_USE_PERMIT_STATUS_CODE",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "DESCRIPTION",
+                "type": "String"
+              },
+              "destination": {
+                "name": "DESCRIPTION",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "DISPLAY_ORDER",
+                "type": "Int16"
+              },
+              "destination": {
+                "name": "DISPLAY_ORDER",
+                "physicalType": "integer"
+              }
+            },
+            {
+              "source": {
+                "name": "EFFECTIVE_DATE",
+                "type": "DateTime"
+              },
+              "destination": {
+                "name": "EFFECTIVE_DATE",
+                "physicalType": "timestamp"
+              }
+            },
+            {
+              "source": {
+                "name": "EXPIRY_DATE",
+                "type": "DateTime"
+              },
+              "destination": {
+                "name": "EXPIRY_DATE",
+                "physicalType": "timestamp"
+              }
+            },
+            {
+              "source": {
+                "name": "CREATE_USER",
+                "type": "String"
+              },
+              "destination": {
+                "name": "CREATE_USER",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "CREATE_DATE",
+                "type": "DateTime"
+              },
+              "destination": {
+                "name": "CREATE_DATE",
+                "physicalType": "timestamp"
+              }
+            },
+            {
+              "source": {
+                "name": "UPDATE_USER",
+                "type": "String"
+              },
+              "destination": {
+                "name": "UPDATE_USER",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "UPDATE_DATE",
+                "type": "DateTime"
+              },
+              "destination": {
+                "name": "UPDATE_DATE",
+                "physicalType": "timestamp"
+              }
+            }
+          ]
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "0b112e2d-871a-498b-9718-38968017be31",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "APP_RRS",
+            "table": "RR_ASSOCIATED_TENURE"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "rrs_replication",
+            "table": "rrs_rr_associated_tenure_test"
+          }
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "e54e1248-d2b9-4530-a994-f019903dbfa3",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "APP_RRS",
+            "table": "SUBMISSION_STATUS_CODE"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "rrs_replication",
+            "table": "rrs_submission_status_code_test"
+          }
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    }
+  ]
+}
