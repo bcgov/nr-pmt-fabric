@@ -37,6 +37,9 @@
           "datasetSettings": {
             "schema": "CORRAL_GENERATED_VIEWS",
             "table": "VFCBC_APPLICATION"
+          },
+          "partitionSettings": {
+            "partitionOption": "None"
           }
         },
         "destination": {
@@ -67,6 +70,9 @@
           "datasetSettings": {
             "schema": "CORRAL_GENERATED_VIEWS",
             "table": "VFCBC_APPLICATION_VW"
+          },
+          "partitionSettings": {
+            "partitionOption": "None"
           }
         },
         "destination": {
@@ -331,6 +337,9 @@
           "datasetSettings": {
             "schema": "CORRAL_GENERATED_VIEWS",
             "table": "VFCBC_ATSNUMBER_VW"
+          },
+          "partitionSettings": {
+            "partitionOption": "None"
           }
         },
         "destination": {
@@ -417,6 +426,9 @@
           "datasetSettings": {
             "schema": "CORRAL_GENERATED_VIEWS",
             "table": "VFCBC_BUSINESS"
+          },
+          "partitionSettings": {
+            "partitionOption": "None"
           }
         },
         "destination": {
@@ -447,6 +459,9 @@
           "datasetSettings": {
             "schema": "CORRAL_GENERATED_VIEWS",
             "table": "VFCBC_BUSINESSAREA"
+          },
+          "partitionSettings": {
+            "partitionOption": "None"
           }
         },
         "destination": {
@@ -477,6 +492,9 @@
           "datasetSettings": {
             "schema": "CORRAL_GENERATED_VIEWS",
             "table": "VFCBC_CROWNLANDTENUREAPPAREA"
+          },
+          "partitionSettings": {
+            "partitionOption": "None"
           }
         },
         "destination": {
@@ -491,6 +509,110 @@
         "enableStaging": false,
         "translator": {
           "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "20e8249e-5759-478d-9268-07dc68832819",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "CORRAL_GENERATED_VIEWS",
+            "table": "VFCBC_PROCESSES"
+          },
+          "partitionSettings": {
+            "partitionOption": "None"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "vfcbc_replication",
+            "table": "vfcbc_process"
+          }
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator",
+          "mappings": [
+            {
+              "source": {
+                "name": "OBJECTID",
+                "type": "Int64"
+              },
+              "destination": {
+                "name": "OBJECTID",
+                "physicalType": "long"
+              }
+            },
+            {
+              "source": {
+                "name": "CREATEDDATE",
+                "type": "DateTime"
+              },
+              "destination": {
+                "name": "CREATEDDATE",
+                "physicalType": "timestamp"
+              }
+            },
+            {
+              "source": {
+                "name": "DATECOMPLETED",
+                "type": "DateTime"
+              },
+              "destination": {
+                "name": "DATECOMPLETED",
+                "physicalType": "timestamp"
+              }
+            },
+            {
+              "source": {
+                "name": "JOBID",
+                "type": "Int64"
+              },
+              "destination": {
+                "name": "JOBID",
+                "physicalType": "long"
+              }
+            },
+            {
+              "source": {
+                "name": "OUTCOME",
+                "type": "String"
+              },
+              "destination": {
+                "name": "OUTCOME",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "PROCESSTYPE",
+                "type": "String"
+              },
+              "destination": {
+                "name": "PROCESSTYPE",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "STAFFASSIGNED",
+                "type": "String"
+              },
+              "destination": {
+                "name": "STAFFASSIGNED",
+                "physicalType": "string"
+              }
+            }
+          ]
         },
         "typeConversionSettings": {
           "typeConversion": {
