@@ -4,7 +4,7 @@
       {
         "type": "TridentNotebook",
         "typeProperties": {
-          "notebookId": "e79f1044-4c39-a7ea-4aa9-3b372e610063",
+          "notebookId": "1641cd69-edf1-99e1-467d-02a2603a28cf",
           "workspaceId": "00000000-0000-0000-0000-000000000000",
           "sessionTag": "spark_water_session"
         },
@@ -48,7 +48,7 @@
       {
         "type": "TridentNotebook",
         "typeProperties": {
-          "notebookId": "5fee1047-e3c2-af41-4cf9-e8a353814d4d",
+          "notebookId": "e2939c48-8ea9-ae61-4f9b-989ad5a53425",
           "workspaceId": "00000000-0000-0000-0000-000000000000",
           "sessionTag": "spark_water_session"
         },
@@ -73,7 +73,7 @@
       {
         "type": "TridentNotebook",
         "typeProperties": {
-          "notebookId": "56c0b23f-24a1-9cd4-4ac3-4472b47c0507",
+          "notebookId": "f9084edb-96b7-b92e-4de0-92d552736984",
           "workspaceId": "00000000-0000-0000-0000-000000000000",
           "sessionTag": "spark_water_session"
         },
