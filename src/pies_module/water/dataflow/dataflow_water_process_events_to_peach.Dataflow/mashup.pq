@@ -1,7 +1,8 @@
-[StagingDefinition = [Kind = "FastCopy"]]
+[DefaultOutputDestinationSettings = [DestinationDefinition = [Kind = "Reference", QueryName = "DefaultDestination (2)", IsNewTarget = true], UpdateMethod = [Kind = "Replace"], DestinationTypeSettings = [Kind = "Table"]], StagingDefinition = [Kind = "FastCopy"]]
 section Section1;
-shared #"pmt-workspace-id" = "79dafa8a-b966-4240-80f7-2e9d46baa5c3" meta [IsParameterQuery = true, IsParameterQueryRequired = false, Type = type text];
-shared #"pmt-lakehouse-id" = "201b9b7d-ca11-46b6-81e8-feeba4c99642" meta [IsParameterQuery = true, IsParameterQueryRequired = false, Type = type text];
+shared #"pmt-workspace-id" = "60f10f69-06b8-44a3-a3cf-1afd52d4d754" meta [IsParameterQuery = true, IsParameterQueryRequired = false, Type = type text];
+shared #"pmt-lakehouse-id" = "79dafa8a-b966-4240-80f7-2e9d46baa5c3" meta [IsParameterQuery = true, IsParameterQueryRequired = false, Type = type text];
+[BindToDefaultDestination = true]
 shared pies_staging_water_jobnumber = let
     // ============================================================
     // Parameters
@@ -51,6 +52,7 @@ shared pies_staging_water_jobnumber = let
     VFCBC_APP0  = GetLHById("vfcbc_replication.vfcbc_application_vw", "VFCBC_APPLICATION_VW"),
     VFCBC_ATS0  = GetLHById("vfcbc_replication.vfcbc_atsnumber_vw", "VFCBC_ATSNUMBER_VW"),
     ATS_AUTH0   = GetLHById("ats_replication.ats_authorizations", "ATS_AUTHORIZATIONS"),
+    ONH0        = GetLHById("ats_replication.ats_authorizations_on_hold", "ATS_AUTHORIZATIONS_ON_HOLD"),
 
     // ============================================================
     // Helpers
@@ -141,6 +143,7 @@ shared pies_staging_water_jobnumber = let
     APP1       = NormalizeCols(VFCBC_APP0),
     ATSNO1     = NormalizeCols(VFCBC_ATS0),
     AUTH1      = NormalizeCols(ATS_AUTH0),
+    ONH1       = NormalizeCols(ONH0),
 
     // ============================================================
     // Ensure join columns exist
@@ -193,6 +196,14 @@ shared pies_staging_water_jobnumber = let
             "AUTHORIZATION_ID",
             {"AUTHORIZATION_ID", "AUTHORIZATIONID"},
             "ATS_AUTHORIZATIONS"
+        ),
+
+    ONH2 =
+        EnsureCanonicalFromAliases(
+            ONH1,
+            "AUTHORIZATION_ID",
+            {"AUTHORIZATION_ID", "AUTHORIZATIONID"},
+            "ATS_AUTHORIZATIONS_ON_HOLD"
         ),
 
 
@@ -284,10 +295,36 @@ shared pies_staging_water_jobnumber = let
     AuthCols = Table.ColumnNames(AUTH3),
     E2 = ExpandWithDedup(J2, "AUTH", AuthCols, "__AUTH"),
 
+    ONH3 = Table.TransformColumns(ONH2, {{"AUTHORIZATION_ID", each ToNumberOrNull(_), type number}}),
+
+    J3 =
+        Table.NestedJoin(
+            E2,
+            {"__AUTH_ID_FOR_JOIN"},
+            ONH3,
+            {"AUTHORIZATION_ID"},
+            "ONH",
+            JoinKind.LeftOuter
+        ),
+
+    OnhCols =
+        {
+            "AUTHORIZATION_ON_HOLD_ID",
+            "ATHN_ON_HOLD_REASON_CODE",
+            "CURRENT_ON_HOLD_IND",
+            "ON_HOLD_START_DATE",
+            "ON_HOLD_END_DATE",
+            "ON_HOLD_NOTES",
+            "REMOVED_BY",
+            "PARTNER_AGENCY_ID"
+        },
+
+    E3 = ExpandWithDedup(J3, "ONH", OnhCols, "__ONH"),
+
 
     WithPIESID =
         Table.AddColumn(
-            E2,
+            E3,
             "PIESID",
             each
                 if not IsNullOrBlank([JOBNUMBER])
@@ -391,6 +428,7 @@ shared pies_staging_water_jobnumber = let
         Table.SelectRows(Cleaned, each [PIESID] <> null and Text.Trim(Text.From([PIESID])) <> "")
 in
     Output;
+[BindToDefaultDestination = true]
 shared pies_staging_water_vfcbctracking = let
     // ============================================================
     // Parameters
@@ -407,13 +445,14 @@ shared pies_staging_water_vfcbctracking = let
             "$(/**/pmt-variable-library/pmt-lakehouse-id)",
             "201b9b7d-ca11-46b6-81e8-feeba4c99642"
         ),
+
     // ============================================================
     // Lakehouse navigation
     // ============================================================
-
     Source = Lakehouse.Contents(null),
     WS = Source{[workspaceId = WorkspaceId]}[Data],
     LH = WS{[lakehouseId = LakehouseId]}[Data],
+
     GetLHById = (id as text, friendly as text) as table =>
         let
             rows = Table.SelectRows(LH, each Record.HasFields(_, "Id") and [Id] = id),
@@ -439,6 +478,7 @@ shared pies_staging_water_vfcbctracking = let
     VFCBC_APP0  = GetLHById("vfcbc_replication.vfcbc_application_vw", "VFCBC_APPLICATION_VW"),
     VFCBC_ATS0  = GetLHById("vfcbc_replication.vfcbc_atsnumber_vw", "VFCBC_ATSNUMBER_VW"),
     ATS_AUTH0   = GetLHById("ats_replication.ats_authorizations", "ATS_AUTHORIZATIONS"),
+    ONH0        = GetLHById("ats_replication.ats_authorizations_on_hold", "ATS_AUTHORIZATIONS_ON_HOLD"),
 
     // ============================================================
     // Helpers
@@ -529,6 +569,7 @@ shared pies_staging_water_vfcbctracking = let
     APP1       = NormalizeCols(VFCBC_APP0),
     ATSNO1     = NormalizeCols(VFCBC_ATS0),
     AUTH1      = NormalizeCols(ATS_AUTH0),
+    ONH1       = NormalizeCols(ONH0),
 
     // ============================================================
     // Ensure join columns exist
@@ -581,6 +622,14 @@ shared pies_staging_water_vfcbctracking = let
             "AUTHORIZATION_ID",
             {"AUTHORIZATION_ID", "AUTHORIZATIONID"},
             "ATS_AUTHORIZATIONS"
+        ),
+
+    ONH2 =
+        EnsureCanonicalFromAliases(
+            ONH1,
+            "AUTHORIZATION_ID",
+            {"AUTHORIZATION_ID", "AUTHORIZATIONID"},
+            "ATS_AUTHORIZATIONS_ON_HOLD"
         ),
 
 
@@ -672,6 +721,31 @@ shared pies_staging_water_vfcbctracking = let
     AuthCols = Table.ColumnNames(AUTH3),
     E2 = ExpandWithDedup(J2, "AUTH", AuthCols, "__AUTH"),
 
+    ONH3 = Table.TransformColumns(ONH2, {{"AUTHORIZATION_ID", each ToNumberOrNull(_), type number}}),
+
+    J3 =
+        Table.NestedJoin(
+            E2,
+            {"__AUTH_ID_FOR_JOIN"},
+            ONH3,
+            {"AUTHORIZATION_ID"},
+            "ONH",
+            JoinKind.LeftOuter
+        ),
+
+    OnhCols =
+        {
+            "AUTHORIZATION_ON_HOLD_ID",
+            "ATHN_ON_HOLD_REASON_CODE",
+            "CURRENT_ON_HOLD_IND",
+            "ON_HOLD_START_DATE",
+            "ON_HOLD_END_DATE",
+            "ON_HOLD_NOTES",
+            "REMOVED_BY",
+            "PARTNER_AGENCY_ID"
+        },
+
+    E3 = ExpandWithDedup(J3, "ONH", OnhCols, "__ONH"),
 
     WithPIESID =
         Table.AddColumn(
@@ -684,7 +758,6 @@ shared pies_staging_water_vfcbctracking = let
                 else null,
             type text
         ),
-
 
     EnsureIfMissing = (t as table, col as text, compute as function, colType as type) as table =>
         if List.Contains(Table.ColumnNames(t), col) then t else Table.AddColumn(t, col, compute, colType),
@@ -780,6 +853,7 @@ shared pies_staging_water_vfcbctracking = let
         Table.SelectRows(Cleaned, each [PIESID] <> null and Text.Trim(Text.From([PIESID])) <> "")
 in
     Output;
+[BindToDefaultDestination = true]
 shared pies_staging_water_authid = let
     // ============================================================
     // Parameters
@@ -796,13 +870,14 @@ shared pies_staging_water_authid = let
             "$(/**/pmt-variable-library/pmt-lakehouse-id)",
             "201b9b7d-ca11-46b6-81e8-feeba4c99642"
         ),
+
     // ============================================================
     // Lakehouse navigation
     // ============================================================
-
     Source = Lakehouse.Contents(null),
     WS = Source{[workspaceId = WorkspaceId]}[Data],
     LH = WS{[lakehouseId = LakehouseId]}[Data],
+
     GetLHById = (id as text, friendly as text) as table =>
         let
             rows = Table.SelectRows(LH, each Record.HasFields(_, "Id") and [Id] = id),
@@ -828,6 +903,7 @@ shared pies_staging_water_authid = let
     VFCBC_APP0  = GetLHById("vfcbc_replication.vfcbc_application_vw", "VFCBC_APPLICATION_VW"),
     VFCBC_ATS0  = GetLHById("vfcbc_replication.vfcbc_atsnumber_vw", "VFCBC_ATSNUMBER_VW"),
     ATS_AUTH0   = GetLHById("ats_replication.ats_authorizations", "ATS_AUTHORIZATIONS"),
+    ONH0        = GetLHById("ats_replication.ats_authorizations_on_hold", "ATS_AUTHORIZATIONS_ON_HOLD"),
 
     // ============================================================
     // Helpers
@@ -918,6 +994,7 @@ shared pies_staging_water_authid = let
     APP1       = NormalizeCols(VFCBC_APP0),
     ATSNO1     = NormalizeCols(VFCBC_ATS0),
     AUTH1      = NormalizeCols(ATS_AUTH0),
+    ONH1       = NormalizeCols(ONH0),
 
     // ============================================================
     // Ensure join columns exist
@@ -970,6 +1047,14 @@ shared pies_staging_water_authid = let
             "AUTHORIZATION_ID",
             {"AUTHORIZATION_ID", "AUTHORIZATIONID"},
             "ATS_AUTHORIZATIONS"
+        ),
+
+    ONH2 =
+        EnsureCanonicalFromAliases(
+            ONH1,
+            "AUTHORIZATION_ID",
+            {"AUTHORIZATION_ID", "AUTHORIZATIONID"},
+            "ATS_AUTHORIZATIONS_ON_HOLD"
         ),
 
 
@@ -1061,23 +1146,41 @@ shared pies_staging_water_authid = let
     AuthCols = Table.ColumnNames(AUTH3),
     E2 = ExpandWithDedup(J2, "AUTH", AuthCols, "__AUTH"),
 
+    ONH3 = Table.TransformColumns(ONH2, {{"AUTHORIZATION_ID", each ToNumberOrNull(_), type number}}),
+
+    J3 =
+        Table.NestedJoin(
+            E2,
+            {"__AUTH_ID_FOR_JOIN"},
+            ONH3,
+            {"AUTHORIZATION_ID"},
+            "ONH",
+            JoinKind.LeftOuter
+        ),
+
+    OnhCols =
+        {
+            "AUTHORIZATION_ON_HOLD_ID",
+            "ATHN_ON_HOLD_REASON_CODE",
+            "CURRENT_ON_HOLD_IND",
+            "ON_HOLD_START_DATE",
+            "ON_HOLD_END_DATE",
+            "ON_HOLD_NOTES",
+            "REMOVED_BY",
+            "PARTNER_AGENCY_ID"
+        },
+
+    E3 = ExpandWithDedup(J3, "ONH", OnhCols, "__ONH"),
 
     WithPIESID =
         Table.AddColumn(
             E2,
             "PIESID",
             each
-                let
-                    ats = FirstUsefulField(_, {
-                        "ATSAUTHORIZATIONNUMBER",
-                        "ATSAUTHORIZATIONNUMBER__ATSNO"
-                    })
-                in
-                    if IsNullOrBlank([JOBNUMBER])
-                    and IsNullOrBlank([VFCTRACKING_NUMBER])
-                    and not IsNullOrBlank(ats)
-                    then Text.From(ats)
-                    else null,
+                if IsNullOrBlank([JOBNUMBER])
+                and not IsNullOrBlank([VFCTRACKING_NUMBER])
+                then Text.From([VFCTRACKING_NUMBER])
+                else null,
             type text
         ),
 
@@ -1175,8 +1278,8 @@ shared pies_staging_water_authid = let
         Table.SelectRows(Cleaned, each [PIESID] <> null and Text.Trim(Text.From([PIESID])) <> "")
 in
     Output;
-
-shared DefaultDestination =
-    Lakehouse.Contents([EnableFolding = false])
+[BindToDefaultDestination = true]
+shared DefaultDestination = Lakehouse.Contents([EnableFolding = false])
     {[workspaceId = #"pmt-workspace-id"]}[Data]
     {[lakehouseId = #"pmt-lakehouse-id"]}[Data];
+shared #"DefaultDestination (2)" = Lakehouse.Contents([EnableFolding = false]){[workspaceId = "60f10f69-06b8-44a3-a3cf-1afd52d4d754"]}[Data]{[lakehouseId = "964899a6-7e35-47cd-9eb3-429482e1b733"]}[Data];

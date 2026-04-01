@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Notebook",
+    "displayName": "notebook_lands_process_events_on_hold_peach"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "85e9f2c7-5b86-a989-47a2-073d2a7e7341"
+  }
+}
