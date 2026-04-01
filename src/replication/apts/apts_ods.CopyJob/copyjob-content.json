@@ -1,0 +1,529 @@
+{
+  "properties": {
+    "jobMode": "Batch",
+    "source": {
+      "type": "OracleTable",
+      "connectionSettings": {
+        "type": "Oracle",
+        "externalReferences": {
+          "connectionVariableLibrary": {
+            "variableName": "pmt-elic-odb",
+            "libraryName": "pmt_env_vars"
+          }
+        }
+      }
+    },
+    "destination": {
+      "type": "LakehouseTable",
+      "connectionSettings": {
+        "type": "Lakehouse",
+        "typeProperties": {
+          "workspaceId": "00000000-0000-0000-0000-000000000000",
+          "artifactId": "a4c99642-feeb-81e8-46b6-ca11201b9b7d",
+          "rootFolder": "Tables"
+        }
+      }
+    },
+    "policy": {
+      "timeout": "0.12:00:00",
+      "retry": 0
+    }
+  },
+  "activities": [
+    {
+      "id": "25d9de2c-f378-4560-961e-e642b7a38f95",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "ARCHAEOLOGY_CORRAL_VIEWS",
+            "table": "AR_ARCHAEOLOGYPERMITJOB"
+          },
+          "partitionSettings": {
+            "partitionOption": "None"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "apts_replication",
+            "table": "apts_ar_archaeologypermitjob"
+          },
+          "applyVOrder": false
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "ed342027-968e-4bd2-858f-3800734425f6",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "ARCHAEOLOGY_CORRAL_VIEWS",
+            "table": "AR_BORDENNUMBER"
+          },
+          "partitionSettings": {
+            "partitionOption": "None"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "apts_replication",
+            "table": "apts_ar_bordennumber"
+          },
+          "applyVOrder": false
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "b72f5b0d-84d3-4a2c-b539-cac8a5e7a143",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "ARCHAEOLOGY_CORRAL_VIEWS",
+            "table": "AR_MAPSHEET"
+          },
+          "partitionSettings": {
+            "partitionOption": "None"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "apts_replication",
+            "table": "apts_ar_mapsheet"
+          },
+          "applyVOrder": false
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "975a91df-2a05-4f23-bfeb-403e4ad7d1df",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "ARCHAEOLOGY_CORRAL_VIEWS",
+            "table": "AR_PARTY"
+          },
+          "partitionSettings": {
+            "partitionOption": "None"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "apts_replication",
+            "table": "apts_ar_party"
+          },
+          "applyVOrder": false
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "918d817d-5285-4414-a461-f3b399e9988c",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "ARCHAEOLOGY_CORRAL_VIEWS",
+            "table": "AR_PERMITAMMENDMENTREQUEST"
+          },
+          "partitionSettings": {
+            "partitionOption": "None"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "apts_replication",
+            "table": "apts_ar_permitammendmentrequest"
+          },
+          "applyVOrder": false
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "496a34a6-0065-403b-bb48-08397e795ecc",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "ARCHAEOLOGY_CORRAL_VIEWS",
+            "table": "AR_PERMITPARTICIPANT"
+          },
+          "partitionSettings": {
+            "partitionOption": "None"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "apts_replication",
+            "table": "apts_ar_permitparticipant"
+          },
+          "applyVOrder": false
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "6009b80b-dd50-467e-a4b9-e8f9a4df2a26",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "ARCHAEOLOGY_CORRAL_VIEWS",
+            "table": "AR_PERMITRELATEDFILE"
+          },
+          "partitionSettings": {
+            "partitionOption": "None"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "apts_replication",
+            "table": "apts_ar_permitrelatedfile"
+          },
+          "applyVOrder": false
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "43e19b64-06ac-442d-8785-a970e2649a70",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "ARCHAEOLOGY_CORRAL_VIEWS",
+            "table": "AR_PERMITTOBORDENNUMBERXREF"
+          },
+          "partitionSettings": {
+            "partitionOption": "None"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "apts_replication",
+            "table": "apts_ar_permittobordennumberxref"
+          },
+          "applyVOrder": false
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "bbddf66b-e3b9-4ea6-80fe-70fbf1cd9e02",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "ARCHAEOLOGY_CORRAL_VIEWS",
+            "table": "AR_PERMITTOGEOGRAPHAREAXREF"
+          },
+          "partitionSettings": {
+            "partitionOption": "None"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "apts_replication",
+            "table": "apts_ar_permittogeographareaxref"
+          },
+          "applyVOrder": false
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "5c572ac7-3aa4-4c0d-9104-ebb88980f978",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "ARCHAEOLOGY_CORRAL_VIEWS",
+            "table": "AR_PERMITTOINTERESTEDPARTYXREF"
+          },
+          "partitionSettings": {
+            "partitionOption": "None"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "apts_replication",
+            "table": "apts_ar_permittointerestedpartyxref"
+          },
+          "applyVOrder": false
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "fe8f12ec-71dc-4ee4-bd35-f56f38ec7229",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "ARCHAEOLOGY_CORRAL_VIEWS",
+            "table": "AR_PERMITTOMAPSHEETXREF"
+          },
+          "partitionSettings": {
+            "partitionOption": "None"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "apts_replication",
+            "table": "apts_ar_permittomapsheetxref"
+          },
+          "applyVOrder": false
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "fb754a03-e059-4335-8430-7c5fa148422f",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "ARCHAEOLOGY_CORRAL_VIEWS",
+            "table": "AR_PERMITTYPE"
+          },
+          "partitionSettings": {
+            "partitionOption": "None"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "apts_replication",
+            "table": "apts_ar_permittype"
+          },
+          "applyVOrder": false
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "cffec692-5715-4c5b-93ca-f69683069d18",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "ARCHAEOLOGY_CORRAL_VIEWS",
+            "table": "AR_PROCESSES"
+          },
+          "partitionSettings": {
+            "partitionOption": "None"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "apts_replication",
+            "table": "apts_ar_processes"
+          },
+          "applyVOrder": false
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "fb9c66fb-65c4-4143-8615-279e72131eec",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "ARCHAEOLOGY_CORRAL_VIEWS",
+            "table": "AR_SYSTEMTABLE"
+          },
+          "partitionSettings": {
+            "partitionOption": "None"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "apts_replication",
+            "table": "apts_ar_systemtable"
+          },
+          "applyVOrder": false
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "19db9f14-77b0-49f8-99e2-7ab8ff6413b9",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "CORRAL_GENERATED_VIEWS",
+            "table": "AMSPROCESSES"
+          },
+          "partitionSettings": {
+            "partitionOption": "None"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "apts_replication",
+            "table": "apts_amsprocesses"
+          },
+          "applyVOrder": false
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    }
+  ]
+}
