@@ -1,7 +1,7 @@
 [DefaultOutputDestinationSettings = [DestinationDefinition = [Kind = "Reference", QueryName = "DefaultDestination (2)", IsNewTarget = true], UpdateMethod = [Kind = "Replace"], DestinationTypeSettings = [Kind = "Table"]], StagingDefinition = [Kind = "FastCopy"]]
 section Section1;
 shared #"pmt-workspace-id" = "60f10f69-06b8-44a3-a3cf-1afd52d4d754" meta [IsParameterQuery = true, IsParameterQueryRequired = false, Type = type text];
-shared #"pmt-lakehouse-id" = "79dafa8a-b966-4240-80f7-2e9d46baa5c3" meta [IsParameterQuery = true, IsParameterQueryRequired = false, Type = type text];
+shared #"pmt-lakehouse-id" = "964899a6-7e35-47cd-9eb3-429482e1b733" meta [IsParameterQuery = true, IsParameterQueryRequired = false, Type = type text];
 [BindToDefaultDestination = true]
 shared pies_staging_water_jobnumber = let
     // ============================================================
@@ -11,13 +11,13 @@ shared pies_staging_water_jobnumber = let
     WorkspaceId =
         Variable.ValueOrDefault(
             "$(/**/pmt-variable-library/pmt-workspace-id)",
-            "79dafa8a-b966-4240-80f7-2e9d46baa5c3"
+            "60f10f69-06b8-44a3-a3cf-1afd52d4d754"
         ),
 
     LakehouseId =
         Variable.ValueOrDefault(
             "$(/**/pmt-variable-library/pmt-lakehouse-id)",
-            "201b9b7d-ca11-46b6-81e8-feeba4c99642"
+            "964899a6-7e35-47cd-9eb3-429482e1b733"
         ),
 
     // ============================================================
@@ -431,21 +431,19 @@ in
 [BindToDefaultDestination = true]
 shared pies_staging_water_vfcbctracking = let
     // ============================================================
-    // Parameters
+    // Parameters (keep for CI/CD)
     // ============================================================
-
     WorkspaceId =
         Variable.ValueOrDefault(
             "$(/**/pmt-variable-library/pmt-workspace-id)",
-            "79dafa8a-b966-4240-80f7-2e9d46baa5c3"
+            "60f10f69-06b8-44a3-a3cf-1afd52d4d754"
         ),
 
     LakehouseId =
         Variable.ValueOrDefault(
             "$(/**/pmt-variable-library/pmt-lakehouse-id)",
-            "201b9b7d-ca11-46b6-81e8-feeba4c99642"
+            "964899a6-7e35-47cd-9eb3-429482e1b733"
         ),
-
     // ============================================================
     // Lakehouse navigation
     // ============================================================
@@ -478,7 +476,6 @@ shared pies_staging_water_vfcbctracking = let
     VFCBC_APP0  = GetLHById("vfcbc_replication.vfcbc_application_vw", "VFCBC_APPLICATION_VW"),
     VFCBC_ATS0  = GetLHById("vfcbc_replication.vfcbc_atsnumber_vw", "VFCBC_ATSNUMBER_VW"),
     ATS_AUTH0   = GetLHById("ats_replication.ats_authorizations", "ATS_AUTHORIZATIONS"),
-    ONH0        = GetLHById("ats_replication.ats_authorizations_on_hold", "ATS_AUTHORIZATIONS_ON_HOLD"),
 
     // ============================================================
     // Helpers
@@ -506,7 +503,6 @@ shared pies_staging_water_vfcbctracking = let
             else
                 Table.AddColumn(t, canonical, each Record.Field(_, hit), type any),
 
-    // Safe “time-only” detector
     IsTimeOnlyText = (s as text) as logical =>
         let
             t = Text.Trim(s),
@@ -533,7 +529,8 @@ shared pies_staging_water_vfcbctracking = let
             vals = List.Transform(
                 names,
                 (n) =>
-                    let raw = try Record.Field(r, n) otherwise null,
+                    let
+                        raw = try Record.Field(r, n) otherwise null,
                         v = CleanDateValue(raw)
                     in
                         if v = null then null
@@ -544,15 +541,51 @@ shared pies_staging_water_vfcbctracking = let
         in
             if List.Count(nn) > 0 then nn{0} else null,
 
-    ToKeyText = (v as any) as nullable text =>
-        if v = null then null
+    ToStableText = (v as any) as nullable text =>
+        if v = null then
+            null
         else
-            let t = Text.Trim(Text.From(v))
-            in if t = "" then null else t,
+            let
+                raw =
+                    if Value.Is(v, type number) then
+                        Number.ToText(v, "0.############################", "en-US")
+                    else
+                        Text.From(v),
+                noNbsp = Text.Replace(raw, Character.FromNumber(160), " "),
+                trimmed = Text.Trim(noNbsp)
+            in
+                if trimmed = "" then null else trimmed,
+
+    ToKeyText = (v as any) as nullable text =>
+        ToStableText(v),
 
     ToNumberOrNull = (v as any) as nullable number =>
-        try Number.From(v) otherwise null,
+        let
+            t = ToStableText(v)
+        in
+            if t = null then
+                null
+            else
+                let
+                    parsed =
+                        try Number.FromText(t, "en-US")
+                        otherwise
+                            try Number.From(t)
+                            otherwise null
+                in
+                    parsed,
 
+    ToDateTimeOrNull = (v as any) as nullable datetime =>
+        let
+            c = CleanDateValue(v)
+        in
+            if c = null then
+                null
+            else
+                try DateTime.From(c)
+                otherwise
+                    try DateTime.FromText(ToStableText(c), "en-US")
+                    otherwise null,
 
     ExpandWithDedup = (left as table, nestedCol as text, rightCols as list, suffix as text) as table =>
         let
@@ -562,6 +595,9 @@ shared pies_staging_water_vfcbctracking = let
         in
             expanded,
 
+    EnsureIfMissing = (t as table, col as text, compute as function, colType as type) as table =>
+        if List.Contains(Table.ColumnNames(t), col) then t else Table.AddColumn(t, col, compute, colType),
+
     // ============================================================
     // Normalize column names
     // ============================================================
@@ -569,7 +605,6 @@ shared pies_staging_water_vfcbctracking = let
     APP1       = NormalizeCols(VFCBC_APP0),
     ATSNO1     = NormalizeCols(VFCBC_ATS0),
     AUTH1      = NormalizeCols(ATS_AUTH0),
-    ONH1       = NormalizeCols(ONH0),
 
     // ============================================================
     // Ensure join columns exist
@@ -589,7 +624,6 @@ shared pies_staging_water_vfcbctracking = let
             {"VFCTRACKING_NUMBER", "VFCTRACKINGNUMBER", "VFC_TRACKING_NUMBER", "VFC_TRACKINGNUMBER", "TRACKINGNUMBER"},
             "VFCBC_APPLICATION_VW"
         ),
-
 
     APP3 =
         EnsureCanonicalFromAliases(
@@ -615,21 +649,12 @@ shared pies_staging_water_vfcbctracking = let
             "VFCBC_ATSNUMBER_VW"
         ),
 
-
     AUTH2 =
         EnsureCanonicalFromAliases(
             AUTH1,
             "AUTHORIZATION_ID",
             {"AUTHORIZATION_ID", "AUTHORIZATIONID"},
             "ATS_AUTHORIZATIONS"
-        ),
-
-    ONH2 =
-        EnsureCanonicalFromAliases(
-            ONH1,
-            "AUTHORIZATION_ID",
-            {"AUTHORIZATION_ID", "AUTHORIZATIONID"},
-            "ATS_AUTHORIZATIONS_ON_HOLD"
         ),
 
 
@@ -641,30 +666,64 @@ shared pies_staging_water_vfcbctracking = let
             "ATIS"
         ),
 
+    // ============================================================
+    // Build join keys
+    // ============================================================
+    ATIS4 =
+        Table.AddColumn(
+            ATIS3,
+            "__VFCT_KEY",
+            each ToKeyText([VFCTRACKING_NUMBER]),
+            type text
+        ),
 
-    ATIS4 = Table.AddColumn(ATIS3, "__VFCT_KEY", each ToKeyText([VFCTRACKING_NUMBER]), type text),
-    APP4  = Table.AddColumn(APP3,  "__VFCT_KEY", each ToKeyText([VFCTRACKING_NUMBER]), type text),
+    APP4 =
+        Table.AddColumn(
+            APP3,
+            "__VFCT_KEY",
+            each ToKeyText([VFCTRACKING_NUMBER]),
+            type text
+        ),
 
-    APP5  = Table.AddColumn(APP4,  "__ATSLINK_KEY", each ToKeyText([ATSLINKID]), type text),
-    ATSNO4= Table.AddColumn(ATSNO3,"__ATSLINK_KEY", each ToKeyText([ATSLINKID]), type text),
+    APP5 =
+        Table.AddColumn(
+            APP4,
+            "__ATSLINK_KEY",
+            each ToNumberOrNull([ATSLINKID]),
+            type number
+        ),
+
+    ATSNO4 =
+        Table.AddColumn(
+            ATSNO3,
+            "__ATSLINK_KEY",
+            each ToNumberOrNull([ATSLINKID]),
+            type number
+        ),
 
 
+    APP5_Distinct   = Table.Distinct(APP5),
+    ATSNO4_Distinct = Table.Distinct(ATSNO4),
 
+    // ============================================================
+    // Join 1: ATIS -> APP
+    // ============================================================
     J0 =
         Table.NestedJoin(
             ATIS4,
             {"__VFCT_KEY"},
-            APP5,
+            APP5_Distinct,
             {"__VFCT_KEY"},
             "APP",
             JoinKind.LeftOuter
         ),
 
-
-    AppCols = Table.ColumnNames(APP5),
+    AppCols = Table.ColumnNames(APP5_Distinct),
     E0 = ExpandWithDedup(J0, "APP", AppCols, "__APP"),
 
-    // For ATSNO join
+    // ============================================================
+    // Join 2: APP -> ATSNO
+    // ============================================================
     WithATSLINKID =
         Table.AddColumn(
             E0,
@@ -673,79 +732,78 @@ shared pies_staging_water_vfcbctracking = let
                 let
                     v = FirstUsefulField(_, {"ATSLINKID", "ATSLINKID__APP"})
                 in
-                    ToKeyText(v),
-            type text
+                    ToNumberOrNull(v),
+            type number
         ),
 
     J1 =
         Table.NestedJoin(
             WithATSLINKID,
             {"__ATSLINK_FOR_JOIN"},
-            ATSNO4,
+            ATSNO4_Distinct,
             {"__ATSLINK_KEY"},
             "ATSNO",
             JoinKind.LeftOuter
         ),
 
-    AtsNoCols = Table.ColumnNames(ATSNO4),
+    AtsNoCols = Table.ColumnNames(ATSNO4_Distinct),
     E1 = ExpandWithDedup(J1, "ATSNO", AtsNoCols, "__ATSNO"),
 
+    // ============================================================
+    // Join 3: ONLY use ATSNUMBER.ATSAUTHORIZATIONNUMBER -> AUTH
+    // ============================================================
+    AUTH3 =
+        Table.TransformColumns(
+            AUTH2,
+            {{"AUTHORIZATION_ID", each ToNumberOrNull(_), type number}}
+        ),
+
+    AUTH3_Filtered =
+        Table.SelectRows(AUTH3, each [AUTHORIZATION_ID] <> null),
+
+    // choose one AUTH row per AUTHORIZATION_ID, prefer latest updated row
+    AUTH3_Sorted =
+        Table.Sort(
+            AUTH3_Filtered,
+            {
+                {"AUTHORIZATION_ID", Order.Ascending},
+                {"WHEN_UPDATED", Order.Descending},
+                {"ADJUDICATION_DATE", Order.Descending},
+                {"APPLICATION_ACCEPTED_DATE", Order.Descending}
+            }
+        ),
+
+    AUTH3_Unique =
+        Table.Distinct(
+            Table.Buffer(AUTH3_Sorted),
+            {"AUTHORIZATION_ID"}
+        ),
 
     WithAuthKey =
         Table.AddColumn(
             E1,
             "__AUTH_ID_FOR_JOIN",
-            each
-                let
-                    aRaw = FirstUsefulField(_, {"AUTHORIZATION_ID"}),
-                    a = ToNumberOrNull(aRaw),
-                    bRaw = FirstUsefulField(_, {"ATSAUTHORIZATIONNUMBER", "ATSAUTHORIZATIONNUMBER__ATSNO"}),
-                    b = ToNumberOrNull(bRaw)
-                in
-                    if a <> null then a else b,
+            each ToNumberOrNull(FirstUsefulField(_, {"ATSAUTHORIZATIONNUMBER", "ATSAUTHORIZATIONNUMBER__ATSNO"})),
             type number
         ),
 
-    AUTH3 = Table.TransformColumns(AUTH2, {{"AUTHORIZATION_ID", each ToNumberOrNull(_), type number}}),
+    AuthCols = Table.ColumnNames(AUTH3_Unique),
 
     J2 =
         Table.NestedJoin(
             WithAuthKey,
             {"__AUTH_ID_FOR_JOIN"},
-            AUTH3,
+            AUTH3_Unique,
             {"AUTHORIZATION_ID"},
             "AUTH",
             JoinKind.LeftOuter
         ),
 
-    AuthCols = Table.ColumnNames(AUTH3),
     E2 = ExpandWithDedup(J2, "AUTH", AuthCols, "__AUTH"),
 
-    ONH3 = Table.TransformColumns(ONH2, {{"AUTHORIZATION_ID", each ToNumberOrNull(_), type number}}),
-
-    J3 =
-        Table.NestedJoin(
-            E2,
-            {"__AUTH_ID_FOR_JOIN"},
-            ONH3,
-            {"AUTHORIZATION_ID"},
-            "ONH",
-            JoinKind.LeftOuter
-        ),
-
-    OnhCols =
-        {
-            "AUTHORIZATION_ON_HOLD_ID",
-            "ATHN_ON_HOLD_REASON_CODE",
-            "CURRENT_ON_HOLD_IND",
-            "ON_HOLD_START_DATE",
-            "ON_HOLD_END_DATE",
-            "ON_HOLD_NOTES",
-            "REMOVED_BY",
-            "PARTNER_AGENCY_ID"
-        },
-
-    E3 = ExpandWithDedup(J3, "ONH", OnhCols, "__ONH"),
+    // ============================================================
+    // Add PIESID (job-number table)
+    // ============================================================
 
     WithPIESID =
         Table.AddColumn(
@@ -759,11 +817,88 @@ shared pies_staging_water_vfcbctracking = let
             type text
         ),
 
-    EnsureIfMissing = (t as table, col as text, compute as function, colType as type) as table =>
-        if List.Contains(Table.ColumnNames(t), col) then t else Table.AddColumn(t, col, compute, colType),
+    Ranked0 =
+        Table.AddColumn(
+            WithPIESID,
+            "__HAS_VFCT",
+            each if not IsNullOrBlank([VFCTRACKING_NUMBER]) then 1 else 0,
+            Int64.Type
+        ),
 
+    Ranked1 =
+        Table.AddColumn(
+            Ranked0,
+            "__HAS_APP",
+            each if not IsNullOrBlank(FirstUsefulField(_, {"JOBID", "JOBID__APP"})) then 1 else 0,
+            Int64.Type
+        ),
 
-    S0  = EnsureIfMissing(WithPIESID, "CREATEDDATE", each FirstUsefulField(_, {"CREATEDDATE"}), type any),
+    Ranked2 =
+        Table.AddColumn(
+            Ranked1,
+            "__HAS_ATS",
+            each if not IsNullOrBlank(FirstUsefulField(_, {"ATSAUTHORIZATIONNUMBER", "ATSAUTHORIZATIONNUMBER__ATSNO"})) then 1 else 0,
+            Int64.Type
+        ),
+
+    Ranked3 =
+        Table.AddColumn(
+            Ranked2,
+            "__HAS_AUTH",
+            each if not IsNullOrBlank(FirstUsefulField(_, {"AUTHORIZATION_ID__AUTH"})) then 1 else 0,
+            Int64.Type
+        ),
+
+    Ranked4 =
+        Table.AddColumn(
+            Ranked3,
+            "__AUTH_UPDATED_SORT",
+            each ToDateTimeOrNull(FirstUsefulField(_, {"WHEN_UPDATED"})),
+            type datetime
+        ),
+
+    Ranked5 =
+        Table.AddColumn(
+            Ranked4,
+            "__ADJUDICATION_SORT",
+            each ToDateTimeOrNull(FirstUsefulField(_, {"ADJUDICATION_DATE"})),
+            type datetime
+        ),
+
+    Ranked6 =
+        Table.AddColumn(
+            Ranked5,
+            "__ATS_AUTH_NUM_SORT",
+            each ToNumberOrNull(FirstUsefulField(_, {"ATSAUTHORIZATIONNUMBER", "ATSAUTHORIZATIONNUMBER__ATSNO"})),
+            type number
+        ),
+
+    PreferredSorted =
+        Table.Sort(
+            Ranked6,
+            {
+                {"PIESID", Order.Ascending},
+                {"__HAS_VFCT", Order.Descending},
+                {"__HAS_APP", Order.Descending},
+                {"__HAS_ATS", Order.Descending},
+                {"__HAS_AUTH", Order.Descending},
+                {"__AUTH_UPDATED_SORT", Order.Descending},
+                {"__ADJUDICATION_SORT", Order.Descending},
+                {"__ATS_AUTH_NUM_SORT", Order.Descending},
+                {"UNIQUEID", Order.Ascending}
+            }
+        ),
+
+    OneRowPerPIESID =
+        Table.Distinct(
+            Table.Buffer(PreferredSorted),
+            {"PIESID"}
+        ),
+
+    // ============================================================
+    // Final derived fields (same business logic / same output names)
+    // ============================================================
+    S0  = EnsureIfMissing(OneRowPerPIESID, "CREATEDDATE", each FirstUsefulField(_, {"CREATEDDATE"}), type any),
     S1  = EnsureIfMissing(S0,        "SUBMITTEDDATE", each FirstUsefulField(_, {"SUBMITTEDDATE"}), type any),
 
     S2  = EnsureIfMissing(S1, "APPLICATION_ACCEPTED_DATE",
@@ -798,11 +933,9 @@ shared pies_staging_water_vfcbctracking = let
             each FirstUsefulField(_, {"FIRST_NATION_COMPLETION_DATE"}),
             type any),
 
-
     S10 = EnsureIfMissing(S9, "ADJUDICATED_DAT",
             each FirstUsefulField(_, {"ADJUDICATED_DAT", "ADJUDICATION_DATE"}),
             type any),
-
 
     S11 = EnsureIfMissing(S10, "LAND_STATUS_DAT",
             each FirstUsefulField(_, {"LAND_STATUS_DAT", "TECH_REVIEW_COMPLETION_DATE", "TECHASSESSMENTCOMPLETEDATE"}),
@@ -842,15 +975,38 @@ shared pies_staging_water_vfcbctracking = let
             type text
          ),
 
-
+    // ============================================================
+    // Remove helper columns only
+    // ============================================================
     Cleaned =
         Table.RemoveColumns(
             S21,
-            List.Intersect({Table.ColumnNames(S21), {"__VFCT_KEY", "__ATSLINK_KEY", "__ATSLINK_FOR_JOIN", "__AUTH_ID_FOR_JOIN"}})
+            List.Intersect({
+                Table.ColumnNames(S21),
+                {
+                    "__VFCT_KEY",
+                    "__ATSLINK_KEY",
+                    "__ATSLINK_FOR_JOIN",
+                    "__AUTH_ID_FOR_JOIN",
+                    "__HAS_VFCT",
+                    "__HAS_APP",
+                    "__HAS_ATS",
+                    "__HAS_AUTH",
+                    "__AUTH_UPDATED_SORT",
+                    "__ADJUDICATION_SORT",
+                    "__ATS_AUTH_NUM_SORT"
+                }
+            })
         ),
 
+    // ============================================================
+    // Final filter
+    // ============================================================
     Output =
-        Table.SelectRows(Cleaned, each [PIESID] <> null and Text.Trim(Text.From([PIESID])) <> "")
+        Table.SelectRows(
+            Cleaned,
+            each [PIESID] <> null and Text.Trim(Text.From([PIESID])) <> ""
+        )
 in
     Output;
 [BindToDefaultDestination = true]
@@ -862,13 +1018,13 @@ shared pies_staging_water_authid = let
     WorkspaceId =
         Variable.ValueOrDefault(
             "$(/**/pmt-variable-library/pmt-workspace-id)",
-            "79dafa8a-b966-4240-80f7-2e9d46baa5c3"
+            "60f10f69-06b8-44a3-a3cf-1afd52d4d754"
         ),
 
     LakehouseId =
         Variable.ValueOrDefault(
             "$(/**/pmt-variable-library/pmt-lakehouse-id)",
-            "201b9b7d-ca11-46b6-81e8-feeba4c99642"
+            "964899a6-7e35-47cd-9eb3-429482e1b733"
         ),
 
     // ============================================================
