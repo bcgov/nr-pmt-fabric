@@ -1,0 +1,32 @@
+{
+  "formatVersion": "202502",
+  "computeEngineSettings": {
+    "allowModernEvaluationEngine": true
+  },
+  "name": "testdataflow",
+  "queryGroups": [],
+  "documentLocale": "en-US",
+  "queriesMetadata": {
+    "pmt-workspace-id": {
+      "queryId": "77049185-d32f-4a62-aabd-c27efd037cc5",
+      "queryName": "pmt-workspace-id",
+      "loadEnabled": false
+    },
+    "pmt-lakehouse-id": {
+      "queryId": "6fa8ae19-8ffb-486a-af19-a4d0f3bc3e2b",
+      "queryName": "pmt-lakehouse-id",
+      "loadEnabled": false
+    },
+    "test": {
+      "queryId": "7e305a0c-0681-4619-829d-509922d59bf7",
+      "queryName": "test"
+    }
+  },
+  "connections": [
+    {
+      "path": "Lakehouse",
+      "kind": "Lakehouse",
+      "connectionId": "{\"ClusterId\":\"1f7baf71-1832-47ee-ba8c-e8f46696fbb5\",\"DatasourceId\":\"242c11af-5a94-4dc0-a80c-556166c29afe\"}"
+    }
+  ]
+}
