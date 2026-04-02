@@ -34,3 +34,7 @@ shared test = let
   #"Removed columns" = Table.RemoveColumns(DISP_Source, {"COMPLEXITY_LEVEL_CDE", "CROWN_GRANT_YRN", "DISPOSITION_SID", "DISPOSITION_TRANSACTION_SID", "EXPIRY_DAT", "MANAGING_AGENCY", "ORG_UNIT_SID", "RECEIVED_DAT", "REPLMNT_FOR_DISP_TRANS_SID", "REVIEW_DAT", "SUBTYPE_SID", "TYPE_SID", "UNIT_NAME", "ACTIVATION_CDE", "FILE_CHR", "CODE_CHR_STATUS", "CODE_CHR_STAGE", "EFFECTIVE_DAT", "CODE_CHR_REASON", "TYPE_NME", "SUBTYPE_NME", "PURPOSE_NME", "SUBPURPOSE_NME", "DISTRICT_OFFICE", "LAND_STATUS_DAT", "REPORTED_DAT", "ADJUDICATED_DAT", "DISALLOWED_DAT", "OFFERED_DAT", "OFFER_NOT_ACCEPTED_DAT", "CANCELED_DAT"})
 in
     #"Removed columns";
+[BindToDefaultDestination = true]
+shared DefaultDestination = Lakehouse.Contents([EnableFolding = false])
+    {[workspaceId = #"pmt-workspace-id"]}[Data]
+    {[lakehouseId = #"pmt-lakehouse-id"]}[Data];
