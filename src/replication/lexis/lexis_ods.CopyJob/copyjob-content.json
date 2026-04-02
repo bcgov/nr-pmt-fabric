@@ -25,7 +25,8 @@
       }
     },
     "policy": {
-      "timeout": "0.12:00:00"
+      "timeout": "0.12:00:00",
+      "retry": 0
     }
   },
   "activities": [
@@ -36,13 +37,17 @@
           "datasetSettings": {
             "schema": "THE",
             "table": "EXPORT_PERMIT_DETAIL"
+          },
+          "partitionSettings": {
+            "partitionOption": "None"
           }
         },
         "destination": {
-          "writeBehavior": "Append",
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
           "datasetSettings": {
             "schema": "lexis_replication",
-            "table": "export_permit_detail"
+            "table": "lexis_export_permit_detail"
           }
         },
         "enableStaging": false,
@@ -64,13 +69,17 @@
           "datasetSettings": {
             "schema": "THE",
             "table": "EXPORT_PERMIT_STATUS_CODE"
+          },
+          "partitionSettings": {
+            "partitionOption": "None"
           }
         },
         "destination": {
-          "writeBehavior": "Append",
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
           "datasetSettings": {
             "schema": "lexis_replication",
-            "table": "export_permit_status_code"
+            "table": "lexis_export_permit_status_code"
           }
         },
         "enableStaging": false,
