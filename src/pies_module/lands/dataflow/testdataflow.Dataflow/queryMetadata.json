@@ -19,7 +19,19 @@
     },
     "test": {
       "queryId": "7e305a0c-0681-4619-829d-509922d59bf7",
-      "queryName": "test"
+      "queryName": "test",
+      "loadEnabled": false
+    },
+    "DefaultDestination": {
+      "queryId": "8f8840c4-71f9-4908-8b22-884fd9ea1434",
+      "queryName": "DefaultDestination",
+      "loadEnabled": false
+    },
+    "DefaultDestination (2)": {
+      "queryId": "c08b3825-47f9-4e30-b308-b07b23012261",
+      "queryName": "DefaultDestination (2)",
+      "isHidden": true,
+      "loadEnabled": false
     }
   },
   "connections": [
