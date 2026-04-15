@@ -1,7 +1,8 @@
-[StagingDefinition = [Kind = "FastCopy"]]
+[DefaultOutputDestinationSettings = [DestinationDefinition = [Kind = "Reference", QueryName = "DefaultDestination (2)", IsNewTarget = true], UpdateMethod = [Kind = "Replace"], DestinationTypeSettings = [Kind = "Table"]], StagingDefinition = [Kind = "FastCopy"]]
 section Section1;
 shared #"pmt-workspace-id" = "79dafa8a-b966-4240-80f7-2e9d46baa5c3" meta [IsParameterQuery = true, IsParameterQueryRequired = false, Type = type text];
 shared #"pmt-lakehouse-id" = "201b9b7d-ca11-46b6-81e8-feeba4c99642" meta [IsParameterQuery = true, IsParameterQueryRequired = false, Type = type text];
+[BindToDefaultDestination = true]
 shared test = let
     // -----------------------------
     // Parameters
@@ -38,3 +39,4 @@ in
 shared DefaultDestination = Lakehouse.Contents([EnableFolding = false])
     {[workspaceId = #"pmt-workspace-id"]}[Data]
     {[lakehouseId = #"pmt-lakehouse-id"]}[Data];
+shared #"DefaultDestination (2)" = Lakehouse.Contents([EnableFolding = false]){[workspaceId = "79dafa8a-b966-4240-80f7-2e9d46baa5c3"]}[Data]{[lakehouseId = "201b9b7d-ca11-46b6-81e8-feeba4c99642"]}[Data];
