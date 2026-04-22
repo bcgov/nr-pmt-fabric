@@ -7,8 +7,19 @@
  StagingDefinition = [Kind = "FastCopy"]
 ]
 section Section1;
-shared #"pmt-workspace-id" = "79dafa8a-b966-4240-80f7-2e9d46baa5c3" meta [IsParameterQuery = true, IsParameterQueryRequired = false, Type = type text];
-shared #"pmt-lakehouse-id" = "201b9b7d-ca11-46b6-81e8-feeba4c99642" meta [IsParameterQuery = true, IsParameterQueryRequired = false, Type = type text];
+shared #"pmt-workspace-id" =
+    Variable.ValueOrDefault(
+        "$(/**/pmt-variable-library/pmt-workspace-id)",
+        "79dafa8a-b966-4240-80f7-2e9d46baa5c3"
+    )
+    meta [IsParameterQuery = true, IsParameterQueryRequired = false, Type = type text];
+
+shared #"pmt-lakehouse-id" =
+    Variable.ValueOrDefault(
+        "$(/**/pmt-variable-library/pmt-lakehouse-id)",
+        "201b9b7d-ca11-46b6-81e8-feeba4c99642"
+    )
+    meta [IsParameterQuery = true, IsParameterQueryRequired = false, Type = type text];
 [BindToDefaultDestination = true]
 shared test = let
     // -----------------------------
