@@ -53,7 +53,7 @@ CREATE SCHEMA apts_sharing;
 
 -- MAGIC %%sql
 -- MAGIC 
--- MAGIC CREATE MATERIALIZED LAKE VIEW IF NOT EIapts_sharing.apts_amsprocesses_subset AS
+-- MAGIC CREATE MATERIALIZED LAKE VIEW IF NOT EXISTS apts_sharing.apts_amsprocesses_subset AS
 -- MAGIC SELECT
 -- MAGIC     PROCESSID,
 -- MAGIC     CREATEDDATE,
@@ -96,7 +96,7 @@ CREATE SCHEMA apts_sharing;
 
 -- MAGIC %%sql
 -- MAGIC 
--- MAGIC CREATE MATERIALIZED LAKE VIEW apts_sharing.apts_ar_bordennumber AS
+-- MAGIC CREATE MATERIALIZED LAKE VIEW IF NOT EXISTS apts_sharing.apts_ar_bordennumber AS
 -- MAGIC SELECT
 -- MAGIC     OBJECTID,
 -- MAGIC     BORDENNUMBER
@@ -113,7 +113,7 @@ CREATE SCHEMA apts_sharing;
 
 -- MAGIC %%sql
 -- MAGIC 
--- MAGIC CREATE MATERIALIZED LAKE VIEW apts_sharing.apts_ar_mapsheet AS
+-- MAGIC CREATE MATERIALIZED LAKE VIEW IF NOT EXISTS apts_sharing.apts_ar_mapsheet AS
 -- MAGIC SELECT
 -- MAGIC     OBJECTID,
 -- MAGIC     ACTIVE,
@@ -132,7 +132,7 @@ CREATE SCHEMA apts_sharing;
 
 -- MAGIC %%sql
 -- MAGIC 
--- MAGIC CREATE MATERIALIZED LAKE VIEW apts_sharing.apts_ar_party_redacted AS
+-- MAGIC CREATE MATERIALIZED LAKE VIEW IF NOT EXISTS apts_sharing.apts_ar_party_redacted AS
 -- MAGIC SELECT
 -- MAGIC 
 -- MAGIC     OBJECTID,
@@ -171,7 +171,7 @@ CREATE SCHEMA apts_sharing;
 
 -- MAGIC %%sql
 -- MAGIC 
--- MAGIC CREATE MATERIALIZED LAKE VIEW apts_sharing.apts_ar_archaeologypermitjob_redacted AS
+-- MAGIC CREATE MATERIALIZED LAKE VIEW IF NOT EXISTS apts_sharing.apts_ar_archaeologypermitjob_redacted AS
 -- MAGIC SELECT
 -- MAGIC     JOBID,
 -- MAGIC     ADDDEVELOPMENTAREA,
@@ -208,7 +208,7 @@ CREATE SCHEMA apts_sharing;
 
 -- MAGIC %%sql
 -- MAGIC 
--- MAGIC CREATE MATERIALIZED LAKE VIEW apts_sharing.apts_ar_permitparticipant_redacted AS
+-- MAGIC CREATE MATERIALIZED LAKE VIEW IF NOT EXISTS apts_sharing.apts_ar_permitparticipant_redacted AS
 -- MAGIC SELECT
 -- MAGIC 
 -- MAGIC     OBJECTID,
@@ -230,7 +230,7 @@ CREATE SCHEMA apts_sharing;
 
 -- MAGIC %%sql
 -- MAGIC 
--- MAGIC CREATE MATERIALIZED LAKE VIEW apts_sharing.apts_ar_permitrelatedfile_redacted AS
+-- MAGIC CREATE MATERIALIZED LAKE VIEW IF NOT EXISTS apts_sharing.apts_ar_permitrelatedfile_redacted AS
 -- MAGIC SELECT
 -- MAGIC 
 -- MAGIC     OBJECTID,
@@ -251,7 +251,7 @@ CREATE SCHEMA apts_sharing;
 
 -- MAGIC %%sql
 -- MAGIC 
--- MAGIC CREATE MATERIALIZED LAKE VIEW apts_sharing.apts_ar_permittobordennumberxref AS
+-- MAGIC CREATE MATERIALIZED LAKE VIEW IF NOT EXISTS apts_sharing.apts_ar_permittobordennumberxref AS
 -- MAGIC SELECT
 -- MAGIC 
 -- MAGIC     RELATIONSHIPID,
@@ -271,7 +271,7 @@ CREATE SCHEMA apts_sharing;
 
 -- MAGIC %%sql
 -- MAGIC 
--- MAGIC CREATE MATERIALIZED LAKE VIEW apts_sharing.apts_ar_permittogeographareaxref AS
+-- MAGIC CREATE MATERIALIZED LAKE VIEW IF NOT EXISTS apts_sharing.apts_ar_permittogeographareaxref AS
 -- MAGIC SELECT
 -- MAGIC 
 -- MAGIC     RELATIONSHIPID,
@@ -291,7 +291,7 @@ CREATE SCHEMA apts_sharing;
 
 -- MAGIC %%sql
 -- MAGIC 
--- MAGIC CREATE MATERIALIZED LAKE VIEW apts_sharing.apts_ar_permittointerestedpartyxref AS
+-- MAGIC CREATE MATERIALIZED LAKE VIEW IF NOT EXISTS apts_sharing.apts_ar_permittointerestedpartyxref AS
 -- MAGIC SELECT
 -- MAGIC 
 -- MAGIC     RELATIONSHIPID,
@@ -312,7 +312,7 @@ CREATE SCHEMA apts_sharing;
 
 -- MAGIC %%sql
 -- MAGIC 
--- MAGIC CREATE MATERIALIZED LAKE VIEW apts_sharing.apts_ar_permittomapsheetxref AS
+-- MAGIC CREATE MATERIALIZED LAKE VIEW IF NOT EXISTS apts_sharing.apts_ar_permittomapsheetxref AS
 -- MAGIC SELECT
 -- MAGIC 
 -- MAGIC     RELATIONSHIPID,
@@ -332,7 +332,7 @@ CREATE SCHEMA apts_sharing;
 
 -- MAGIC %%sql
 -- MAGIC 
--- MAGIC CREATE MATERIALIZED LAKE VIEW apts_sharing.apts_ar_permittype AS
+-- MAGIC CREATE MATERIALIZED LAKE VIEW IF NOT EXISTS apts_sharing.apts_ar_permittype AS
 -- MAGIC SELECT
 -- MAGIC 
 -- MAGIC     OBJECTID,
@@ -354,7 +354,7 @@ CREATE SCHEMA apts_sharing;
 
 -- MAGIC %%sql
 -- MAGIC 
--- MAGIC CREATE MATERIALIZED LAKE VIEW apts_sharing.apts_ar_processes_redacted AS
+-- MAGIC CREATE MATERIALIZED LAKE VIEW IF NOT EXISTS apts_sharing.apts_ar_processes_redacted AS
 -- MAGIC SELECT
 -- MAGIC 
 -- MAGIC     PROCESSID,
@@ -379,7 +379,7 @@ CREATE SCHEMA apts_sharing;
 
 -- MAGIC %%sql
 -- MAGIC 
--- MAGIC CREATE MATERIALIZED LAKE VIEW IF NOT EXISTS apts_sharing.apts_ar_systemtable AS
+-- MAGIC CREATE MATERIALIZED LAKE VIEW IF NOT EXISTS IF NOT EXISTS apts_sharing.apts_ar_systemtable AS
 -- MAGIC SELECT
 -- MAGIC 
 -- MAGIC     OBJECTID,
