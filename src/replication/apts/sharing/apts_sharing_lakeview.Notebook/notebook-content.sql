@@ -53,7 +53,7 @@ CREATE SCHEMA apts_sharing;
 
 -- MAGIC %%sql
 -- MAGIC 
--- MAGIC CREATE MATERIALIZED LAKE VIEW apts_sharing.apts_amsprocesses_subset AS
+-- MAGIC CREATE MATERIALIZED LAKE VIEW IF NOT EIapts_sharing.apts_amsprocesses_subset AS
 -- MAGIC SELECT
 -- MAGIC     PROCESSID,
 -- MAGIC     CREATEDDATE,
@@ -84,43 +84,6 @@ CREATE SCHEMA apts_sharing;
 -- MAGIC ,'p_AR_InviteComments'
 -- MAGIC ,'p_AR_SendCommentReminders'
 -- MAGIC ,'p_AR_RequestInformation');
-
--- METADATA ********************
-
--- META {
--- META   "language": "sparksql",
--- META   "language_group": "synapse_pyspark"
--- META }
-
--- CELL ********************
-
--- MAGIC %%sql
--- MAGIC 
--- MAGIC CREATE MATERIALIZED LAKE VIEW apts_sharing.apts_ar_archaeologypermitjob_redacted AS
--- MAGIC SELECT
--- MAGIC     JOBID,
--- MAGIC     ADDDEVELOPMENTAREA,
--- MAGIC     ADDFIELDDIRECTOR,
--- MAGIC     ADDPROPONENT,
--- MAGIC     AMENDMENTAPPROVEDDATE,
--- MAGIC     APPLICATIONNUMBER,
--- MAGIC     APPLICATIONRECEIVEDDATE,
--- MAGIC     APPLICATIONREVISED,
--- MAGIC     DATEASSIGNEDTOPO,
--- MAGIC     DELIVERABLESDUEDATE,
--- MAGIC     ISSUEDATE,
--- MAGIC     PERMITEXPIRYDATE,
--- MAGIC     PERMITNUMBER,
--- MAGIC     PERMITTYPEOBJECTID,
--- MAGIC     POREVIEWCOMPLETEDDATE,
--- MAGIC     POREVIEWDUEDATE,
--- MAGIC     PROJECTOFFICERID,
--- MAGIC     STATUSDESCRIPTION,
--- MAGIC     PROJECTTYPEID,
--- MAGIC     ISSUINGAGENCYID,
--- MAGIC     PROPONENTOBECTID,
--- MAGIC     SECTOROBJECTID
--- MAGIC FROM apts_replication.apts_ar_archaeologypermitjob;
 
 -- METADATA ********************
 
