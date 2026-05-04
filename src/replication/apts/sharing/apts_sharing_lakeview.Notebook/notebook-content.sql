@@ -403,7 +403,7 @@ CREATE SCHEMA apts_sharing;
 
 -- MAGIC %%sql
 -- MAGIC 
--- MAGIC CREATE MATERIALIZED LAKE VIEW IF NOT EXISTS IF NOT EXISTS apts_sharing.apts_ar_systemtable AS
+-- MAGIC CREATE MATERIALIZED LAKE VIEW IF NOT EXISTS apts_sharing.apts_ar_systemtable AS
 -- MAGIC SELECT
 -- MAGIC 
 -- MAGIC     OBJECTID,
