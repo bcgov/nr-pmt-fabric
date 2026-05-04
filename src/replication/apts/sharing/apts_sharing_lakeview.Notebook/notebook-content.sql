@@ -171,6 +171,30 @@ CREATE SCHEMA apts_sharing;
 
 -- MAGIC %%sql
 -- MAGIC 
+-- MAGIC CREATE MATERIALIZED LAKE VIEW IF NOT EXISTS apts_sharing.apts_ar_permitammendmentrequest_redacted AS
+-- MAGIC SELECT
+-- MAGIC 
+-- MAGIC     OBJECTID,
+-- MAGIC     COMPLETIONDATE,
+-- MAGIC     PERMITJOBID,
+-- MAGIC     REQUESTEDDATE,
+-- MAGIC     REQUESTNUMBER,
+-- MAGIC     STATUS,
+-- MAGIC     AMENDMENTTYPEID
+-- MAGIC 
+-- MAGIC FROM apts_replication.apts_ar_permitammendmentrequest;
+
+-- METADATA ********************
+
+-- META {
+-- META   "language": "sparksql",
+-- META   "language_group": "synapse_pyspark"
+-- META }
+
+-- CELL ********************
+
+-- MAGIC %%sql
+-- MAGIC 
 -- MAGIC CREATE MATERIALIZED LAKE VIEW IF NOT EXISTS apts_sharing.apts_ar_archaeologypermitjob_redacted AS
 -- MAGIC SELECT
 -- MAGIC     JOBID,
