@@ -20,7 +20,7 @@
 # Province of British Columbia – Natural Resource Information & Digital Services, CSBC
 #
 # ---------------------------------------------------------------------------
-# ETL mapping -water-authorization id with on hold (Fabric notebook version)
+# ETL mapping -water-authorization id  with on hold (Fabric notebook version)
 # ---------------------------------------------------------------------------
 # Transform permit source data (Fabric table) into ProcessEventSet JSON Lines
 # for the NR-PIES specification; optionally POST each record to PEACH.
@@ -764,6 +764,79 @@ def load_rules(path_str: str, *, system: Optional[str] = None) -> List[Dict[str,
 
 
 # ---------------------------
+# ON-HOLD: direct table join helpers
+# ---------------------------
+def normalize_join_key(value: Any) -> Optional[str]:
+    """
+    Normalize numeric/text join keys consistently with the Dataflow NormalizeKey:
+    - null/blank -> None
+    - trim
+    - remove commas
+    - remove trailing .0
+    """
+    if _is_nullish(value):
+        return None
+
+    s = str(value).strip().replace(",", "")
+    if not s:
+        return None
+
+    if "." in s:
+        left, right = s.split(".", 1)
+        if right.rstrip("0") == "":
+            s = left
+
+    s = s.strip()
+    return s or None
+
+
+def build_on_hold_index_from_df(onh_df: Any) -> Dict[str, List[Mapping[str, Any]]]:
+    """
+    Build AUTHORIZATION_ID -> [ON_HOLD rows] from ats_replication.ats_authorizations_on_hold.
+
+    This intentionally keeps every ON_HOLD row for the same AUTHORIZATION_ID,
+    including repeated reason codes and repeated on-hold periods over time.
+    """
+    index: Dict[str, List[Mapping[str, Any]]] = {}
+    source_count = 0
+    indexed_count = 0
+
+    for r in onh_df.toLocalIterator():
+        source_count += 1
+        raw_row = r.asDict(recursive=True)
+        row = CaseInsensitiveRow(raw_row)
+        auth_key = normalize_join_key(row.get("AUTHORIZATION_ID"))
+
+        if not auth_key:
+            continue
+
+        reason_key = normalize_join_key(row.get("ATHN_ON_HOLD_REASON_CODE"))
+        if reason_key is not None:
+            raw_row["ATHN_ON_HOLD_REASON_CODE"] = reason_key
+
+        index.setdefault(auth_key, []).append(CaseInsensitiveRow(raw_row))
+        indexed_count += 1
+
+    for auth_key, rows in index.items():
+        rows.sort(
+            key=lambda x: (
+                str(x.get("ON_HOLD_START_DATE") or ""),
+                str(x.get("AUTHORIZATION_ON_HOLD_ID") or ""),
+            )
+        )
+
+    logger.info(
+        "Built ON_HOLD index. source_rows=%d indexed_rows=%d authorization_ids=%d",
+        source_count,
+        indexed_count,
+        len(index),
+    )
+
+    return index
+
+
+
+# ---------------------------
 # ON-HOLD: load rules + code map
 # ---------------------------
 def load_on_hold_rules(path_str: Optional[str]) -> List[Dict[str, Any]]:
@@ -837,7 +910,6 @@ def load_on_hold_code_map(path_str: Optional[str]) -> Dict[str, Any]:
     except Exception as exc:
         logger.warning("Failed to load on-hold code map (%s): %s", path_str, exc)
     return {}
-
 
 def load_lifecycle(path_str: Optional[str]) -> Dict[str, Any]:
     if not path_str:
@@ -1091,13 +1163,13 @@ def _build_event(
 
 
 # ---------------------------
-# ON-HOLD: build CodingEvent
+# ON-HOLD: build CodingEvent from ats_authorizations_on_hold row + ON-HOLD rule/code map
 # ---------------------------
 def _build_on_hold_event(
     row: Mapping[str, Any],
     rule: Mapping[str, Any],
     code_map: Mapping[str, Any],
-) -> Dict[str, Any]:
+) -> Optional[Dict[str, Any]]:
     start_raw = _safe_get(row, rule.get("start"))
     end_raw = _safe_get(row, rule.get("end"))
 
@@ -1146,15 +1218,19 @@ def _build_on_hold_event(
             if ed:
                 event_blk["end_date"] = ed
 
-    if not event_blk:
-        record_id = row.get("PIESID") or row.get("record_id") or "UNKNOWN"
+    has_start = "start_date" in event_blk or "start_datetime" in event_blk
+
+    if not has_start:
         logger.warning(
-            "Record %s: ON-HOLD event '%s' produced no valid time fields (raw start=%r, end=%r)",
-            record_id,
+            "ON-HOLD event skipped because no valid start date/time was produced "
+            "(authorization_on_hold_id=%r authorization_id=%r rule=%r raw start=%r end=%r)",
+            row.get("AUTHORIZATION_ON_HOLD_ID"),
+            row.get("AUTHORIZATION_ID"),
             rule.get("key"),
             start_raw,
             end_raw,
         )
+        return None
 
     code = str(rule.get("code") or "UNKNOWN")
     code_info = code_map.get(code) if isinstance(code_map, dict) else None
@@ -1341,13 +1417,15 @@ def post_jsonl_to_api(
                         break
 
                     total_failed += 1
+                    api_error_text = resp.text or ""
                     if status in POST_RETRY_STATUSES:
                         logger.error(
-                            "POST give up record_id=%s (line %d) after %d attempts, final status=%s",
+                            "POST give up record_id=%s (line %d) after %d attempts, final status=%s. resp=%s",
                             record_id,
                             line_no,
                             POST_MAX_RETRIES,
                             status,
+                            api_error_text,
                         )
                     else:
                         logger.error(
@@ -1355,9 +1433,15 @@ def post_jsonl_to_api(
                             status,
                             record_id,
                             line_no,
-                            (resp.text or "")[:300],
+                            api_error_text,
                         )
-                    _write_error_entry(record, line_no, record_id, error=f"HTTP {status}", status_code=status)
+                    _write_error_entry(
+                        record,
+                        line_no,
+                        record_id,
+                        error=f"HTTP {status}: {api_error_text}",
+                        status_code=status,
+                    )
                     break
 
     finally:
@@ -1394,12 +1478,13 @@ def smart_engine_from_rows(
     rows: Iterable[Mapping[str, Any]],
     rules: List[Mapping[str, Any]],
     lifecycle_map: Mapping[str, Any],
-    on_hold_rules: List[Mapping[str, Any]],
-    on_hold_code_map: Mapping[str, Any],
     out_dir: Path,
     outfile: str,
     cfg: Config,
     *,
+    on_hold_index: Optional[Dict[str, List[Mapping[str, Any]]]] = None,
+    on_hold_rules: Optional[List[Mapping[str, Any]]] = None,
+    on_hold_code_map: Optional[Mapping[str, Any]] = None,
     default_system_id: str = "ITSM-6117",
     record_kind: str = "Permit",
     version: str = "0.1.0",
@@ -1407,13 +1492,16 @@ def smart_engine_from_rows(
     start = time.perf_counter()
     row_count = 0
     record_count = 0
-    event_count = 0
+    process_event_count = 0
+    on_hold_event_count = 0
 
     rule_hits: Dict[str, int] = {r["key"]: 0 for r in rules}
+    on_hold_rules = list(on_hold_rules or [])
+    on_hold_code_map = dict(on_hold_code_map or {})
     on_hold_hits: Dict[str, int] = {r["key"]: 0 for r in on_hold_rules}
 
     def _row_gen() -> Iterator[Dict[str, Any]]:
-        nonlocal row_count, record_count, event_count
+        nonlocal row_count, record_count, process_event_count, on_hold_event_count
 
         for row in rows:
             row_count += 1
@@ -1443,20 +1531,35 @@ def smart_engine_from_rows(
                     evts.append(_build_event(row, rule, lifecycle_map))
 
             hold_evts: List[Dict[str, Any]] = []
-            for hr in on_hold_rules:
-                try:
-                    matched = hr["match"](row)
-                except Exception as exc:
-                    matched = False
-                    rid = row.get("PIESID") or "UNKNOWN"
-                    logger.error("ON-HOLD rule eval error rule=%s record=%s: %s", hr["key"], rid, exc)
+            if on_hold_index:
+                auth_key = (
+                    normalize_join_key(row.get("ATSAUTHORIZATIONNUMBER"))
+                    or normalize_join_key(row.get("AUTHORIZATION_ID"))
+                    or normalize_join_key(row.get("AUTHORIZATIONID"))
+                    or normalize_join_key(row.get("ATS_AUTHORIZATION_ID"))
+                    or normalize_join_key(row.get("AUTHORIZATION_ID__ATS"))
+                    or normalize_join_key(row.get("ATS_AUTHORIZATION_ID__ATS"))
+                )
 
-                if matched:
-                    on_hold_hits[hr["key"]] += 1
-                    hold_evts.append(_build_on_hold_event(row, hr, on_hold_code_map))
+                if auth_key:
+                    for onh_row in on_hold_index.get(auth_key, []):
+                        for hr in on_hold_rules:
+                            try:
+                                matched = hr["match"](onh_row)
+                            except Exception as exc:
+                                matched = False
+                                rid = row.get("PIESID") or "UNKNOWN"
+                                logger.error("ON-HOLD rule eval error rule=%s record=%s: %s", hr["key"], rid, exc)
+
+                            if matched:
+                                on_hold_hits[hr["key"]] += 1
+                                hold_evt = _build_on_hold_event(onh_row, hr, on_hold_code_map)
+                                if hold_evt:
+                                    hold_evts.append(hold_evt)
 
             if evts or hold_evts:
-                event_count += len(evts) + len(hold_evts)
+                process_event_count += len(evts)
+                on_hold_event_count += len(hold_evts)
                 record_count += 1
                 yield _build_pes(
                     row,
@@ -1482,10 +1585,12 @@ def smart_engine_from_rows(
 
     dur = time.perf_counter() - start
     logger.info(
-        "Done. Source rows=%d  Output records=%d  Total events=%d  Elapsed=%.2fs  Output=%s",
+        "Done. Source rows=%d  Output records=%d  Process events=%d  ON_HOLD events=%d  Total events=%d  Elapsed=%.2fs  Output=%s",
         row_count,
         record_count,
-        event_count,
+        process_event_count,
+        on_hold_event_count,
+        process_event_count + on_hold_event_count,
         dur,
         out_path,
     )
@@ -1500,6 +1605,7 @@ def run_fabric_from_table(
     output_dir_abfs: str,
     output_filename: str = "events.jsonl",
     *,
+    on_hold_table_abfs_path: Optional[str] = None,
     on_hold_rules_path: Optional[str] = None,
     on_hold_code_map_path: Optional[str] = None,
     post_to_api: bool = False,
@@ -1519,7 +1625,6 @@ def run_fabric_from_table(
 
     rules = load_rules(rules_path, system=None)
     lifecycle_map = load_lifecycle(lifecycle_path)
-
     on_hold_rules = load_on_hold_rules(on_hold_rules_path)
     on_hold_code_map = load_on_hold_code_map(on_hold_code_map_path)
 
@@ -1529,12 +1634,23 @@ def run_fabric_from_table(
 
     df = spark.read.format("delta").load(table_abfs_path)  # type: ignore[name-defined]
 
+    on_hold_index: Dict[str, List[Mapping[str, Any]]] = {}
+    if on_hold_table_abfs_path:
+        logger.info("Reading ON_HOLD Delta table via ABFS: %s", on_hold_table_abfs_path)
+        onh_df = spark.read.format("delta").load(on_hold_table_abfs_path)  # type: ignore[name-defined]
+        try:
+            onh_cols = list(onh_df.columns)
+            logger.info("ON_HOLD table columns=%d", len(onh_cols))
+            if on_hold_rules:
+                _preflight_rules_vs_table_columns(onh_cols, on_hold_rules)
+        except Exception as exc:
+            logger.warning("ON_HOLD preflight schema check failed (non-fatal): %s", exc)
+        on_hold_index = build_on_hold_index_from_df(onh_df)
+
     try:
         table_cols = list(df.columns)
         logger.info("Table columns=%d", len(table_cols))
         _preflight_rules_vs_table_columns(table_cols, rules)
-        if on_hold_rules:
-            _preflight_rules_vs_table_columns(table_cols, on_hold_rules)
     except Exception as exc:
         logger.warning("Preflight schema check failed (non-fatal): %s", exc)
 
@@ -1544,11 +1660,12 @@ def run_fabric_from_table(
         rows=rows,
         rules=rules,
         lifecycle_map=lifecycle_map,
-        on_hold_rules=on_hold_rules,
-        on_hold_code_map=on_hold_code_map,
         out_dir=stage_dir,
         outfile=output_filename,
         cfg=cfg,
+        on_hold_index=on_hold_index,
+        on_hold_rules=on_hold_rules,
+        on_hold_code_map=on_hold_code_map,
         default_system_id=default_system_id,
         record_kind=record_kind,
         version=version,
@@ -1689,17 +1806,23 @@ print(f"[SWITCH] POST_TO_API={POST_TO_API}  USE_PEACH_AUTH={USE_PEACH_AUTH}")
 # Change here
 # -------------------------
 TABLE_NAME = "dbo.pies_staging_water_authid"
+
 TABLE_SHORT = TABLE_NAME.split(".")[-1]
 TABLE_ABFS_PATH = f"{ABFS_BASE}/Tables/dbo/{TABLE_SHORT}"
 
 RULES_PATH = f"{ABFS_BASE}/Files/pies_module/water/water_lifecyle_rules/rules.json"
 LIFECYCLE_PATH = f"{ABFS_BASE}/Files/pies_module/water/water_lifecyle_mapping/lifecycle_map.json"
-# ON-HOLD JSONs
+
+# ON-HOLD source table + standard code mapping
+ON_HOLD_TABLE_NAME = "ats_replication.ats_authorizations_on_hold"
+ON_HOLD_TABLE_ABFS_PATH = f"{ABFS_BASE}/Tables/ats_replication/ats_authorizations_on_hold"
 ON_HOLD_RULES_PATH = f"{ABFS_BASE}/Files/pies_module/water/water_on_hold/on_hold_rules.json"
 ON_HOLD_CODE_MAP_PATH = f"{ABFS_BASE}/Files/pies_module/water/water_on_hold/on_hold_code_map.json"
+
 timestamp = datetime.now().strftime("%Y%m%d")
 OUTPUT_DIR_ABFS = f"{ABFS_BASE}/Files/pies_module/water/water_events_peach/{FABRIC_ENV.lower()}"
 OUTPUT_FILENAME = f"water_events_authid_{FABRIC_ENV.lower()}_{timestamp}.jsonl"
+
 DEFAULT_SYSTEM_ID = "ITSM-5314"
 RECORD_KIND = "Permit"
 PES_VERSION = "0.1.0"
@@ -1723,6 +1846,7 @@ run_fabric_from_table(
     lifecycle_path=LIFECYCLE_PATH,
     output_dir_abfs=OUTPUT_DIR_ABFS,
     output_filename=OUTPUT_FILENAME,
+    on_hold_table_abfs_path=ON_HOLD_TABLE_ABFS_PATH,
     on_hold_rules_path=ON_HOLD_RULES_PATH,
     on_hold_code_map_path=ON_HOLD_CODE_MAP_PATH,
     post_to_api=POST_TO_API,
@@ -1736,7 +1860,7 @@ run_fabric_from_table(
 # Checklist:
 # 1) TABLE_NAME
 # 2) OUTPUT_FILENAME pattern
-# 3) RULES_PATH / LIFECYCLE_PATH / ON_HOLD_RULES_PATH / ON_HOLD_CODE_MAP_PATH
+# 3) RULES_PATH / LIFECYCLE_PATH / ON_HOLD_TABLE_ABFS_PATH / ON_HOLD_RULES_PATH / ON_HOLD_CODE_MAP_PATH
 # 4) DEFAULT_SYSTEM_ID / RECORD_KIND / PES_VERSION
 # 5) Switches: POST_TO_API / USE_PEACH_AUTH
 # 6) Variable Library keys (pmt_env_vars): fabric_env, peach_api_url, pmt-workspace-id, pmt-lakehouse-id
