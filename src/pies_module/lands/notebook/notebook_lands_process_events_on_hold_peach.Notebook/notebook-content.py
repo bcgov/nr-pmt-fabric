@@ -759,7 +759,7 @@ def load_rules(path_str: str, *, system: Optional[str] = None) -> List[Dict[str,
 
 
 # ---------------------------
-# ON-HOLD: direct table join helpers
+# ON-HOLD: direct table join  helpers
 # ---------------------------
 def normalize_join_key(value: Any) -> Optional[str]:
     """
