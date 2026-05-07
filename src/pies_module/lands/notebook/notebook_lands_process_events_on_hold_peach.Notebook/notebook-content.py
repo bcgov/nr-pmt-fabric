@@ -787,7 +787,7 @@ def normalize_join_key(value: Any) -> Optional[str]:
 
 def build_on_hold_index_from_df(onh_df: Any) -> Dict[str, List[Mapping[str, Any]]]:
     """
-    Build AUTHORIZATION_ID -> [ON_HOLD rows] from ats_replication.ats_authorizations_on_hold.
+    Build AUTHORIZATION_ID -> [ON_HOLD rows] from ats_staging.ats_authorizations_on_hold_staging.
 
     This intentionally keeps every ON_HOLD row for the same AUTHORIZATION_ID,
     including repeated reason codes and repeated on-hold periods over time.
@@ -1158,7 +1158,7 @@ def _build_event(
 
 
 # ---------------------------
-# ON-HOLD: build CodingEvent from ats_authorizations_on_hold row + ON-HOLD rule/code map
+# ON-HOLD: build CodingEvent from ats_staging.ats_authorizations_on_hold_staging row + ON-HOLD rule/code map
 # ---------------------------
 def _build_on_hold_event(
     row: Mapping[str, Any],
@@ -1810,8 +1810,8 @@ RULES_PATH = f"{ABFS_BASE}/Files/pies_module/lands/lands_lifecyle_rules/rules.js
 LIFECYCLE_PATH = f"{ABFS_BASE}/Files/pies_module/lands/lands_lifecyle_mapping/lifecycle_map.json"
 
 # ON-HOLD source table + standard code mapping
-ON_HOLD_TABLE_NAME = "ats_replication.ats_authorizations_on_hold"
-ON_HOLD_TABLE_ABFS_PATH = f"{ABFS_BASE}/Tables/ats_replication/ats_authorizations_on_hold"
+ON_HOLD_TABLE_NAME = "ats_staging.ats_authorizations_on_hold_staging"
+ON_HOLD_TABLE_ABFS_PATH = f"{ABFS_BASE}/Tables/ats_staging/ats_authorizations_on_hold_staging"
 ON_HOLD_RULES_PATH = f"{ABFS_BASE}/Files/pies_module/lands/lands_on_hold/on_hold_rules.json"
 ON_HOLD_CODE_MAP_PATH = f"{ABFS_BASE}/Files/pies_module/lands/lands_on_hold/on_hold_code_map.json"
 
