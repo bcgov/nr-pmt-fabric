@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "DataPipeline",
+    "displayName": "pipeline_ats_onhold_staging"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "d790e1ff-9e38-8cbd-423a-8f80ca63ba9c"
+  }
+}
