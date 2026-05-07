@@ -1,0 +1,39 @@
+{
+  "formatVersion": "202502",
+  "computeEngineSettings": {
+    "allowModernEvaluationEngine": true
+  },
+  "name": "dataflow_ats_onhold_staging",
+  "queryGroups": [],
+  "documentLocale": "en-US",
+  "queriesMetadata": {
+    "ats_authorizations_on_hold_staging": {
+      "queryId": "28a40b51-4f6f-49fb-b638-534067b9cf32",
+      "queryName": "ats_authorizations_on_hold_staging",
+      "loadEnabled": false
+    },
+    "pmt-workspace-id": {
+      "queryId": "1d9d1add-dabf-4464-b221-3d6d6c9b3d58",
+      "queryName": "pmt-workspace-id",
+      "loadEnabled": false
+    },
+    "pmt-lakehouse-id": {
+      "queryId": "7e454275-7c7f-44c1-839d-b3a23f894e50",
+      "queryName": "pmt-lakehouse-id",
+      "loadEnabled": false
+    },
+    "Query1_DataDestination": {
+      "queryId": "13948e28-7ac6-456f-9e04-5782864e5db1",
+      "queryName": "Query1_DataDestination",
+      "isHidden": true,
+      "loadEnabled": false
+    }
+  },
+  "connections": [
+    {
+      "path": "Lakehouse",
+      "kind": "Lakehouse",
+      "connectionId": "{\"ClusterId\":\"1f7baf71-1832-47ee-ba8c-e8f46696fbb5\",\"DatasourceId\":\"242c11af-5a94-4dc0-a80c-556166c29afe\"}"
+    }
+  ]
+}
