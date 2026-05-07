@@ -22,9 +22,9 @@
       "queryName": "pmt-lakehouse-id",
       "loadEnabled": false
     },
-    "Query1_DataDestination": {
-      "queryId": "13948e28-7ac6-456f-9e04-5782864e5db1",
-      "queryName": "Query1_DataDestination",
+    "ats_authorizations_on_hold_staging_DataDestination": {
+      "queryId": "2a185242-31e4-4f50-ac15-6b3fc1a0d834",
+      "queryName": "ats_authorizations_on_hold_staging_DataDestination",
       "isHidden": true,
       "loadEnabled": false
     }

@@ -1,6 +1,6 @@
 [StagingDefinition = [Kind = "FastCopy"]]
 section Section1;
-[DataDestinations = {[Definition = [Kind = "Reference", QueryName = "Query1_DataDestination", IsNewTarget = true], Settings = [Kind = "Automatic", TypeSettings = [Kind = "Table"]]]}]
+[DataDestinations = {[Definition = [Kind = "Reference", QueryName = "ats_authorizations_on_hold_staging_DataDestination", IsNewTarget = true], Settings = [Kind = "Automatic", TypeSettings = [Kind = "Table"]]]}]
 shared ats_authorizations_on_hold_staging = let
     // -----------------------------
     // Parameters
@@ -62,7 +62,7 @@ in
     Deduped;
 shared #"pmt-workspace-id" = "79dafa8a-b966-4240-80f7-2e9d46baa5c3" meta [IsParameterQuery = true, IsParameterQueryRequired = false, Type = type text];
 shared #"pmt-lakehouse-id" = "201b9b7d-ca11-46b6-81e8-feeba4c99642" meta [IsParameterQuery = true, IsParameterQueryRequired = false, Type = type text];
-shared Query1_DataDestination = let
+shared ats_authorizations_on_hold_staging_DataDestination = let
   Pattern = Lakehouse.Contents([CreateNavigationProperties = false, EnableFolding = false, HierarchicalNavigation = true, EnableVorder = true, OutputMetadataRefresh = true]),
   Navigation_1 = Pattern{[workspaceId = "79dafa8a-b966-4240-80f7-2e9d46baa5c3"]}[Data],
   Navigation_2 = Navigation_1{[lakehouseId = "201b9b7d-ca11-46b6-81e8-feeba4c99642"]}[Data],
