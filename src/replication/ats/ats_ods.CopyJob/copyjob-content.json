@@ -153,6 +153,9 @@
           "datasetSettings": {
             "schema": "ATS",
             "table": "ATS_AVG_PROCESSING_TIME_VW"
+          },
+          "partitionSettings": {
+            "partitionOption": "None"
           }
         },
         "destination": {
@@ -176,9 +179,7 @@
               },
               "destination": {
                 "name": "MANAGING_FCBC_REGION_ID",
-                "physicalType": "decimal",
-                "scale": 18,
-                "precision": 38
+                "physicalType": "long"
               }
             },
             {
@@ -190,9 +191,7 @@
               },
               "destination": {
                 "name": "AUTHORIZATION_INSTRUMENT_ID",
-                "physicalType": "decimal",
-                "scale": 18,
-                "precision": 38
+                "physicalType": "long"
               }
             },
             {
@@ -204,9 +203,7 @@
               },
               "destination": {
                 "name": "PARTNER_AGENCY_ID",
-                "physicalType": "decimal",
-                "scale": 18,
-                "precision": 38
+                "physicalType": "long"
               }
             },
             {
@@ -218,9 +215,7 @@
               },
               "destination": {
                 "name": "PROJECT_ID",
-                "physicalType": "decimal",
-                "scale": 18,
-                "precision": 38
+                "physicalType": "long"
               }
             },
             {
@@ -232,9 +227,7 @@
               },
               "destination": {
                 "name": "AUTHORIZATION_ID",
-                "physicalType": "decimal",
-                "scale": 18,
-                "precision": 38
+                "physicalType": "long"
               }
             },
             {
@@ -246,9 +239,7 @@
               },
               "destination": {
                 "name": "SUBREGIONAL_OFFICE_ID",
-                "physicalType": "decimal",
-                "scale": 18,
-                "precision": 38
+                "physicalType": "long"
               }
             },
             {
@@ -260,9 +251,7 @@
               },
               "destination": {
                 "name": "SECONDARY_OFFICE_ID",
-                "physicalType": "decimal",
-                "scale": 18,
-                "precision": 38
+                "physicalType": "long"
               }
             },
             {
@@ -404,9 +393,7 @@
               },
               "destination": {
                 "name": "ACCEPTANCE_NET_TIME",
-                "physicalType": "decimal",
-                "scale": 18,
-                "precision": 38
+                "physicalType": "long"
               }
             },
             {
@@ -478,9 +465,7 @@
               },
               "destination": {
                 "name": "FIRST_NATION_NET_TIME",
-                "physicalType": "decimal",
-                "scale": 18,
-                "precision": 38
+                "physicalType": "long"
               }
             },
             {
@@ -502,9 +487,7 @@
               },
               "destination": {
                 "name": "TECH_REVIEW_NET_TIME",
-                "physicalType": "decimal",
-                "scale": 18,
-                "precision": 38
+                "physicalType": "long"
               }
             },
             {
@@ -546,9 +529,7 @@
               },
               "destination": {
                 "name": "TOTAL_PROCESSING_TIME",
-                "physicalType": "decimal",
-                "scale": 18,
-                "precision": 38
+                "physicalType": "integer"
               }
             },
             {
@@ -614,6 +595,9 @@
           "datasetSettings": {
             "schema": "ATS",
             "table": "ATS_CLIENTS"
+          },
+          "partitionSettings": {
+            "partitionOption": "None"
           }
         },
         "destination": {
@@ -637,9 +621,7 @@
               },
               "destination": {
                 "name": "CLIENT_ID",
-                "physicalType": "decimal",
-                "scale": 18,
-                "precision": 38
+                "physicalType": "long"
               }
             },
             {
@@ -651,9 +633,7 @@
               },
               "destination": {
                 "name": "ADDRESS_ID",
-                "physicalType": "decimal",
-                "scale": 18,
-                "precision": 38
+                "physicalType": "long"
               }
             },
             {
@@ -882,6 +862,9 @@
           "datasetSettings": {
             "schema": "ATS",
             "table": "ATS_ENQUIRIES"
+          },
+          "partitionSettings": {
+            "partitionOption": "None"
           }
         },
         "destination": {
@@ -905,9 +888,7 @@
               },
               "destination": {
                 "name": "ENQUIRY_ID",
-                "physicalType": "decimal",
-                "scale": 18,
-                "precision": 38
+                "physicalType": "long"
               }
             },
             {
@@ -919,9 +900,7 @@
               },
               "destination": {
                 "name": "CLIENT_ID",
-                "physicalType": "decimal",
-                "scale": 18,
-                "precision": 38
+                "physicalType": "long"
               }
             },
             {
@@ -975,9 +954,7 @@
               },
               "destination": {
                 "name": "SUBREGIONAL_OFFICE_ID",
-                "physicalType": "decimal",
-                "scale": 18,
-                "precision": 38
+                "physicalType": "long"
               }
             },
             {
@@ -989,9 +966,7 @@
               },
               "destination": {
                 "name": "SECONDARY_OFFICE_ID",
-                "physicalType": "decimal",
-                "scale": 18,
-                "precision": 38
+                "physicalType": "long"
               }
             },
             {
@@ -1254,6 +1229,9 @@
           "datasetSettings": {
             "schema": "ATS",
             "table": "ATS_TARGET_TURNAROUND_VW"
+          },
+          "partitionSettings": {
+            "partitionOption": "None"
           }
         },
         "destination": {
@@ -1277,9 +1255,7 @@
               },
               "destination": {
                 "name": "AUTHORIZATION_ID",
-                "physicalType": "decimal",
-                "scale": 18,
-                "precision": 38
+                "physicalType": "long"
               }
             },
             {
@@ -1291,9 +1267,7 @@
               },
               "destination": {
                 "name": "MANAGING_FCBC_REGION_ID",
-                "physicalType": "decimal",
-                "scale": 18,
-                "precision": 38
+                "physicalType": "long"
               }
             },
             {
@@ -1325,9 +1299,7 @@
               },
               "destination": {
                 "name": "PROJECT_ID",
-                "physicalType": "decimal",
-                "scale": 18,
-                "precision": 38
+                "physicalType": "long"
               }
             },
             {
@@ -1359,9 +1331,7 @@
               },
               "destination": {
                 "name": "AUTHORIZATION_INSTRUMENT_ID",
-                "physicalType": "decimal",
-                "scale": 18,
-                "precision": 38
+                "physicalType": "long"
               }
             },
             {
@@ -1383,9 +1353,7 @@
               },
               "destination": {
                 "name": "PARTNER_AGENCY_ID",
-                "physicalType": "decimal",
-                "scale": 18,
-                "precision": 38
+                "physicalType": "long"
               }
             },
             {
@@ -1487,7 +1455,7 @@
               },
               "destination": {
                 "name": "TARGET_TAT",
-                "physicalType": "float"
+                "physicalType": "long"
               }
             },
             {
@@ -1593,6 +1561,540 @@
               }
             }
           ]
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "80ed67ea-bec8-4e4f-ac15-1436092985f7",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "ATS",
+            "table": "ATS_AUTHORIZATION_INSTRUMENTS"
+          },
+          "partitionSettings": {
+            "partitionOption": "None"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "ats_replication",
+            "table": "ats_authorization_instruments"
+          }
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "90c1a7ea-ecb5-41bd-8420-9cc087b3b2b0",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "ATS",
+            "table": "ATS_AUTHORIZATION_STATUS_CODES"
+          },
+          "partitionSettings": {
+            "partitionOption": "None"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "ats_replication",
+            "table": "ats_authorization_status_codes"
+          }
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "f4b678ad-3a25-4b04-927d-2f3f7168900e",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "ATS",
+            "table": "ATS_CLIENT_SATISFACTION_VW"
+          },
+          "partitionSettings": {
+            "partitionOption": "None"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "ats_replication",
+            "table": "ats_client_satisfaction_vw"
+          }
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator",
+          "mappings": [
+            {
+              "source": {
+                "name": "CLIENT_ID",
+                "type": "Double",
+                "physicalType": "number",
+                "scale": 0,
+                "precision": 38
+              },
+              "destination": {
+                "name": "CLIENT_ID",
+                "physicalType": "integer"
+              }
+            },
+            {
+              "source": {
+                "name": "COMPANY_NAME",
+                "type": "String",
+                "physicalType": "varchar2",
+                "length": "100",
+                "unit": "BYTE"
+              },
+              "destination": {
+                "name": "COMPANY_NAME",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "FIRST_NAME",
+                "type": "String",
+                "physicalType": "varchar2",
+                "length": "50",
+                "unit": "BYTE"
+              },
+              "destination": {
+                "name": "FIRST_NAME",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "SURNAME",
+                "type": "String",
+                "physicalType": "varchar2",
+                "length": "50",
+                "unit": "BYTE"
+              },
+              "destination": {
+                "name": "SURNAME",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "PROJ_ENQ_ID",
+                "type": "Double",
+                "physicalType": "number",
+                "scale": 0,
+                "precision": 38
+              },
+              "destination": {
+                "name": "PROJ_ENQ_ID",
+                "physicalType": "integer"
+              }
+            },
+            {
+              "source": {
+                "name": "ADDRESS_LINE1",
+                "type": "String",
+                "physicalType": "varchar2",
+                "length": "75",
+                "unit": "BYTE"
+              },
+              "destination": {
+                "name": "ADDRESS_LINE1",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "ADDRESS_LINE2",
+                "type": "String",
+                "physicalType": "varchar2",
+                "length": "75",
+                "unit": "BYTE"
+              },
+              "destination": {
+                "name": "ADDRESS_LINE2",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "CITY",
+                "type": "String",
+                "physicalType": "varchar2",
+                "length": "45",
+                "unit": "BYTE"
+              },
+              "destination": {
+                "name": "CITY",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "PROVINCE_NAME",
+                "type": "String",
+                "physicalType": "varchar2",
+                "length": "40",
+                "unit": "BYTE"
+              },
+              "destination": {
+                "name": "PROVINCE_NAME",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "COUNTRY_NAME",
+                "type": "String",
+                "physicalType": "varchar2",
+                "length": "50",
+                "unit": "BYTE"
+              },
+              "destination": {
+                "name": "COUNTRY_NAME",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "POSTAL_CODE",
+                "type": "String",
+                "physicalType": "varchar2",
+                "length": "12",
+                "unit": "BYTE"
+              },
+              "destination": {
+                "name": "POSTAL_CODE",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "PRIMARY_PHONE",
+                "type": "String",
+                "physicalType": "varchar2",
+                "length": "25",
+                "unit": "BYTE"
+              },
+              "destination": {
+                "name": "PRIMARY_PHONE",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "SECONDARY_PHONE",
+                "type": "String",
+                "physicalType": "varchar2",
+                "length": "25",
+                "unit": "BYTE"
+              },
+              "destination": {
+                "name": "SECONDARY_PHONE",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "FAX",
+                "type": "String",
+                "physicalType": "varchar2",
+                "length": "20",
+                "unit": "BYTE"
+              },
+              "destination": {
+                "name": "FAX",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "EMAIL",
+                "type": "String",
+                "physicalType": "varchar2",
+                "length": "60",
+                "unit": "BYTE"
+              },
+              "destination": {
+                "name": "EMAIL",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "MANAGING_FCBC_REGION_ID",
+                "type": "Double",
+                "physicalType": "number",
+                "scale": 0,
+                "precision": 38
+              },
+              "destination": {
+                "name": "MANAGING_FCBC_REGION_ID",
+                "physicalType": "integer"
+              }
+            },
+            {
+              "source": {
+                "name": "REGION_NAME",
+                "type": "String",
+                "physicalType": "varchar2",
+                "length": "50",
+                "unit": "BYTE"
+              },
+              "destination": {
+                "name": "REGION_NAME",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "CONTACT_INFORMATION",
+                "type": "String",
+                "physicalType": "varchar2",
+                "length": "13",
+                "unit": "BYTE"
+              },
+              "destination": {
+                "name": "CONTACT_INFORMATION",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "ENQ_AUTH_DATE",
+                "type": "DateTime",
+                "physicalType": "date"
+              },
+              "destination": {
+                "name": "ENQ_AUTH_DATE",
+                "physicalType": "timestamp"
+              }
+            },
+            {
+              "source": {
+                "name": "PARTNER_AGENCY_ID",
+                "type": "Double",
+                "physicalType": "number",
+                "scale": 0,
+                "precision": 38
+              },
+              "destination": {
+                "name": "PARTNER_AGENCY_ID",
+                "physicalType": "integer"
+              }
+            },
+            {
+              "source": {
+                "name": "AGENCY_NAME",
+                "type": "String",
+                "physicalType": "varchar2",
+                "length": "60",
+                "unit": "BYTE"
+              },
+              "destination": {
+                "name": "AGENCY_NAME",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "SUB_REGION_ID",
+                "type": "Double",
+                "physicalType": "number",
+                "scale": 0,
+                "precision": 38
+              },
+              "destination": {
+                "name": "SUB_REGION_ID",
+                "physicalType": "integer"
+              }
+            },
+            {
+              "source": {
+                "name": "SUB_REGION_NAME",
+                "type": "String",
+                "physicalType": "varchar2",
+                "length": "50",
+                "unit": "BYTE"
+              },
+              "destination": {
+                "name": "SUB_REGION_NAME",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "SORT_NUM",
+                "type": "Double",
+                "physicalType": "number"
+              },
+              "destination": {
+                "name": "SORT_NUM",
+                "physicalType": "integer"
+              }
+            }
+          ]
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "e0497736-7ce4-418e-ace1-6fcc2a18a67c",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "ATS",
+            "table": "ATS_MANAGING_FCBC_REGIONS"
+          },
+          "partitionSettings": {
+            "partitionOption": "None"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "ats_replication",
+            "table": "ats_managing_fcbc_regions"
+          }
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "efb5b133-967e-46ec-9a9b-4fc700e6e1fc",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "ATS",
+            "table": "ATS_PROJECT_STATUS_CODES"
+          },
+          "partitionSettings": {
+            "partitionOption": "None"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "ats_replication",
+            "table": "ats_project_status_codes"
+          }
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "22c43a3c-a973-4c89-9649-f512b33430b8",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "ATS",
+            "table": "ATS_REGIONAL_USERS"
+          },
+          "partitionSettings": {
+            "partitionOption": "None"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "ats_replication",
+            "table": "ats_regional_users"
+          }
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "5e6e943c-306a-4358-aaa4-c02b4d1d14f6",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "ATS",
+            "table": "ATS_SECONDARY_OFFICES"
+          },
+          "partitionSettings": {
+            "partitionOption": "None"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "ats_replication",
+            "table": "ats_secondary_offices"
+          }
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
         },
         "typeConversionSettings": {
           "typeConversion": {
