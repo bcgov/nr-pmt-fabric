@@ -2,13 +2,13 @@
 section Section1;
 shared #"pmt-workspace-id" = let
   Source = Variable.ValueOrDefault(
-        "$(/**/pmt-variable-library/pmt-workspace-id)",
+        "$(/**/pmt_env_vars/pmt-workspace-id)",
         "79dafa8a-b966-4240-80f7-2e9d46baa5c3")
 in
   Source;
 shared #"pmt-lakehouse-id" = let
   Source = Variable.ValueOrDefault(
-        "$(/**/pmt-variable-library/pmt-lakehouse-id)",
+        "$(/**/pmt_env_vars/pmt-lakehouse-id)",
         "201b9b7d-ca11-46b6-81e8-feeba4c99642")
 in
   Source;
