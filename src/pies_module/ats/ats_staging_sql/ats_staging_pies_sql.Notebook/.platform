@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Notebook",
+    "displayName": "ats_staging_pies_sql"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "86493af6-d753-a243-49ef-15c93663bf8e"
+  }
+}

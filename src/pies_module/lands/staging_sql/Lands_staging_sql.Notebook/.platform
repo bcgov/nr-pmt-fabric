@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Notebook",
+    "displayName": "Lands_staging_sql"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "4a153baa-85bb-8626-439a-d5afa0573400"
+  }
+}

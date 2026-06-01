@@ -1,0 +1,39 @@
+{
+  "formatVersion": "202502",
+  "computeEngineSettings": {
+    "allowModernEvaluationEngine": true
+  },
+  "name": "dataflow_lands_vfcbc_only_process_events_to_peach",
+  "queryGroups": [],
+  "documentLocale": "en-US",
+  "queriesMetadata": {
+    "pmt-workspace-id": {
+      "queryId": "cf9b2b45-1907-4c83-9261-05302109ad94",
+      "queryName": "pmt-workspace-id",
+      "loadEnabled": false
+    },
+    "pies_staging_lands_vfcbc_only": {
+      "queryId": "76cf8204-38d6-4379-93ab-7ccefbd782ac",
+      "queryName": "pies_staging_lands_vfcbc_only",
+      "loadEnabled": false
+    },
+    "pmt-lakehouse-id": {
+      "queryId": "b7750b43-5383-455b-9b47-986ebc49449d",
+      "queryName": "pmt-lakehouse-id",
+      "loadEnabled": false
+    },
+    "pies_staging_lands_vfcbc_only_DataDestination": {
+      "queryId": "bdeaa8ac-ba9a-41c8-90f3-3a53fb898f40",
+      "queryName": "pies_staging_lands_vfcbc_only_DataDestination",
+      "isHidden": true,
+      "loadEnabled": false
+    }
+  },
+  "connections": [
+    {
+      "path": "Lakehouse",
+      "kind": "Lakehouse",
+      "connectionId": "{\"ClusterId\":\"1f7baf71-1832-47ee-ba8c-e8f46696fbb5\",\"DatasourceId\":\"242c11af-5a94-4dc0-a80c-556166c29afe\"}"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Dataflow",
+    "displayName": "dataflow_lands_vfcbc_only_process_events_to_peach"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "fe401a8d-d5d5-b778-44b4-61638bf14297"
+  }
+}
