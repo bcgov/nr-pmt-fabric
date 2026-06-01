@@ -6,6 +6,12 @@ shared #"pmt-workspace-id" = let
         "60f10f69-06b8-44a3-a3cf-1afd52d4d754")
 in
   Source;
+shared #"pmt-lakehouse-id" = let
+  Source = Variable.ValueOrDefault(
+        "$(/**/pmt_env_vars/pmt-lakehouse-id)",
+        "964899a6-7e35-47cd-9eb3-429482e1b733")
+in
+  Source;
 [DataDestinations = {[Definition = [Kind = "Reference", QueryName = "pies_staging_lands_vfcbc_only_DataDestination", IsNewTarget = true], Settings = [Kind = "Automatic", TypeSettings = [Kind = "Table"]]]}]
 shared pies_staging_lands_vfcbc_only = let
     Source = Lakehouse.Contents(null),
@@ -209,12 +215,6 @@ shared pies_staging_lands_vfcbc_only = let
     )
 in
     ChangedTypes;
-shared #"pmt-lakehouse-id" = let
-  Source = Variable.ValueOrDefault(
-        "$(/**/pmt_env_vars/pmt-lakehouse-id)",
-        "964899a6-7e35-47cd-9eb3-429482e1b733")
-in
-  Source;
 shared pies_staging_lands_vfcbc_only_DataDestination = let
   Pattern = Lakehouse.Contents([CreateNavigationProperties = false, EnableFolding = false, HierarchicalNavigation = true, EnableVorder = true, OutputMetadataRefresh = true]),
   Navigation_1 = Pattern{[workspaceId = #"pmt-workspace-id"]}[Data],
