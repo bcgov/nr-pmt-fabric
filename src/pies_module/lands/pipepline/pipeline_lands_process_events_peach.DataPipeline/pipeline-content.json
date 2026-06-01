@@ -7,7 +7,8 @@
           "dataflowId": "2921741e-37a2-9a9b-4ef4-049e9fe4c7c9",
           "workspaceId": "00000000-0000-0000-0000-000000000000",
           "notifyOption": "NoNotification",
-          "dataflowType": "DataflowFabric"
+          "dataflowType": "DataflowFabric",
+          "executeMashupQueriesOnly": true
         },
         "policy": {
           "timeout": "0.12:00:00",
@@ -51,6 +52,44 @@
         "dependsOn": [
           {
             "activity": "Dataflow_pmt_pies_lands",
+            "dependencyConditions": [
+              "Completed"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "Wait",
+        "typeProperties": {
+          "waitTimeInSeconds": 60
+        },
+        "name": "Wait 60s_copy1",
+        "dependsOn": [
+          {
+            "activity": "Notebook_pmt_pies_lands",
+            "dependencyConditions": [
+              "Completed"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "TridentNotebook",
+        "typeProperties": {
+          "notebookId": "19ecc775-435c-b008-4db6-a1e2ba1cf1bb",
+          "workspaceId": "00000000-0000-0000-0000-000000000000"
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 3,
+          "retryIntervalInSeconds": 60,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Notebook_pmt_pies_lands_vfcbc_only",
+        "dependsOn": [
+          {
+            "activity": "Wait 60s_copy1",
             "dependencyConditions": [
               "Completed"
             ]
