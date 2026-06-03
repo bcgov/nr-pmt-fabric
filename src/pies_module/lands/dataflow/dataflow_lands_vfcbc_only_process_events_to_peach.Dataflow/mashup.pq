@@ -16,6 +16,7 @@ in
 shared pies_staging_lands_vfcbc_only = let
     Source = Lakehouse.Contents(null),
     WS     = Source{[workspaceId = #"pmt-workspace-id"]}[Data],
+    
     LH     = WS{[lakehouseId  = #"pmt-lakehouse-id"]}[Data],
 
     SourceView = LH{[Id = "tantalis_staging.tantalis_vfcbc_only_vw"]}[Data],
