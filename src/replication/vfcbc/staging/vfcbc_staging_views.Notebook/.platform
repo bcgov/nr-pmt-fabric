@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Notebook",
+    "displayName": "vfcbc_staging_views"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "d1937e0d-2e5c-aa61-4abe-60b89758e1fc"
+  }
+}
