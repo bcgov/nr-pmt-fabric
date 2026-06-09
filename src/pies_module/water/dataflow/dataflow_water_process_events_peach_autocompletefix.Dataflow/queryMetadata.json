@@ -27,6 +27,17 @@
       "queryName": "pies_staging_water_jobnumber_DataDestination",
       "isHidden": true,
       "loadEnabled": false
+    },
+    "pies_staging_water_vfcbctracking": {
+      "queryId": "6875b2b6-a344-4fba-aec7-0dc3373db25b",
+      "queryName": "pies_staging_water_vfcbctracking",
+      "loadEnabled": false
+    },
+    "pies_staging_water_vfcbctracking_DataDestination": {
+      "queryId": "e5adbdfe-dc3e-46fb-a058-73f8be0ff836",
+      "queryName": "pies_staging_water_vfcbctracking_DataDestination",
+      "isHidden": true,
+      "loadEnabled": false
     }
   },
   "connections": [
