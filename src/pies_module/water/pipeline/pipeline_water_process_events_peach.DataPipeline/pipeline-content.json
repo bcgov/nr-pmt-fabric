@@ -29,10 +29,11 @@
       {
         "type": "RefreshDataflow",
         "typeProperties": {
-          "dataflowId": "7f651b01-7a1a-91bf-4324-77f6958d5add",
+          "dataflowId": "7d61dd30-5c1b-b770-4d57-4958e39d79e7",
           "workspaceId": "00000000-0000-0000-0000-000000000000",
           "notifyOption": "NoNotification",
-          "dataflowType": "DataflowFabric"
+          "dataflowType": "DataflowFabric",
+          "executeMashupQueriesOnly": true
         },
         "policy": {
           "timeout": "0.12:00:00",
@@ -42,7 +43,7 @@
           "secureOutput": false
         },
         "name": "Dataflow_water_raw",
-        "description": "pull water data from water combined view for PIES ETL water",
+        "description": "Pull water data from water combined view for PIES ETL water",
         "dependsOn": []
       },
       {
@@ -64,31 +65,6 @@
         "dependsOn": [
           {
             "activity": "Wait 90secs_copy1",
-            "dependencyConditions": [
-              "Completed"
-            ]
-          }
-        ]
-      },
-      {
-        "type": "TridentNotebook",
-        "typeProperties": {
-          "notebookId": "f9084edb-96b7-b92e-4de0-92d552736984",
-          "workspaceId": "00000000-0000-0000-0000-000000000000",
-          "sessionTag": "spark_water_session"
-        },
-        "policy": {
-          "timeout": "0.12:00:00",
-          "retry": 3,
-          "retryIntervalInSeconds": 120,
-          "secureInput": false,
-          "secureOutput": false
-        },
-        "name": "Notebook_authorizationid",
-        "description": "run PIES etl mapping for water authorization id, then push to PEACH",
-        "dependsOn": [
-          {
-            "activity": "Wait 90secs_copy1_copy1",
             "dependencyConditions": [
               "Completed"
             ]
@@ -119,21 +95,6 @@
         "dependsOn": [
           {
             "activity": "notebood_water_jobnumber",
-            "dependencyConditions": [
-              "Succeeded"
-            ]
-          }
-        ]
-      },
-      {
-        "type": "Wait",
-        "typeProperties": {
-          "waitTimeInSeconds": 90
-        },
-        "name": "Wait 90secs_copy1_copy1",
-        "dependsOn": [
-          {
-            "activity": "Notebook_vfcbctrackingnumber",
             "dependencyConditions": [
               "Succeeded"
             ]
