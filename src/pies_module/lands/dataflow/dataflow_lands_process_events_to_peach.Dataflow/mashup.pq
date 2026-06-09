@@ -1,32 +1,33 @@
-[DefaultOutputDestinationSettings = [DestinationDefinition = [Kind = "Reference", QueryName = "DefaultDestination (2)", IsNewTarget = true], UpdateMethod = [Kind = "Replace"], DestinationTypeSettings = [Kind = "Table"]], StagingDefinition = [Kind = "FastCopy"]]
+[StagingDefinition = [Kind = "FastCopy"]]
 section Section1;
-shared #"pmt-workspace-id" = "79dafa8a-b966-4240-80f7-2e9d46baa5c3" meta [IsParameterQuery = true, IsParameterQueryRequired = false, Type = type text];
-shared #"pmt-lakehouse-id" = "201b9b7d-ca11-46b6-81e8-feeba4c99642" meta [IsParameterQuery = true, IsParameterQueryRequired = false, Type = type text];
-[BindToDefaultDestination = true]
+shared #"pmt-workspace-id" = let
+  Source = Variable.ValueOrDefault(
+        "$(/**/pmt_env_vars/pmt-workspace-id)",
+        "60f10f69-06b8-44a3-a3cf-1afd52d4d754")
+in
+  Source;
+shared #"pmt-lakehouse-id" = let
+  Source = Variable.ValueOrDefault(
+        "$(/**/pmt_env_vars/pmt-lakehouse-id)",
+        "964899a6-7e35-47cd-9eb3-429482e1b733")
+in
+  Source;
+[DataDestinations = {[Definition = [Kind = "Reference", QueryName = "pies_staging_lands_dispids_DataDestination", IsNewTarget = true], Settings = [Kind = "Automatic", TypeSettings = [Kind = "Table"]]]}]
 shared pies_staging_lands_dispids = let
     // -----------------------------
     // Parameters
     // -----------------------------
-    WorkspaceId =
-        Variable.ValueOrDefault(
-            "$(/**/pmt-variable-library/pmt-workspace-id)",
-            "60f10f69-06b8-44a3-a3cf-1afd52d4d754"
-        ),
+    Source = Lakehouse.Contents(null),
+    WS     = Source{[workspaceId = #"pmt-workspace-id"]}[Data],
+    LH     = WS{[lakehouseId  = #"pmt-lakehouse-id"]}[Data],
 
-    LakehouseId =
-        Variable.ValueOrDefault(
-            "$(/**/pmt-variable-library/pmt-lakehouse-id)",
-            "964899a6-7e35-47cd-9eb3-429482e1b733"
-        ),
     // Optional: add a constant system_id so rules/preflight won't complain
     DEFAULT_SYSTEM_ID = "ITSM-6072",
 
     // -----------------------------
     // Lakehouse navigation
     // -----------------------------
-    Source = Lakehouse.Contents(null),
-    WS = Source{[workspaceId = WorkspaceId]}[Data],
-    LH = WS{[lakehouseId = LakehouseId]}[Data],
+
 
     // -----------------------------
     // Read source objects
@@ -34,7 +35,6 @@ shared pies_staging_lands_dispids = let
     DISP_Source  = LH{[Id = "tantalis_staging.vw_ta_disposition_merged"]}[Data],
     VFCBC_Source = LH{[Id = "tantalis_staging.ta_vfcbc_merged"]}[Data],
     ATS_Source   = LH{[Id = "ats_replication.ats_authorizations"]}[Data],
-    ONH_Source   = LH{[Id = "ats_replication.ats_authorizations_on_hold"]}[Data],
 
     // -----------------------------
     // Helper: normalize keys (trim, cast to text, remove trailing ".0", blank -> null)
@@ -213,63 +213,11 @@ shared pies_staging_lands_dispids = let
         ),
 
     // -----------------------------
-    // ON HOLD LOGIC (join via ATSAUTHORIZATIONNUMBER -> ONH.AUTHORIZATION_ID)
-    // -----------------------------
-    ONH_WithKey =
-        Table.AddColumn(
-            ONH_Source,
-            "__AUTH_KEY",
-            each NormalizeKey([AUTHORIZATION_ID]),
-            type text
-        ),
-
-    ONH_Filtered =
-        Table.SelectRows(ONH_WithKey, each [__AUTH_KEY] <> null),
-
-    JoinedONH =
-        Table.NestedJoin(
-            WithSystemId,
-            {"__ATSAUTH_KEY"},
-            ONH_Filtered,
-            {"__AUTH_KEY"},
-            "ONH",
-            JoinKind.LeftOuter
-        ),
-
-    ExpandedONH =
-        Table.ExpandTableColumn(
-            JoinedONH,
-            "ONH",
-            {
-                "AUTHORIZATION_ON_HOLD_ID",
-                "ATHN_ON_HOLD_REASON_CODE",
-                "AUTHORIZATION_ID",
-                "CURRENT_ON_HOLD_IND",
-                "ON_HOLD_START_DATE",
-                "ON_HOLD_END_DATE",
-                "ON_HOLD_NOTES",
-                "REMOVED_BY",
-                "PARTNER_AGENCY_ID"
-            },
-            {
-                "AUTHORIZATION_ON_HOLD_ID",
-                "ATHN_ON_HOLD_REASON_CODE",
-                "AUTHORIZATION_ID",
-                "CURRENT_ON_HOLD_IND",
-                "ON_HOLD_START_DATE",
-                "ON_HOLD_END_DATE",
-                "ON_HOLD_NOTES",
-                "REMOVED_BY",
-                "PARTNER_AGENCY_ID"
-            }
-        ),
-
-    // -----------------------------
     // PIESID (AFTER ATS JOIN)
     // -----------------------------
     WithPIESID =
         Table.AddColumn(
-            ExpandedONH,
+            WithSystemId,
             "PIESID",
             each NormalizeKey([DISPOSITION_TRANSACTION_SID]),
             type text
@@ -290,8 +238,14 @@ shared pies_staging_lands_dispids = let
         )
 in
     Cleanup;
-[BindToDefaultDestination = true]
 shared DefaultDestination = Lakehouse.Contents([EnableFolding = false])
     {[workspaceId = #"pmt-workspace-id"]}[Data]
     {[lakehouseId = #"pmt-lakehouse-id"]}[Data];
-shared #"DefaultDestination (2)" = Lakehouse.Contents([EnableFolding = false]){[workspaceId = "79dafa8a-b966-4240-80f7-2e9d46baa5c3"]}[Data]{[lakehouseId = "201b9b7d-ca11-46b6-81e8-feeba4c99642"]}[Data];
+shared pies_staging_lands_dispids_DataDestination = let
+  Pattern = Lakehouse.Contents([CreateNavigationProperties = false, EnableFolding = false, HierarchicalNavigation = true, EnableVorder = true, OutputMetadataRefresh = true]),
+  Navigation_1 = Pattern{[workspaceId = #"pmt-workspace-id"]}[Data],
+  Navigation_2 = Navigation_1{[lakehouseId = #"pmt-lakehouse-id"]}[Data],
+  Navigation_3 = Navigation_2{[Id = "pies_staging", ItemKind = "Schema"]}[Data],
+  TableNavigation = Navigation_3{[Id = "pies_staging_lands_dispids", ItemKind = "Table"]}?[Data]?
+in
+  TableNavigation;

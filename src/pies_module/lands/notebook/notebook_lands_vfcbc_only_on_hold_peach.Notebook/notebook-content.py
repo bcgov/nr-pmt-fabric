@@ -1801,10 +1801,10 @@ print(f"[SWITCH] POST_TO_API={POST_TO_API}  USE_PEACH_AUTH={USE_PEACH_AUTH}")
 # -------------------------
 # Change here
 # -------------------------
-TABLE_NAME = "tantalis_staging.pies_staging_lands_vfcbc_only"
+TABLE_NAME = "pies_staging.pies_staging_lands_vfcbc_only"
 
 TABLE_SHORT = TABLE_NAME.split(".")[-1]
-TABLE_ABFS_PATH = f"{ABFS_BASE}/Tables/tantalis_staging/{TABLE_SHORT}"
+TABLE_ABFS_PATH = f"{ABFS_BASE}/Tables/pies_staging/{TABLE_SHORT}"
 
 RULES_PATH = f"{ABFS_BASE}/Files/pies_module/lands/lands_lifecyle_rules/rules.json"
 LIFECYCLE_PATH = f"{ABFS_BASE}/Files/pies_module/lands/lands_lifecyle_mapping/lifecycle_map.json"

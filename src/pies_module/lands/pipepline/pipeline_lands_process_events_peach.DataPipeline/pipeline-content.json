@@ -36,7 +36,7 @@
         "name": "Notebook_pmt_pies_lands",
         "dependsOn": [
           {
-            "activity": "Wait 60s",
+            "activity": "Wait 60s_copy2",
             "dependencyConditions": [
               "Completed"
             ]
@@ -90,6 +90,47 @@
         "dependsOn": [
           {
             "activity": "Wait 60s_copy1",
+            "dependencyConditions": [
+              "Completed"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "RefreshDataflow",
+        "typeProperties": {
+          "dataflowId": "fe401a8d-d5d5-b778-44b4-61638bf14297",
+          "workspaceId": "00000000-0000-0000-0000-000000000000",
+          "notifyOption": "NoNotification",
+          "dataflowType": "DataflowFabric",
+          "executeMashupQueriesOnly": true
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 3,
+          "retryIntervalInSeconds": 60,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Dataflow_pmt_pies_lands_vfcbc_only",
+        "dependsOn": [
+          {
+            "activity": "Wait 60s",
+            "dependencyConditions": [
+              "Completed"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "Wait",
+        "typeProperties": {
+          "waitTimeInSeconds": 60
+        },
+        "name": "Wait 60s_copy2",
+        "dependsOn": [
+          {
+            "activity": "Dataflow_pmt_pies_lands_vfcbc_only",
             "dependencyConditions": [
               "Completed"
             ]

@@ -16,7 +16,6 @@ in
 shared pies_staging_lands_vfcbc_only = let
     Source = Lakehouse.Contents(null),
     WS     = Source{[workspaceId = #"pmt-workspace-id"]}[Data],
-    
     LH     = WS{[lakehouseId  = #"pmt-lakehouse-id"]}[Data],
 
     SourceView = LH{[Id = "tantalis_staging.tantalis_vfcbc_only_vw"]}[Data],
@@ -220,7 +219,7 @@ shared pies_staging_lands_vfcbc_only_DataDestination = let
   Pattern = Lakehouse.Contents([CreateNavigationProperties = false, EnableFolding = false, HierarchicalNavigation = true, EnableVorder = true, OutputMetadataRefresh = true]),
   Navigation_1 = Pattern{[workspaceId = #"pmt-workspace-id"]}[Data],
   Navigation_2 = Navigation_1{[lakehouseId = #"pmt-lakehouse-id"]}[Data],
-  Navigation_3 = Navigation_2{[Id = "tantalis_staging", ItemKind = "Schema"]}[Data],
+  Navigation_3 = Navigation_2{[Id = "pies_staging", ItemKind = "Schema"]}[Data],
   TableNavigation = Navigation_3{[Id = "pies_staging_lands_vfcbc_only", ItemKind = "Table"]}?[Data]?
 in
   TableNavigation;
