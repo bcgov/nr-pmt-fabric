@@ -1,0 +1,39 @@
+{
+  "formatVersion": "202502",
+  "computeEngineSettings": {
+    "allowModernEvaluationEngine": true
+  },
+  "name": "dataflow_water_process_events_peach_autocompletefix",
+  "queryGroups": [],
+  "documentLocale": "en-US",
+  "queriesMetadata": {
+    "pmt-lakehouse-id": {
+      "queryId": "57fd175c-4121-4ca2-9c09-a030b8c63488",
+      "queryName": "pmt-lakehouse-id",
+      "loadEnabled": false
+    },
+    "pmt-workspace-id": {
+      "queryId": "2c77c1c9-f0b8-4c32-8485-dd7f4c744934",
+      "queryName": "pmt-workspace-id",
+      "loadEnabled": false
+    },
+    "pies_staging_water_jobnumber": {
+      "queryId": "945a4732-7154-4b45-9ac5-c1165139ff61",
+      "queryName": "pies_staging_water_jobnumber",
+      "loadEnabled": false
+    },
+    "pies_staging_water_jobnumber_DataDestination": {
+      "queryId": "9186aa1c-1f10-4407-b263-f3071617d5df",
+      "queryName": "pies_staging_water_jobnumber_DataDestination",
+      "isHidden": true,
+      "loadEnabled": false
+    }
+  },
+  "connections": [
+    {
+      "path": "Lakehouse",
+      "kind": "Lakehouse",
+      "connectionId": "{\"ClusterId\":\"1f7baf71-1832-47ee-ba8c-e8f46696fbb5\",\"DatasourceId\":\"242c11af-5a94-4dc0-a80c-556166c29afe\"}"
+    }
+  ]
+}
