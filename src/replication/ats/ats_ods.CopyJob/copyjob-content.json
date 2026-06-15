@@ -31,64 +31,6 @@
   },
   "activities": [
     {
-      "id": "6f862069-9143-4aba-9f0a-4ce1d4700a30",
-      "properties": {
-        "source": {
-          "datasetSettings": {
-            "schema": "ATS",
-            "table": "ATS_ATHN_CLOSE_REASON_CODES"
-          }
-        },
-        "destination": {
-          "partitionOption": "None",
-          "writeBehavior": "Overwrite",
-          "datasetSettings": {
-            "schema": "ats_replication",
-            "table": "ats_athn_close_reason_codes"
-          }
-        },
-        "enableStaging": false,
-        "translator": {
-          "type": "TabularTranslator"
-        },
-        "typeConversionSettings": {
-          "typeConversion": {
-            "allowDataTruncation": true,
-            "treatBooleanAsNumber": false
-          }
-        }
-      }
-    },
-    {
-      "id": "c3d942ff-425d-4a08-a878-9a6130ddcc68",
-      "properties": {
-        "source": {
-          "datasetSettings": {
-            "schema": "ATS",
-            "table": "ATS_ATHN_ON_HOLD_REASON_CODES"
-          }
-        },
-        "destination": {
-          "partitionOption": "None",
-          "writeBehavior": "Overwrite",
-          "datasetSettings": {
-            "schema": "ats_replication",
-            "table": "ats_athn_on_hold_reasons_code"
-          }
-        },
-        "enableStaging": false,
-        "translator": {
-          "type": "TabularTranslator"
-        },
-        "typeConversionSettings": {
-          "typeConversion": {
-            "allowDataTruncation": true,
-            "treatBooleanAsNumber": false
-          }
-        }
-      }
-    },
-    {
       "id": "89c8823f-0c53-4549-bf5c-a45dc07d6fc1",
       "properties": {
         "source": {
@@ -1020,64 +962,6 @@
       }
     },
     {
-      "id": "8ca518a3-88e2-4c9c-bba9-16f07465f823",
-      "properties": {
-        "source": {
-          "datasetSettings": {
-            "schema": "ATS",
-            "table": "ATS_ENQUIRY_METHOD_CODES"
-          }
-        },
-        "destination": {
-          "partitionOption": "None",
-          "writeBehavior": "Overwrite",
-          "datasetSettings": {
-            "schema": "ats_replication",
-            "table": "ats_enquiry_method_codes"
-          }
-        },
-        "enableStaging": false,
-        "translator": {
-          "type": "TabularTranslator"
-        },
-        "typeConversionSettings": {
-          "typeConversion": {
-            "allowDataTruncation": true,
-            "treatBooleanAsNumber": false
-          }
-        }
-      }
-    },
-    {
-      "id": "6fe62b88-3ea5-4a58-be19-0e7fb7fc11a2",
-      "properties": {
-        "source": {
-          "datasetSettings": {
-            "schema": "ATS",
-            "table": "ATS_ENQUIRY_TYPE_CODES"
-          }
-        },
-        "destination": {
-          "partitionOption": "None",
-          "writeBehavior": "Overwrite",
-          "datasetSettings": {
-            "schema": "ats_replication",
-            "table": "ats_enquiry_type_codes"
-          }
-        },
-        "enableStaging": false,
-        "translator": {
-          "type": "TabularTranslator"
-        },
-        "typeConversionSettings": {
-          "typeConversion": {
-            "allowDataTruncation": true,
-            "treatBooleanAsNumber": false
-          }
-        }
-      }
-    },
-    {
       "id": "1df12b3a-a801-4303-8b86-e01340490819",
       "properties": {
         "source": {
@@ -1603,38 +1487,6 @@
       }
     },
     {
-      "id": "90c1a7ea-ecb5-41bd-8420-9cc087b3b2b0",
-      "properties": {
-        "source": {
-          "datasetSettings": {
-            "schema": "ATS",
-            "table": "ATS_AUTHORIZATION_STATUS_CODES"
-          },
-          "partitionSettings": {
-            "partitionOption": "None"
-          }
-        },
-        "destination": {
-          "partitionOption": "None",
-          "writeBehavior": "Overwrite",
-          "datasetSettings": {
-            "schema": "ats_replication",
-            "table": "ats_authorization_status_codes"
-          }
-        },
-        "enableStaging": false,
-        "translator": {
-          "type": "TabularTranslator"
-        },
-        "typeConversionSettings": {
-          "typeConversion": {
-            "allowDataTruncation": true,
-            "treatBooleanAsNumber": false
-          }
-        }
-      }
-    },
-    {
       "id": "f4b678ad-3a25-4b04-927d-2f3f7168900e",
       "properties": {
         "source": {
@@ -2009,38 +1861,6 @@
       }
     },
     {
-      "id": "efb5b133-967e-46ec-9a9b-4fc700e6e1fc",
-      "properties": {
-        "source": {
-          "datasetSettings": {
-            "schema": "ATS",
-            "table": "ATS_PROJECT_STATUS_CODES"
-          },
-          "partitionSettings": {
-            "partitionOption": "None"
-          }
-        },
-        "destination": {
-          "partitionOption": "None",
-          "writeBehavior": "Overwrite",
-          "datasetSettings": {
-            "schema": "ats_replication",
-            "table": "ats_project_status_codes"
-          }
-        },
-        "enableStaging": false,
-        "translator": {
-          "type": "TabularTranslator"
-        },
-        "typeConversionSettings": {
-          "typeConversion": {
-            "allowDataTruncation": true,
-            "treatBooleanAsNumber": false
-          }
-        }
-      }
-    },
-    {
       "id": "22c43a3c-a973-4c89-9649-f512b33430b8",
       "properties": {
         "source": {
@@ -2090,6 +1910,38 @@
           "datasetSettings": {
             "schema": "ats_replication",
             "table": "ats_secondary_offices"
+          }
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "3dc106ef-d7e3-41a2-a3bc-788b5fda0ef0",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "ATS",
+            "table": "ATS_PROJ_PROJ_TYPE_CODE_XREF"
+          },
+          "partitionSettings": {
+            "partitionOption": "None"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "ats_replication",
+            "table": "ats_proj_proj_type_code_xref"
           }
         },
         "enableStaging": false,

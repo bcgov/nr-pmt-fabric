@@ -2,10 +2,10 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
   "metadata": {
     "type": "CopyJob",
-    "displayName": "ats_ods_2"
+    "displayName": "fta_ods_geoms"
   },
   "config": {
     "version": "2.0",
-    "logicalId": "0d88099a-fde6-b991-4a27-a574a16c75b2"
+    "logicalId": "f981393c-bd4e-914c-439f-bcb0c6bee75b"
   }
 }

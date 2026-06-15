@@ -7,7 +7,7 @@
         "type": "Oracle",
         "externalReferences": {
           "connectionVariableLibrary": {
-            "variableName": "pmt-ats-odb",
+            "variableName": "pmt-fta-odb",
             "libraryName": "pmt_env_vars"
           }
         }
@@ -31,12 +31,12 @@
   },
   "activities": [
     {
-      "id": "2a7d116d-a905-4a89-8332-5cb6c85bed16",
+      "id": "537d29a5-0b25-42cc-bcd5-9605cc7aadf9",
       "properties": {
         "source": {
           "datasetSettings": {
-            "schema": "ATS",
-            "table": "ATS_PROJ_PROJ_TYPE_CODE_XREF"
+            "schema": "THE",
+            "table": "CUT_BLOCK_GEOM"
           },
           "partitionSettings": {
             "partitionOption": "None"
@@ -46,8 +46,8 @@
           "partitionOption": "None",
           "writeBehavior": "Overwrite",
           "datasetSettings": {
-            "schema": "ats_replication",
-            "table": "ats_proj_proj_type_code_xref"
+            "schema": "fta_replication",
+            "table": "fta_cut_block_geom"
           },
           "applyVOrder": false
         },
@@ -64,12 +64,12 @@
       }
     },
     {
-      "id": "0fa5b535-2ca4-4a47-8a8a-9797ee725c6c",
+      "id": "7938c4f1-628a-45cd-b11d-e42711a5ebc2",
       "properties": {
         "source": {
           "datasetSettings": {
-            "schema": "ATS",
-            "table": "ATS_PROJECT_TYPE_CODES"
+            "schema": "THE",
+            "table": "HARVEST_AUTHORITY_AMEND_GEOM"
           },
           "partitionSettings": {
             "partitionOption": "None"
@@ -79,8 +79,41 @@
           "partitionOption": "None",
           "writeBehavior": "Overwrite",
           "datasetSettings": {
-            "schema": "ats_replication",
-            "table": "ats_project_type_codes"
+            "schema": "fta_replication",
+            "table": "fta_harvest_authority_amend_geom"
+          },
+          "applyVOrder": false
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "084dca5d-3f2e-46f5-aa0a-0f80b3e2a4f8",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "THE",
+            "table": "HARVEST_AUTHORITY_GEOM"
+          },
+          "partitionSettings": {
+            "partitionOption": "None"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "fta_replication",
+            "table": "fta_harvest_authority_geom"
           },
           "applyVOrder": false
         },
