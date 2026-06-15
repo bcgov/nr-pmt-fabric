@@ -1,0 +1,133 @@
+{
+  "properties": {
+    "jobMode": "Batch",
+    "source": {
+      "type": "OracleTable",
+      "connectionSettings": {
+        "type": "Oracle",
+        "externalReferences": {
+          "connectionVariableLibrary": {
+            "variableName": "pmt-fta-odb",
+            "libraryName": "pmt_env_vars"
+          }
+        }
+      }
+    },
+    "destination": {
+      "type": "LakehouseTable",
+      "connectionSettings": {
+        "type": "Lakehouse",
+        "typeProperties": {
+          "workspaceId": "00000000-0000-0000-0000-000000000000",
+          "artifactId": "a4c99642-feeb-81e8-46b6-ca11201b9b7d",
+          "rootFolder": "Tables"
+        }
+      }
+    },
+    "policy": {
+      "timeout": "0.12:00:00",
+      "retry": 0
+    }
+  },
+  "activities": [
+    {
+      "id": "537d29a5-0b25-42cc-bcd5-9605cc7aadf9",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "THE",
+            "table": "CUT_BLOCK_GEOM"
+          },
+          "partitionSettings": {
+            "partitionOption": "None"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "fta_replication",
+            "table": "fta_cut_block_geom"
+          },
+          "applyVOrder": false
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "7938c4f1-628a-45cd-b11d-e42711a5ebc2",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "THE",
+            "table": "HARVEST_AUTHORITY_AMEND_GEOM"
+          },
+          "partitionSettings": {
+            "partitionOption": "None"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "fta_replication",
+            "table": "fta_harvest_authority_amend_geom"
+          },
+          "applyVOrder": false
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "084dca5d-3f2e-46f5-aa0a-0f80b3e2a4f8",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "THE",
+            "table": "HARVEST_AUTHORITY_GEOM"
+          },
+          "partitionSettings": {
+            "partitionOption": "None"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "fta_replication",
+            "table": "fta_harvest_authority_geom"
+          },
+          "applyVOrder": false
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    }
+  ]
+}

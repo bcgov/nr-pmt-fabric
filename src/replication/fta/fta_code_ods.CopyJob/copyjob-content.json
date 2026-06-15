@@ -1,0 +1,892 @@
+{
+  "properties": {
+    "jobMode": "Batch",
+    "source": {
+      "type": "OracleTable",
+      "connectionSettings": {
+        "type": "Oracle",
+        "externalReferences": {
+          "connectionVariableLibrary": {
+            "variableName": "pmt-fta-odb",
+            "libraryName": "pmt_env_vars"
+          }
+        }
+      }
+    },
+    "destination": {
+      "type": "LakehouseTable",
+      "connectionSettings": {
+        "type": "Lakehouse",
+        "typeProperties": {
+          "workspaceId": "00000000-0000-0000-0000-000000000000",
+          "artifactId": "a4c99642-feeb-81e8-46b6-ca11201b9b7d",
+          "rootFolder": "Tables"
+        }
+      }
+    },
+    "policy": {
+      "timeout": "0.12:00:00",
+      "retry": 0
+    }
+  },
+  "activities": [
+    {
+      "id": "795c8333-df10-498d-9ff2-9c446b152092",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "THE",
+            "table": "AAC_ADJUSTMENT_REASON_CODE"
+          },
+          "partitionSettings": {
+            "partitionOption": "None"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "fta_replication",
+            "table": "fta_aac_adjustment_reason_code"
+          },
+          "applyVOrder": false
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "82fb2119-5b9d-4c14-bdb6-285081c6028e",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "THE",
+            "table": "AAC_FILE_TYPE_CODE"
+          },
+          "partitionSettings": {
+            "partitionOption": "None"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "fta_replication",
+            "table": "fta_aac_file_type_code"
+          },
+          "applyVOrder": false
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "7dbea6b8-fee8-4562-b495-d0ab5e2f41ea",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "THE",
+            "table": "ALLOWABLE_AREA_TYPE_CODE"
+          },
+          "partitionSettings": {
+            "partitionOption": "None"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "fta_replication",
+            "table": "fta_allowable_area_type_code"
+          },
+          "applyVOrder": false
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "3ec7e183-80b3-44c9-af07-fdefeda37ccf",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "THE",
+            "table": "ALLOWABLE_CUT_TYPE_CODE"
+          },
+          "partitionSettings": {
+            "partitionOption": "None"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "fta_replication",
+            "table": "fta_allowable_cut_type_code"
+          },
+          "applyVOrder": false
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "c373b29a-dd5c-4c9d-9b22-6d372e3c2e7c",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "THE",
+            "table": "BLOCK_STATUS_CODE"
+          },
+          "partitionSettings": {
+            "partitionOption": "None"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "fta_replication",
+            "table": "fta_block_status_code"
+          },
+          "applyVOrder": false
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "1e5ec667-f516-4d7c-b023-93fa1c63a783",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "THE",
+            "table": "CUT_REGULATION_CODE"
+          },
+          "partitionSettings": {
+            "partitionOption": "None"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "fta_replication",
+            "table": "fta_cut_regulation_code"
+          },
+          "applyVOrder": false
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "775b4bf6-9cd1-469c-bfb2-f695796dd45f",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "THE",
+            "table": "FILE_TYPE_CODE"
+          },
+          "partitionSettings": {
+            "partitionOption": "None"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "fta_replication",
+            "table": "fta_file_type_code"
+          },
+          "applyVOrder": false
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "1d083ae9-66c3-461d-9f63-95ba2c90eaca",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "THE",
+            "table": "FIRE_HARVESTING_REASON_CODE"
+          },
+          "partitionSettings": {
+            "partitionOption": "None"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "fta_replication",
+            "table": "fta_fire_harvesting_reason_code"
+          },
+          "applyVOrder": false
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "3e5dc715-283d-4915-9eec-65f95a54a283",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "THE",
+            "table": "HARVEST_AUTH_STATUS_CODE"
+          },
+          "partitionSettings": {
+            "partitionOption": "None"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "fta_replication",
+            "table": "fta_harvest_auth_status_code"
+          },
+          "applyVOrder": false
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "7b6c3458-7ccf-4fab-b3d8-8b2115d6f09b",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "THE",
+            "table": "HARVEST_TYPE_CODE"
+          },
+          "partitionSettings": {
+            "partitionOption": "None"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "fta_replication",
+            "table": "fta_harvest_type_code"
+          },
+          "applyVOrder": false
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "ea2e7254-8bf3-449e-b219-b887180e1673",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "THE",
+            "table": "HARVEST_UNIT_OF_MEASURE_CODE"
+          },
+          "partitionSettings": {
+            "partitionOption": "None"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "fta_replication",
+            "table": "fta_harvest_unit_of_measure_code"
+          },
+          "applyVOrder": false
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "318297dd-c6a2-42cd-80b4-7540a002b3f4",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "THE",
+            "table": "LICENCE_TO_CUT_CODE"
+          },
+          "partitionSettings": {
+            "partitionOption": "None"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "fta_replication",
+            "table": "fta_licence_to_cut_code"
+          },
+          "applyVOrder": false
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "7967032d-9749-4088-a8fe-5f4b9dc3614a",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "THE",
+            "table": "MGMT_UNIT_TYPE_CODE"
+          },
+          "partitionSettings": {
+            "partitionOption": "None"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "fta_replication",
+            "table": "fta_mgmt_unit_type_code"
+          },
+          "applyVOrder": false
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "9566f418-2371-4464-bc11-657ceaa15be1",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "THE",
+            "table": "OCCUPANT_LICENCE_TO_CUT_CODE"
+          },
+          "partitionSettings": {
+            "partitionOption": "None"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "fta_replication",
+            "table": "fta_occupant_licence_to_cut_code"
+          },
+          "applyVOrder": false
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "596e7d4b-c677-4000-8042-432efb11b771",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "THE",
+            "table": "REFOREST_DECLARE_TYPE_CODE"
+          },
+          "partitionSettings": {
+            "partitionOption": "None"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "fta_replication",
+            "table": "fta_reforest_declare_type_code"
+          },
+          "applyVOrder": false
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "9befc3f9-4007-4b42-a2c7-77b086f682e8",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "THE",
+            "table": "SALE_METHOD_CODE"
+          },
+          "partitionSettings": {
+            "partitionOption": "None"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "fta_replication",
+            "table": "fta_sale_method_code"
+          },
+          "applyVOrder": false
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "3287536f-50fa-4b4a-84d8-1600ef45fdb1",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "THE",
+            "table": "SB_CATEGORY_CODE"
+          },
+          "partitionSettings": {
+            "partitionOption": "None"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "fta_replication",
+            "table": "fta_sb_category_code"
+          },
+          "applyVOrder": false
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "282467b2-6cbd-4ca9-a712-e9646f9be325",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "THE",
+            "table": "SPECIAL_USE_CODE"
+          },
+          "partitionSettings": {
+            "partitionOption": "None"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "fta_replication",
+            "table": "fta_special_use_code"
+          },
+          "applyVOrder": false
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "9f44abf9-1053-4b07-b924-67e6e64eeed5",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "THE",
+            "table": "TENURE_APPLICATION_PURP_CODE"
+          },
+          "partitionSettings": {
+            "partitionOption": "None"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "fta_replication",
+            "table": "fta_tenure_application_purp_code"
+          },
+          "applyVOrder": false
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "b1464a30-1b41-4386-bec7-b989fa098360",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "THE",
+            "table": "TENURE_APPLICATION_STATE_CODE"
+          },
+          "partitionSettings": {
+            "partitionOption": "None"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "fta_replication",
+            "table": "fta_tenure_application_state_code"
+          },
+          "applyVOrder": false
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "79a4ad8d-06c9-4248-b63b-3ed392cf2014",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "THE",
+            "table": "TENURE_APPLICATION_TYPE_CODE"
+          },
+          "partitionSettings": {
+            "partitionOption": "None"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "fta_replication",
+            "table": "fta_tenure_application_type_code"
+          },
+          "applyVOrder": false
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "798014a9-f6ad-41ea-9d1c-9088884b0e32",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "THE",
+            "table": "TENURE_EXTEND_REASON_CODE"
+          },
+          "partitionSettings": {
+            "partitionOption": "None"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "fta_replication",
+            "table": "fta_tenure_extend_reason_code"
+          },
+          "applyVOrder": false
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "8d3f764e-d298-4065-892f-6c47c16c6cd8",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "THE",
+            "table": "TENURE_FILE_STATUS_CODE"
+          },
+          "partitionSettings": {
+            "partitionOption": "None"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "fta_replication",
+            "table": "fta_tenure_file_status_code"
+          },
+          "applyVOrder": false
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "d2984bec-5b88-4152-8cff-fb9ef0585e39",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "THE",
+            "table": "TENURE_STATUS_CODE"
+          },
+          "partitionSettings": {
+            "partitionOption": "None"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "fta_replication",
+            "table": "fta_tenure_status_code"
+          },
+          "applyVOrder": false
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "8142bfc5-9685-45c3-a64f-6753c4b2eb03",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "THE",
+            "table": "TFL_NUMBER_CODE"
+          },
+          "partitionSettings": {
+            "partitionOption": "None"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "fta_replication",
+            "table": "fta_tfl_number_code"
+          },
+          "applyVOrder": false
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "deb19ee2-536b-412f-bc89-1125566b8a7a",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "THE",
+            "table": "TSA_NUMBER_CODE"
+          },
+          "partitionSettings": {
+            "partitionOption": "None"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "fta_replication",
+            "table": "fta_tsa_number_code"
+          },
+          "applyVOrder": false
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    }
+  ]
+}

@@ -5,12 +5,15 @@
       "enabled": true,
       "jobType": "Execute",
       "configuration": {
-        "type": "Daily",
-        "startDateTime": "2026-01-22T00:00:00",
-        "endDateTime": "2059-12-31T23:59:00",
+        "type": "Weekly",
+        "startDateTime": "2026-06-15T00:00:00",
+        "endDateTime": "2027-06-15T00:00:00",
         "localTimeZoneId": "Pacific Standard Time",
         "times": [
-          "02:10"
+          "02:45"
+        ],
+        "weekdays": [
+          "Tuesday"
         ]
       }
     }
