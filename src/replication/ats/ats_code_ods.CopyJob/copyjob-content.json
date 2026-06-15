@@ -6,7 +6,10 @@
       "connectionSettings": {
         "type": "Oracle",
         "externalReferences": {
-          "connection": "27efbb9f-e2bf-434f-88da-7efd288122bc"
+          "connectionVariableLibrary": {
+            "variableName": "pmt-ats-odb",
+            "libraryName": "pmt_env_vars"
+          }
         }
       }
     },
