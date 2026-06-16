@@ -25,8 +25,7 @@
       }
     },
     "policy": {
-      "timeout": "0.00:30:00",
-      "retry": 3
+      "timeout": "0.12:00:00"
     }
   },
   "activities": [
@@ -37,9 +36,6 @@
           "datasetSettings": {
             "schema": "WATERDW",
             "table": "ATIS_WATERJOB_COMBINED_MV"
-          },
-          "partitionSettings": {
-            "partitionOption": "None"
           }
         },
         "destination": {
@@ -85,7 +81,9 @@
               },
               "destination": {
                 "name": "AUTHORIZATIONID",
-                "physicalType": "long"
+                "physicalType": "decimal",
+                "scale": 18,
+                "precision": 38
               }
             },
             {

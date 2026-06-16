@@ -25,8 +25,7 @@
       }
     },
     "policy": {
-      "timeout": "0.00:30:00",
-      "retry": 3
+      "timeout": "0.12:00:00"
     }
   },
   "activities": [
@@ -267,9 +266,6 @@
           "datasetSettings": {
             "schema": "TANTALIS",
             "table": "TA_DISP_TRANS_TASKS"
-          },
-          "partitionSettings": {
-            "partitionOption": "None"
           }
         },
         "destination": {
@@ -503,7 +499,9 @@
               },
               "destination": {
                 "name": "SUPPLEMENTARY_WORK_SID",
-                "physicalType": "long"
+                "physicalType": "decimal",
+                "scale": 18,
+                "precision": 38
               }
             },
             {
@@ -633,9 +631,6 @@
           "datasetSettings": {
             "schema": "TANTALIS",
             "table": "TA_DISPOSITION_TRANSACTIONS"
-          },
-          "partitionSettings": {
-            "partitionOption": "None"
           }
         },
         "destination": {
@@ -659,7 +654,9 @@
               },
               "destination": {
                 "name": "DISPOSITION_TRANSACTION_SID",
-                "physicalType": "long"
+                "physicalType": "decimal",
+                "scale": 18,
+                "precision": 38
               }
             },
             {
@@ -671,7 +668,9 @@
               },
               "destination": {
                 "name": "TYPE_SID",
-                "physicalType": "long"
+                "physicalType": "decimal",
+                "scale": 18,
+                "precision": 38
               }
             },
             {
@@ -693,7 +692,9 @@
               },
               "destination": {
                 "name": "DISPOSITION_SID",
-                "physicalType": "long"
+                "physicalType": "decimal",
+                "scale": 18,
+                "precision": 38
               }
             },
             {
@@ -705,7 +706,9 @@
               },
               "destination": {
                 "name": "SUBPURPOSE_SID",
-                "physicalType": "long"
+                "physicalType": "decimal",
+                "scale": 18,
+                "precision": 38
               }
             },
             {
@@ -717,7 +720,9 @@
               },
               "destination": {
                 "name": "ORG_UNIT_SID",
-                "physicalType": "long"
+                "physicalType": "decimal",
+                "scale": 18,
+                "precision": 38
               }
             },
             {
@@ -729,7 +734,9 @@
               },
               "destination": {
                 "name": "PURPOSE_SID",
-                "physicalType": "long"
+                "physicalType": "decimal",
+                "scale": 18,
+                "precision": 38
               }
             },
             {
@@ -741,7 +748,9 @@
               },
               "destination": {
                 "name": "SUBTYPE_SID",
-                "physicalType": "long"
+                "physicalType": "decimal",
+                "scale": 18,
+                "precision": 38
               }
             },
             {
@@ -873,7 +882,9 @@
               },
               "destination": {
                 "name": "REVERSION_SID",
-                "physicalType": "long"
+                "physicalType": "decimal",
+                "scale": 18,
+                "precision": 38
               }
             },
             {
@@ -885,7 +896,9 @@
               },
               "destination": {
                 "name": "SUBTYPE_SID_APPLIED_FOR",
-                "physicalType": "long"
+                "physicalType": "decimal",
+                "scale": 18,
+                "precision": 38
               }
             },
             {
@@ -897,7 +910,9 @@
               },
               "destination": {
                 "name": "SUBPURPOSE_SID_APPLIED_FOR",
-                "physicalType": "long"
+                "physicalType": "decimal",
+                "scale": 18,
+                "precision": 38
               }
             },
             {
@@ -909,7 +924,9 @@
               },
               "destination": {
                 "name": "TYPE_SID_APPLIED_AS",
-                "physicalType": "long"
+                "physicalType": "decimal",
+                "scale": 18,
+                "precision": 38
               }
             },
             {
@@ -931,7 +948,9 @@
               },
               "destination": {
                 "name": "ZONAL_VALUE_SID",
-                "physicalType": "long"
+                "physicalType": "decimal",
+                "scale": 18,
+                "precision": 38
               }
             },
             {
@@ -943,7 +962,9 @@
               },
               "destination": {
                 "name": "PER_USE_ZONE_SID",
-                "physicalType": "long"
+                "physicalType": "decimal",
+                "scale": 18,
+                "precision": 38
               }
             },
             {
@@ -965,7 +986,9 @@
               },
               "destination": {
                 "name": "PURPOSE_SID_APPLIED_FOR",
-                "physicalType": "long"
+                "physicalType": "decimal",
+                "scale": 18,
+                "precision": 38
               }
             },
             {
@@ -977,7 +1000,9 @@
               },
               "destination": {
                 "name": "PRE_APPLICATION_SID",
-                "physicalType": "long"
+                "physicalType": "decimal",
+                "scale": 18,
+                "precision": 38
               }
             },
             {
@@ -1017,7 +1042,7 @@
               },
               "destination": {
                 "name": "GST_EXEMPT_AREA_VAL",
-                "physicalType": "long"
+                "physicalType": "decimal"
               }
             },
             {
@@ -1443,7 +1468,9 @@
               },
               "destination": {
                 "name": "REPLMNT_FOR_DISP_TRANS_SID",
-                "physicalType": "long"
+                "physicalType": "decimal",
+                "scale": 18,
+                "precision": 38
               }
             },
             {
@@ -1455,7 +1482,9 @@
               },
               "destination": {
                 "name": "BATCH_SID",
-                "physicalType": "long"
+                "physicalType": "decimal",
+                "scale": 18,
+                "precision": 38
               }
             },
             {
@@ -1655,9 +1684,6 @@
           "datasetSettings": {
             "schema": "TANTALIS",
             "table": "TA_DISPOSITIONS"
-          },
-          "partitionSettings": {
-            "partitionOption": "None"
           }
         },
         "destination": {
@@ -1773,7 +1799,9 @@
               },
               "destination": {
                 "name": "DISPOSITION_SID_GROUPED_BY",
-                "physicalType": "long"
+                "physicalType": "decimal",
+                "scale": 18,
+                "precision": 38
               }
             }
           ]
@@ -1996,9 +2024,6 @@
           "datasetSettings": {
             "schema": "TANTALIS",
             "table": "TA_AVAILABLE_SUBTYPES"
-          },
-          "partitionSettings": {
-            "partitionOption": "None"
           }
         },
         "destination": {
@@ -2022,7 +2047,9 @@
               },
               "destination": {
                 "name": "TYPE_SID",
-                "physicalType": "long"
+                "physicalType": "decimal",
+                "scale": 18,
+                "precision": 38
               }
             },
             {
@@ -2034,7 +2061,9 @@
               },
               "destination": {
                 "name": "SUBTYPE_SID",
-                "physicalType": "long"
+                "physicalType": "decimal",
+                "scale": 18,
+                "precision": 38
               }
             },
             {
