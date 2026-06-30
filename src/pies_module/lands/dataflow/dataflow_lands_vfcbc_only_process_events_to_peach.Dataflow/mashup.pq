@@ -13,7 +13,7 @@ shared #"pmt-lakehouse-id" = let
 in
   Source;
 [DataDestinations = {[Definition = [Kind = "Reference", QueryName = "pies_staging_lands_vfcbc_only_DataDestination", IsNewTarget = true], Settings = [Kind = "Automatic", TypeSettings = [Kind = "Table"]]]}]
-shared pies_staging_lands_vfcbc_only = let
+shared pies_staging_lands_vfcbc_only = let 
     Source = Lakehouse.Contents(null),
     WS     = Source{[workspaceId = #"pmt-workspace-id"]}[Data],
     LH     = WS{[lakehouseId  = #"pmt-lakehouse-id"]}[Data],
@@ -116,8 +116,25 @@ shared pies_staging_lands_vfcbc_only = let
 
     SelectedColumns = Table.SelectColumns(SourceView, RequiredColumns),
 
-    ChangedTypes = Table.TransformColumnTypes(
+    RemovedWrongPIESID = Table.RemoveColumns(
         SelectedColumns,
+        {"PIESID"}
+    ),
+
+    AddedCorrectPIESID = Table.AddColumn(
+        RemovedWrongPIESID,
+        "PIESID",
+        each if [TRACKINGNUMBER] = null then null else Text.From([TRACKINGNUMBER]),
+        type text
+    ),
+
+    ReorderedColumns = Table.ReorderColumns(
+        AddedCorrectPIESID,
+        RequiredColumns
+    ),
+
+    ChangedTypes = Table.TransformColumnTypes(
+        ReorderedColumns,
         {
             {"PIESID", type text},
             {"system_id", type text},
