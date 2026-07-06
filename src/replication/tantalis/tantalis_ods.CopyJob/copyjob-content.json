@@ -25,7 +25,8 @@
       }
     },
     "policy": {
-      "timeout": "0.12:00:00"
+      "timeout": "0.00:30:00",
+      "retry": 3
     }
   },
   "activities": [
