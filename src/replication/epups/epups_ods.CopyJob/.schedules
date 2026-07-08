@@ -6,8 +6,8 @@
       "jobType": "Execute",
       "configuration": {
         "type": "Daily",
-        "startDateTime": "2026-01-16T00:00:00",
-        "endDateTime": "2059-12-31T23:59:00",
+        "startDateTime": "2026-07-08T00:00:00",
+        "endDateTime": "2027-07-08T00:00:00",
         "localTimeZoneId": "Pacific Standard Time",
         "times": [
           "23:50"
