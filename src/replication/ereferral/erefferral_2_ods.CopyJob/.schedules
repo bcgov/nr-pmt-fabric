@@ -5,18 +5,13 @@
       "enabled": true,
       "jobType": "Execute",
       "configuration": {
-        "type": "Monthly",
-        "startDateTime": "2026-06-17T00:00:00",
-        "endDateTime": "2027-06-17T00:00:00",
+        "type": "Daily",
+        "startDateTime": "2026-07-09T00:00:00",
+        "endDateTime": "2027-07-09T00:00:00",
         "localTimeZoneId": "Pacific Standard Time",
         "times": [
-          "01:00"
-        ],
-        "recurrence": 1,
-        "occurrence": {
-          "occurrenceType": "DayOfMonth",
-          "dayOfMonth": 1
-        }
+          "01:35"
+        ]
       }
     }
   ]

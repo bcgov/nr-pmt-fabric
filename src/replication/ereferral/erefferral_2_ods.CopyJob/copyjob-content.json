@@ -25,18 +25,18 @@
       }
     },
     "policy": {
-      "timeout": "0.12:00:00",
-      "retry": 0
+      "timeout": "0.00:30:00",
+      "retry": 3
     }
   },
   "activities": [
     {
-      "id": "2ae066fd-b5ff-463c-a532-18cdc3bfbbb2",
+      "id": "9fd60fbe-d4c8-46eb-ae72-d9184e5efb3f",
       "properties": {
         "source": {
           "datasetSettings": {
             "schema": "CORRAL_GENERATED_VIEWS",
-            "table": "ER_AUTHORIZATION"
+            "table": "ER_REFERRALREQUESTANSWER"
           },
           "partitionSettings": {
             "partitionOption": "None"
@@ -47,176 +47,9 @@
           "writeBehavior": "Overwrite",
           "datasetSettings": {
             "schema": "ereferral_replication",
-            "table": "er_authorization"
-          }
-        },
-        "enableStaging": false,
-        "translator": {
-          "type": "TabularTranslator",
-          "mappings": [
-            {
-              "source": {
-                "name": "OBJECTID",
-                "type": "Int64"
-              },
-              "destination": {
-                "name": "OBJECTID",
-                "physicalType": "long"
-              }
-            },
-            {
-              "source": {
-                "name": "AGENCYFILENUMBER",
-                "type": "String"
-              },
-              "destination": {
-                "name": "AGENCYFILENUMBER",
-                "physicalType": "string"
-              }
-            },
-            {
-              "source": {
-                "name": "AGENCYOBJECTID",
-                "type": "Int64"
-              },
-              "destination": {
-                "name": "AGENCYOBJECTID",
-                "physicalType": "long"
-              }
-            },
-            {
-              "source": {
-                "name": "AUTHORIZATIONAOI",
-                "type": "String"
-              },
-              "destination": {
-                "name": "AUTHORIZATIONAOI",
-                "physicalType": "string"
-              }
-            },
-            {
-              "source": {
-                "name": "AUTHREFERRALTYPEID",
-                "type": "Int64"
-              },
-              "destination": {
-                "name": "AUTHREFERRALTYPEID",
-                "physicalType": "long"
-              }
-            },
-            {
-              "source": {
-                "name": "PROJECTOBJECTID",
-                "type": "Int64"
-              },
-              "destination": {
-                "name": "PROJECTOBJECTID",
-                "physicalType": "long"
-              }
-            }
-          ]
-        },
-        "typeConversionSettings": {
-          "typeConversion": {
-            "allowDataTruncation": true,
-            "treatBooleanAsNumber": false
-          }
-        }
-      }
-    },
-    {
-      "id": "21c89630-38cd-4a66-ba99-60dccc3beb23",
-      "properties": {
-        "source": {
-          "datasetSettings": {
-            "schema": "CORRAL_GENERATED_VIEWS",
-            "table": "ER_AUTHORIZATION_REFERRAL"
+            "table": "er_referralrequestanswer"
           },
-          "partitionSettings": {
-            "partitionOption": "None"
-          }
-        },
-        "destination": {
-          "partitionOption": "None",
-          "writeBehavior": "Overwrite",
-          "datasetSettings": {
-            "schema": "ereferral_replication",
-            "table": "er_authorization_referral"
-          }
-        },
-        "enableStaging": false,
-        "translator": {
-          "type": "TabularTranslator",
-          "mappings": [
-            {
-              "source": {
-                "name": "RELATIONSHIPID",
-                "type": "Int64"
-              },
-              "destination": {
-                "name": "RELATIONSHIPID",
-                "physicalType": "long"
-              }
-            },
-            {
-              "source": {
-                "name": "AUTHORIZATIONOBJECTID",
-                "type": "Int64"
-              },
-              "destination": {
-                "name": "AUTHORIZATIONOBJECTID",
-                "physicalType": "long"
-              }
-            },
-            {
-              "source": {
-                "name": "REFERRALJOBID",
-                "type": "Int64"
-              },
-              "destination": {
-                "name": "REFERRALJOBID",
-                "physicalType": "long"
-              }
-            },
-            {
-              "source": {
-                "name": "AUTHORIZATIONAOI",
-                "type": "String"
-              },
-              "destination": {
-                "name": "AUTHORIZATIONAOI",
-                "physicalType": "string"
-              }
-            }
-          ]
-        },
-        "typeConversionSettings": {
-          "typeConversion": {
-            "allowDataTruncation": true,
-            "treatBooleanAsNumber": false
-          }
-        }
-      }
-    },
-    {
-      "id": "807ac8af-25e6-4d0d-967f-a2dccacc0329",
-      "properties": {
-        "source": {
-          "datasetSettings": {
-            "schema": "CORRAL_GENERATED_VIEWS",
-            "table": "ER_AGENCY"
-          },
-          "partitionSettings": {
-            "partitionOption": "None"
-          }
-        },
-        "destination": {
-          "partitionOption": "None",
-          "writeBehavior": "Overwrite",
-          "datasetSettings": {
-            "schema": "ereferral_replication",
-            "table": "er_agency"
-          }
+          "applyVOrder": false
         },
         "enableStaging": false,
         "translator": {
@@ -231,12 +64,12 @@
       }
     },
     {
-      "id": "3cfdf244-c291-4263-b1d3-c3bddd73ec5b",
+      "id": "ebc82347-5c7c-4a63-b912-1035e38fbc2c",
       "properties": {
         "source": {
           "datasetSettings": {
             "schema": "CORRAL_GENERATED_VIEWS",
-            "table": "ER_ADMINISTRATIVEREGION"
+            "table": "ER_REFERRALRESPONSE"
           },
           "partitionSettings": {
             "partitionOption": "None"
@@ -247,8 +80,9 @@
           "writeBehavior": "Overwrite",
           "datasetSettings": {
             "schema": "ereferral_replication",
-            "table": "er_administrativeregion"
-          }
+            "table": "er_referralresponse"
+          },
+          "applyVOrder": false
         },
         "enableStaging": false,
         "translator": {
@@ -263,12 +97,12 @@
       }
     },
     {
-      "id": "f252ddd3-7465-4c63-873d-58c28b243ef2",
+      "id": "6d0f5cae-5910-4ed8-b01d-c105ece62f23",
       "properties": {
         "source": {
           "datasetSettings": {
             "schema": "CORRAL_GENERATED_VIEWS",
-            "table": "ER_CLASSIFICATION"
+            "table": "ER_REFERRALSUMRECOMMENDATION"
           },
           "partitionSettings": {
             "partitionOption": "None"
@@ -279,8 +113,9 @@
           "writeBehavior": "Overwrite",
           "datasetSettings": {
             "schema": "ereferral_replication",
-            "table": "er_classification"
-          }
+            "table": "er_referralsummaryrecommendation"
+          },
+          "applyVOrder": false
         },
         "enableStaging": false,
         "translator": {
@@ -295,12 +130,12 @@
       }
     },
     {
-      "id": "4bdd6c4a-f574-40e8-a3b7-e44a24e06c0e",
+      "id": "159e74df-0c4a-4db4-9f2a-0a4d59cdc6e4",
       "properties": {
         "source": {
           "datasetSettings": {
             "schema": "CORRAL_GENERATED_VIEWS",
-            "table": "ER_PROJECT"
+            "table": "ER_REFERRALTYPE"
           },
           "partitionSettings": {
             "partitionOption": "None"
@@ -311,8 +146,9 @@
           "writeBehavior": "Overwrite",
           "datasetSettings": {
             "schema": "ereferral_replication",
-            "table": "er_project"
-          }
+            "table": "er_referraltype"
+          },
+          "applyVOrder": false
         },
         "enableStaging": false,
         "translator": {
@@ -327,12 +163,12 @@
       }
     },
     {
-      "id": "e008d825-6a58-456e-a429-b807ff25a4f7",
+      "id": "7d2fa17f-6012-4f72-9f99-45896b25306f",
       "properties": {
         "source": {
           "datasetSettings": {
             "schema": "CORRAL_GENERATED_VIEWS",
-            "table": "ER_PROJECT_REFERRAL"
+            "table": "ER_REFERRALTYPECLASSIFICATION"
           },
           "partitionSettings": {
             "partitionOption": "None"
@@ -343,8 +179,9 @@
           "writeBehavior": "Overwrite",
           "datasetSettings": {
             "schema": "ereferral_replication",
-            "table": "er_project_referral"
-          }
+            "table": "er_referraltypeclassification"
+          },
+          "applyVOrder": false
         },
         "enableStaging": false,
         "translator": {
@@ -359,12 +196,12 @@
       }
     },
     {
-      "id": "1c169bc4-605c-4ddb-83b4-8bfb26ef3941",
+      "id": "5f2c2500-10b2-4978-8968-ec983a44b0c2",
       "properties": {
         "source": {
           "datasetSettings": {
             "schema": "CORRAL_GENERATED_VIEWS",
-            "table": "ER_RECIPIENTAGENCY"
+            "table": "ER_REFERRALTYPESTANDARDCLAUSES"
           },
           "partitionSettings": {
             "partitionOption": "None"
@@ -375,8 +212,9 @@
           "writeBehavior": "Overwrite",
           "datasetSettings": {
             "schema": "ereferral_replication",
-            "table": "er_recipientagency"
-          }
+            "table": "er_referraltypesstandardclauses"
+          },
+          "applyVOrder": false
         },
         "enableStaging": false,
         "translator": {
@@ -391,12 +229,12 @@
       }
     },
     {
-      "id": "bb2d428c-1a86-4f82-ab72-8bc59eeda05d",
+      "id": "c58d0b21-4526-4447-9595-33b3532cec8e",
       "properties": {
         "source": {
           "datasetSettings": {
             "schema": "CORRAL_GENERATED_VIEWS",
-            "table": "ER_RECIPIENTDIRECT"
+            "table": "ER_REFREQUESTRECOMMENDATION"
           },
           "partitionSettings": {
             "partitionOption": "None"
@@ -407,8 +245,9 @@
           "writeBehavior": "Overwrite",
           "datasetSettings": {
             "schema": "ereferral_replication",
-            "table": "er_recipientdirect"
-          }
+            "table": "er_refrequestrecommendation"
+          },
+          "applyVOrder": false
         },
         "enableStaging": false,
         "translator": {
@@ -423,12 +262,12 @@
       }
     },
     {
-      "id": "0e36038e-c3a3-4b2f-b0f2-d7183faaf70b",
+      "id": "b9ff1648-dfb8-4c8f-b342-dc6102551476",
       "properties": {
         "source": {
           "datasetSettings": {
             "schema": "CORRAL_GENERATED_VIEWS",
-            "table": "ER_REFERRAL"
+            "table": "ER_REFTYPEREQUESTRECOMMENDATIO"
           },
           "partitionSettings": {
             "partitionOption": "None"
@@ -439,8 +278,9 @@
           "writeBehavior": "Overwrite",
           "datasetSettings": {
             "schema": "ereferral_replication",
-            "table": "er_referral"
-          }
+            "table": "er_reftyperequestrecommendatio"
+          },
+          "applyVOrder": false
         },
         "enableStaging": false,
         "translator": {
@@ -455,12 +295,12 @@
       }
     },
     {
-      "id": "a586c639-4422-46de-bae1-8eae07425876",
+      "id": "40bfdd19-b7ee-4f1f-b442-c1baa5572cc7",
       "properties": {
         "source": {
           "datasetSettings": {
             "schema": "CORRAL_GENERATED_VIEWS",
-            "table": "ER_REFERRALAGENCY"
+            "table": "ER_REFTYPESUMRECOMMENDATION"
           },
           "partitionSettings": {
             "partitionOption": "None"
@@ -471,8 +311,9 @@
           "writeBehavior": "Overwrite",
           "datasetSettings": {
             "schema": "ereferral_replication",
-            "table": "er_referralagency"
-          }
+            "table": "er_reftypesumrecommendation"
+          },
+          "applyVOrder": false
         },
         "enableStaging": false,
         "translator": {
@@ -487,12 +328,12 @@
       }
     },
     {
-      "id": "8faa7961-d39c-4de9-a33a-89ce5c1cef00",
+      "id": "84f7cf53-8b9e-46fd-aec5-fb5e02f1cd1c",
       "properties": {
         "source": {
           "datasetSettings": {
             "schema": "CORRAL_GENERATED_VIEWS",
-            "table": "ER_REFERRALAGENCYREP"
+            "table": "ER_REQUESTRECOMMENDATION"
           },
           "partitionSettings": {
             "partitionOption": "None"
@@ -503,8 +344,9 @@
           "writeBehavior": "Overwrite",
           "datasetSettings": {
             "schema": "ereferral_replication",
-            "table": "er_referralagencyrep"
-          }
+            "table": "er_requestrecommendation"
+          },
+          "applyVOrder": false
         },
         "enableStaging": false,
         "translator": {
@@ -519,12 +361,12 @@
       }
     },
     {
-      "id": "08a9af39-8df9-47b0-9369-2f17eace3c06",
+      "id": "239ba548-4262-470d-befc-207a285cf33a",
       "properties": {
         "source": {
           "datasetSettings": {
             "schema": "CORRAL_GENERATED_VIEWS",
-            "table": "ER_REFERRALANSWER"
+            "table": "ER_REQUESTRECOMMENDATIONTYPE"
           },
           "partitionSettings": {
             "partitionOption": "None"
@@ -535,8 +377,9 @@
           "writeBehavior": "Overwrite",
           "datasetSettings": {
             "schema": "ereferral_replication",
-            "table": "er_referralanswer"
-          }
+            "table": "er_requestrecommendationtype"
+          },
+          "applyVOrder": false
         },
         "enableStaging": false,
         "translator": {
@@ -551,12 +394,12 @@
       }
     },
     {
-      "id": "ccc50b4b-9350-4fc5-a7eb-e5bd2dedcbb6",
+      "id": "36031ebf-d553-46ee-bf54-5749fbd24d53",
       "properties": {
         "source": {
           "datasetSettings": {
             "schema": "CORRAL_GENERATED_VIEWS",
-            "table": "ER_REFERRALCENTER"
+            "table": "ER_STANDARDCLAUSES"
           },
           "partitionSettings": {
             "partitionOption": "None"
@@ -567,8 +410,9 @@
           "writeBehavior": "Overwrite",
           "datasetSettings": {
             "schema": "ereferral_replication",
-            "table": "er_referralcenter"
-          }
+            "table": "er_standardclauses"
+          },
+          "applyVOrder": false
         },
         "enableStaging": false,
         "translator": {
@@ -583,12 +427,12 @@
       }
     },
     {
-      "id": "d6cc578e-7016-4e31-a80e-f2244e715841",
+      "id": "a8304beb-ccfc-4b4e-8ec2-df87b682cf5c",
       "properties": {
         "source": {
           "datasetSettings": {
             "schema": "CORRAL_GENERATED_VIEWS",
-            "table": "ER_REFERRALQUESTION"
+            "table": "ER_SUMMARY"
           },
           "partitionSettings": {
             "partitionOption": "None"
@@ -599,8 +443,9 @@
           "writeBehavior": "Overwrite",
           "datasetSettings": {
             "schema": "ereferral_replication",
-            "table": "er_referralquestion"
-          }
+            "table": "er_summary"
+          },
+          "applyVOrder": false
         },
         "enableStaging": false,
         "translator": {
@@ -615,12 +460,12 @@
       }
     },
     {
-      "id": "b7808d5a-8ce7-412c-8663-4380147431f2",
+      "id": "497e4a34-810f-48f8-9e98-6da9455a9b1d",
       "properties": {
         "source": {
           "datasetSettings": {
             "schema": "CORRAL_GENERATED_VIEWS",
-            "table": "ER_REFERRALREQUEST"
+            "table": "ER_SUMMARYRECOMMENDATION"
           },
           "partitionSettings": {
             "partitionOption": "None"
@@ -631,8 +476,42 @@
           "writeBehavior": "Overwrite",
           "datasetSettings": {
             "schema": "ereferral_replication",
-            "table": "er_referralrequest"
+            "table": "er_summaryrecommendation"
+          },
+          "applyVOrder": false
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
           }
+        }
+      }
+    },
+    {
+      "id": "06169db3-adb9-4236-8a69-5c8bbdbd983d",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "CORRAL_GENERATED_VIEWS",
+            "table": "ER_SUMMARYRECOMMENDATIONTYPE"
+          },
+          "partitionSettings": {
+            "partitionOption": "None"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "ereferral_replication",
+            "table": "er_summaryrecommendationtype"
+          },
+          "applyVOrder": false
         },
         "enableStaging": false,
         "translator": {
