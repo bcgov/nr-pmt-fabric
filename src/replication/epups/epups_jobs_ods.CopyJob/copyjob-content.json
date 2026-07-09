@@ -25,18 +25,21 @@
       }
     },
     "policy": {
-      "timeout": "0.12:00:00",
-      "retry": 0
+      "timeout": "00:30:00",
+      "retry": 3
     }
   },
   "activities": [
     {
-      "id": "9e09c36a-c478-49af-945f-3e5d5f8a3f4d",
+      "id": "0216646c-a5c4-46fd-8a18-3548d7c0b0ae",
       "properties": {
         "source": {
           "datasetSettings": {
             "schema": "CORRAL_GENERATED_VIEWS",
-            "table": "PU_ACTIVITY"
+            "table": "PU_AMEND_RENEWAL_TRANSFERJOB"
+          },
+          "partitionSettings": {
+            "partitionOption": "None"
           }
         },
         "destination": {
@@ -44,8 +47,9 @@
           "writeBehavior": "Overwrite",
           "datasetSettings": {
             "schema": "epups_replication",
-            "table": "pu_activity"
-          }
+            "table": "pu_amend_renewal_transferjob"
+          },
+          "applyVOrder": false
         },
         "enableStaging": false,
         "translator": {
@@ -60,12 +64,15 @@
       }
     },
     {
-      "id": "43d97e0a-7baf-41fb-8d50-b0c0d3d8bd09",
+      "id": "57b14a8b-b700-48b2-8281-c54a29573547",
       "properties": {
         "source": {
           "datasetSettings": {
             "schema": "CORRAL_GENERATED_VIEWS",
-            "table": "PU_ACTIVITYCATEGORY"
+            "table": "PU_AUTHORIZATIONJOB"
+          },
+          "partitionSettings": {
+            "partitionOption": "None"
           }
         },
         "destination": {
@@ -73,8 +80,9 @@
           "writeBehavior": "Overwrite",
           "datasetSettings": {
             "schema": "epups_replication",
-            "table": "pu_activitycategory"
-          }
+            "table": "epups_pu_authorizationjob"
+          },
+          "applyVOrder": false
         },
         "enableStaging": false,
         "translator": {
@@ -89,12 +97,15 @@
       }
     },
     {
-      "id": "00b9630e-f77d-4b14-898d-59fc23357a77",
+      "id": "57add3d0-1edf-42a8-8bbd-8a87aa8b678f",
       "properties": {
         "source": {
           "datasetSettings": {
             "schema": "CORRAL_GENERATED_VIEWS",
-            "table": "PU_AUTHORIZATION"
+            "table": "PU_PERMITANNUALFEEJOB"
+          },
+          "partitionSettings": {
+            "partitionOption": "None"
           }
         },
         "destination": {
@@ -102,8 +113,9 @@
           "writeBehavior": "Overwrite",
           "datasetSettings": {
             "schema": "epups_replication",
-            "table": "pu_authorization"
-          }
+            "table": "epups_pu_permitannualfeejob"
+          },
+          "applyVOrder": false
         },
         "enableStaging": false,
         "translator": {
@@ -118,12 +130,15 @@
       }
     },
     {
-      "id": "7840cd71-f7d8-4e68-85de-7689ce1e5642",
+      "id": "7e6db099-94cd-4c9b-b5d5-4ab3c0dfc9b4",
       "properties": {
         "source": {
           "datasetSettings": {
             "schema": "CORRAL_GENERATED_VIEWS",
-            "table": "PU_AUTHORIZATIONTYPE"
+            "table": "PU_PERMITAPPLICATIONJOB"
+          },
+          "partitionSettings": {
+            "partitionOption": "None"
           }
         },
         "destination": {
@@ -131,8 +146,9 @@
           "writeBehavior": "Overwrite",
           "datasetSettings": {
             "schema": "epups_replication",
-            "table": "pu_authorizationtype"
-          }
+            "table": "pu_permitapplicationjob"
+          },
+          "applyVOrder": false
         },
         "enableStaging": false,
         "translator": {
@@ -147,12 +163,15 @@
       }
     },
     {
-      "id": "a764be37-6043-48b6-af4a-dac4d9107ed9",
+      "id": "04081cb5-6068-45a7-b922-3a3606ebd16d",
       "properties": {
         "source": {
           "datasetSettings": {
             "schema": "CORRAL_GENERATED_VIEWS",
-            "table": "PU_DRAFTAUTHORIZATION"
+            "table": "PU_PERMITCANCELLATIONJOB"
+          },
+          "partitionSettings": {
+            "partitionOption": "None"
           }
         },
         "destination": {
@@ -160,8 +179,9 @@
           "writeBehavior": "Overwrite",
           "datasetSettings": {
             "schema": "epups_replication",
-            "table": "pu_draftauthorization"
-          }
+            "table": "pu_permitcancellationjob"
+          },
+          "applyVOrder": false
         },
         "enableStaging": false,
         "translator": {
@@ -176,12 +196,15 @@
       }
     },
     {
-      "id": "144d7cd2-dd21-43cc-be45-81b5fdd32388",
+      "id": "ae0f3c49-edf1-4595-8948-1d3441402758",
       "properties": {
         "source": {
           "datasetSettings": {
             "schema": "CORRAL_GENERATED_VIEWS",
-            "table": "PU_EXPIREDPERMITREACTIVATION"
+            "table": "PU_PERMITCANCELWARNINGJOB"
+          },
+          "partitionSettings": {
+            "partitionOption": "None"
           }
         },
         "destination": {
@@ -189,8 +212,9 @@
           "writeBehavior": "Overwrite",
           "datasetSettings": {
             "schema": "epups_replication",
-            "table": "pu_expiredpermitreactivation"
-          }
+            "table": "pu_permitcancelwarningjob"
+          },
+          "applyVOrder": false
         },
         "enableStaging": false,
         "translator": {
@@ -205,12 +229,15 @@
       }
     },
     {
-      "id": "3ed3a4cf-441d-43f2-ba67-26a65e2031d6",
+      "id": "cbf22aa8-6160-485d-a197-decc6b2ae966",
       "properties": {
         "source": {
           "datasetSettings": {
             "schema": "CORRAL_GENERATED_VIEWS",
-            "table": "PU_MANAGEMENTAREA"
+            "table": "PU_PERMITCONDITIONNOTIFJOB"
+          },
+          "partitionSettings": {
+            "partitionOption": "None"
           }
         },
         "destination": {
@@ -218,8 +245,9 @@
           "writeBehavior": "Overwrite",
           "datasetSettings": {
             "schema": "epups_replication",
-            "table": "pu_managementarea"
-          }
+            "table": "pu_permitconditionnotifjob"
+          },
+          "applyVOrder": false
         },
         "enableStaging": false,
         "translator": {
@@ -234,12 +262,15 @@
       }
     },
     {
-      "id": "8d45a139-e71b-41a9-b1a0-65966a0ced6e",
+      "id": "8440b7f0-7f76-4f37-89e1-454798302b92",
       "properties": {
         "source": {
           "datasetSettings": {
             "schema": "CORRAL_GENERATED_VIEWS",
-            "table": "PU_PROTECTEDLAND"
+            "table": "PU_PERMITDATACOLLECTIONJOB"
+          },
+          "partitionSettings": {
+            "partitionOption": "None"
           }
         },
         "destination": {
@@ -247,8 +278,9 @@
           "writeBehavior": "Overwrite",
           "datasetSettings": {
             "schema": "epups_replication",
-            "table": "pu_protectedland"
-          }
+            "table": "pu_permitdatacollectionjob"
+          },
+          "applyVOrder": false
         },
         "enableStaging": false,
         "translator": {
@@ -263,12 +295,15 @@
       }
     },
     {
-      "id": "3a4aea4b-3d8e-4096-a1cf-8a3eb29408e3",
+      "id": "41543334-724f-4e9e-b2c7-6d91c8c5e651",
       "properties": {
         "source": {
           "datasetSettings": {
             "schema": "CORRAL_GENERATED_VIEWS",
-            "table": "PU_PURPOSE"
+            "table": "PU_PERMITEXPIRATIONJOB"
+          },
+          "partitionSettings": {
+            "partitionOption": "None"
           }
         },
         "destination": {
@@ -276,8 +311,9 @@
           "writeBehavior": "Overwrite",
           "datasetSettings": {
             "schema": "epups_replication",
-            "table": "pu_purpose"
-          }
+            "table": "pu_permitexpirationjob"
+          },
+          "applyVOrder": false
         },
         "enableStaging": false,
         "translator": {
@@ -292,12 +328,15 @@
       }
     },
     {
-      "id": "2c898aac-5d90-4191-a681-41e8793bed54",
+      "id": "7f90e771-8188-40bf-a263-665b8878fb2f",
       "properties": {
         "source": {
           "datasetSettings": {
             "schema": "CORRAL_GENERATED_VIEWS",
-            "table": "PU_REGION"
+            "table": "PU_PERMITREINSTATEMENTJOB"
+          },
+          "partitionSettings": {
+            "partitionOption": "None"
           }
         },
         "destination": {
@@ -305,8 +344,9 @@
           "writeBehavior": "Overwrite",
           "datasetSettings": {
             "schema": "epups_replication",
-            "table": "pu_region"
-          }
+            "table": "pu_permitreinstatementjob"
+          },
+          "applyVOrder": false
         },
         "enableStaging": false,
         "translator": {
@@ -321,12 +361,15 @@
       }
     },
     {
-      "id": "9d4d57e3-16dd-479f-93ce-3ca7f64ab2b0",
+      "id": "c707d93f-d0c5-4c0e-99fc-dd06a490f0ec",
       "properties": {
         "source": {
           "datasetSettings": {
             "schema": "CORRAL_GENERATED_VIEWS",
-            "table": "PU_REGIONPARENT"
+            "table": "PU_PERMITSTATEUPDATEJOB"
+          },
+          "partitionSettings": {
+            "partitionOption": "None"
           }
         },
         "destination": {
@@ -334,8 +377,75 @@
           "writeBehavior": "Overwrite",
           "datasetSettings": {
             "schema": "epups_replication",
-            "table": "pu_regionparent"
+            "table": "pu_permitstateupdatejob"
+          },
+          "applyVOrder": false
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
           }
+        }
+      }
+    },
+    {
+      "id": "cff79f5d-786a-42f5-9cf5-5729342b5efd",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "CORRAL_GENERATED_VIEWS",
+            "table": "PU_PERMITSUSPENSIONJOB"
+          },
+          "partitionSettings": {
+            "partitionOption": "None"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "epups_replication",
+            "table": "pu_permitsuspensionjob"
+          },
+          "applyVOrder": false
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "2718c74a-18fe-4b60-aa84-24394bedeb39",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "CORRAL_GENERATED_VIEWS",
+            "table": "PU_RENEWALNOTIFICATIONJOB"
+          },
+          "partitionSettings": {
+            "partitionOption": "None"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "epups_replication",
+            "table": "pu_renewalnotificationjob"
+          },
+          "applyVOrder": false
         },
         "enableStaging": false,
         "translator": {
