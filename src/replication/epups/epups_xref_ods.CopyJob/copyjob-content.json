@@ -6,7 +6,10 @@
       "connectionSettings": {
         "type": "Oracle",
         "externalReferences": {
-          "connection": "289b78cc-0923-4501-bdbf-d056d516c7a2"
+          "connectionVariableLibrary": {
+            "variableName": "pmt-elic-odb",
+            "libraryName": "pmt_env_vars"
+          }
         }
       }
     },
