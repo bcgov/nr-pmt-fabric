@@ -7,10 +7,10 @@
       "configuration": {
         "type": "Daily",
         "startDateTime": "2026-07-06T00:00:00",
-        "endDateTime": "2027-01-12T23:59:00",
+        "endDateTime": "2027-08-20T23:59:00",
         "localTimeZoneId": "Pacific Standard Time",
         "times": [
-          "23:20"
+          "05:05"
         ]
       }
     }
