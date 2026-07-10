@@ -1,0 +1,562 @@
+{
+  "properties": {
+    "jobMode": "Batch",
+    "source": {
+      "type": "OracleTable",
+      "connectionSettings": {
+        "type": "Oracle",
+        "externalReferences": {
+          "connectionVariableLibrary": {
+            "variableName": "pmt-rarn-odb",
+            "libraryName": "pmt_env_vars"
+          }
+        }
+      }
+    },
+    "destination": {
+      "type": "LakehouseTable",
+      "connectionSettings": {
+        "type": "Lakehouse",
+        "typeProperties": {
+          "workspaceId": "00000000-0000-0000-0000-000000000000",
+          "artifactId": "a4c99642-feeb-81e8-46b6-ca11201b9b7d",
+          "rootFolder": "Tables"
+        }
+      }
+    },
+    "policy": {
+      "timeout": "0.00:30:00",
+      "retry": 3
+    }
+  },
+  "activities": [
+    {
+      "id": "5e2007aa-03ae-402e-814e-c16db3966e60",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "RAR",
+            "table": "RAR_ADDRESSES"
+          },
+          "partitionSettings": {
+            "partitionOption": "None"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "rarn_replication",
+            "table": "rarn_addresses"
+          },
+          "applyVOrder": false
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "f8ed5990-8700-49f4-8d13-26b5a5402f19",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "RAR",
+            "table": "RAR_DEV_ASSESS_STATUS_AUDIT"
+          },
+          "partitionSettings": {
+            "partitionOption": "None"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "rarn_replication",
+            "table": "ranr_dev_assess_status_audit"
+          },
+          "applyVOrder": false
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "cd596d73-1b51-45dc-9782-a317b5aa2be6",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "RAR",
+            "table": "RAR_DEV_ASSESSMENT_DOCS"
+          },
+          "partitionSettings": {
+            "partitionOption": "None"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "rarn_replication",
+            "table": "rarn_dev_assessment_docs"
+          },
+          "applyVOrder": false
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "841542e4-7fb2-42c8-bbd7-7377effb87cc",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "RAR",
+            "table": "RAR_DEV_ASSESSMENT_PEOPLE_XREF"
+          },
+          "partitionSettings": {
+            "partitionOption": "None"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "rarn_replication",
+            "table": "rarn_dev_assessment_people_xref"
+          },
+          "applyVOrder": false
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "e9696e40-c181-41f8-9bd0-4b238a2bd690",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "RAR",
+            "table": "RAR_DEV_ASSESSMENTS"
+          },
+          "partitionSettings": {
+            "partitionOption": "None"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "rarn_replication",
+            "table": "rarn_dev_assessments"
+          },
+          "applyVOrder": false
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "a2d89519-9831-4cf8-9892-bb3509fa1a88",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "RAR",
+            "table": "RAR_DEV_CDS"
+          },
+          "partitionSettings": {
+            "partitionOption": "None"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "rarn_replication",
+            "table": "rarn_dev_cds"
+          },
+          "applyVOrder": false
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "5e7e388a-e2f5-4ec8-b323-69aebad15d9f",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "RAR",
+            "table": "RAR_DEV_NATURE_CDS"
+          },
+          "partitionSettings": {
+            "partitionOption": "None"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "rarn_replication",
+            "table": "rarn_dev_nature_cds"
+          },
+          "applyVOrder": false
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "36412b37-a5fd-45a2-bfcd-87217b6a028a",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "RAR",
+            "table": "RAR_DEV_STATUS_CDS"
+          },
+          "partitionSettings": {
+            "partitionOption": "None"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "rarn_replication",
+            "table": "rarn_dev_status_cds"
+          },
+          "applyVOrder": false
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "9be61023-ba74-42a7-a330-ae7ab92e9acc",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "RAR",
+            "table": "RAR_DFO_AREA_CDS"
+          },
+          "partitionSettings": {
+            "partitionOption": "None"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "rarn_replication",
+            "table": "rarn_dfo_area_cds"
+          },
+          "applyVOrder": false
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "83f4fde9-5029-4e2c-8de3-92759e86b6a6",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "RAR",
+            "table": "RAR_GOVERNMENT_FILE_REF_NOS"
+          },
+          "partitionSettings": {
+            "partitionOption": "None"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "rarn_replication",
+            "table": "rarn_government_file_ref_nos"
+          },
+          "applyVOrder": false
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "788c54bf-81a2-4ea8-9686-4efef38e5b95",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "RAR",
+            "table": "RAR_MUNICIPALITIES"
+          },
+          "partitionSettings": {
+            "partitionOption": "None"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "rarn_replication",
+            "table": "rarn_municipalities"
+          },
+          "applyVOrder": false
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "471d91bd-e014-4fdb-83ef-1d98290f984a",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "RAR",
+            "table": "RAR_PEOPLE"
+          },
+          "partitionSettings": {
+            "partitionOption": "None"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "rarn_replication",
+            "table": "rarn_people"
+          },
+          "applyVOrder": false
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "414f5aeb-9451-49b3-9f9e-d1dd35a803c5",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "RAR",
+            "table": "RAR_PERSON_CDS"
+          },
+          "partitionSettings": {
+            "partitionOption": "None"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "rarn_replication",
+            "table": "rarn_person_cds"
+          },
+          "applyVOrder": false
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "77ae36f4-44e0-49c7-834c-1dbb2924e373",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "RAR",
+            "table": "RAR_PROFESSIONAL_DESIGNATIONS"
+          },
+          "partitionSettings": {
+            "partitionOption": "None"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "rarn_replication",
+            "table": "rarn_professional_designations"
+          },
+          "applyVOrder": false
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "6dcdc9d5-8efc-4c34-a2e2-8653a7a19220",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "RAR",
+            "table": "RAR_REGION_CDS"
+          },
+          "partitionSettings": {
+            "partitionOption": "None"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "rarn_replication",
+            "table": "rarn_region_cds"
+          },
+          "applyVOrder": false
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "a521d8b6-61dc-4b9a-99e2-b4f33494270f",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "RAR",
+            "table": "RAR_STREAM_TYPE_CDS"
+          },
+          "partitionSettings": {
+            "partitionOption": "None"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "rarn_replication",
+            "table": "rarn_stream_type_cds"
+          },
+          "applyVOrder": false
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    }
+  ]
+}
