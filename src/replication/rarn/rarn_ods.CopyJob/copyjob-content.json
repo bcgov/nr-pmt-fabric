@@ -25,8 +25,8 @@
       }
     },
     "policy": {
-      "timeout": "0.12:00:00",
-      "retry": 0
+      "timeout": "0.00:30:00",
+      "retry": 3
     }
   },
   "activities": [
@@ -132,8 +132,8 @@
               "destination": {
                 "name": "DEV_ASSESSMENT_DOC_ID",
                 "physicalType": "decimal",
-                "scale": 18,
-                "precision": 38
+                "scale": 0,
+                "precision": 20
               }
             },
             {
@@ -147,8 +147,8 @@
               "destination": {
                 "name": "DEV_ASSESSMENT_ID",
                 "physicalType": "decimal",
-                "scale": 18,
-                "precision": 38
+                "scale": 0,
+                "precision": 20
               }
             },
             {
