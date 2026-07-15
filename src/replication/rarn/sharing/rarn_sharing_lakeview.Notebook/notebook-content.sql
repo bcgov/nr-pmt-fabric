@@ -1,0 +1,413 @@
+-- Fabric notebook source
+
+-- METADATA ********************
+
+-- META {
+-- META   "kernel_info": {
+-- META     "name": "synapse_pyspark"
+-- META   },
+-- META   "dependencies": {
+-- META     "lakehouse": {
+-- META       "default_lakehouse": "201b9b7d-ca11-46b6-81e8-feeba4c99642",
+-- META       "default_lakehouse_name": "permitting_lakehouse",
+-- META       "default_lakehouse_workspace_id": "79dafa8a-b966-4240-80f7-2e9d46baa5c3",
+-- META       "known_lakehouses": [
+-- META         {
+-- META           "id": "201b9b7d-ca11-46b6-81e8-feeba4c99642"
+-- META         }
+-- META       ]
+-- META     },
+-- META     "warehouse": {
+-- META       "known_warehouses": []
+-- META     }
+-- META   }
+-- META }
+
+-- CELL ********************
+
+-- MAGIC %%pyspark
+-- MAGIC  
+-- MAGIC # Fix legacy datetime issues when reading old Parquet files
+-- MAGIC spark.conf.set("spark.sql.parquet.datetimeRebaseModeInRead", "LEGACY")
+-- MAGIC spark.conf.set("spark.sql.parquet.datetimeRebaseModeInWrite", "CORRECTED")
+-- MAGIC spark.conf.set("spark.sql.parquet.int96RebaseModeInRead", "LEGACY")
+-- MAGIC spark.conf.set("spark.sql.parquet.int96RebaseModeInWrite", "CORRECTED")
+-- MAGIC spark.conf.set("spark.sql.avro.datetimeRebaseModeInRead", "LEGACY")
+-- MAGIC spark.conf.set("spark.sql.avro.datetimeRebaseModeInWrite", "CORRECTED")
+
+
+-- METADATA ********************
+
+-- META {
+-- META   "language": "python",
+-- META   "language_group": "synapse_pyspark",
+-- META   "frozen": false,
+-- META   "editable": true
+-- META }
+
+-- CELL ********************
+
+CREATE SCHEMA rarn_sharing;
+
+-- METADATA ********************
+
+-- META {
+-- META   "language": "sparksql",
+-- META   "language_group": "synapse_pyspark",
+-- META   "frozen": true,
+-- META   "editable": false
+-- META }
+
+-- CELL ********************
+
+CREATE MATERIALIZED LAKE VIEW IF NOT EXISTS rarn_sharing.rar_people_redacted AS
+SELECT
+PERSON_ID,
+PROFESSIONAL_DESIGNATION_CODE,
+ADDRESS_ID,
+PERSON_CODE,
+FIRST_NAME,
+MIDDLE_NAME,
+LAST_NAME,
+PHONE_NUMBER,
+EMAIL_ADDRESS,
+COMPANY_NAME,
+WHO_CREATED,
+CASE WHEN WHEN_CREATED = DATE '1900-01-01' THEN NULL WHEN WHEN_CREATED < DATE '1582-10-15' THEN NULL ELSE WHEN_CREATED END AS WHEN_CREATED,
+WHO_UPDATED,
+CASE WHEN WHEN_UPDATED = DATE '1900-01-01' THEN NULL WHEN WHEN_UPDATED < DATE '1582-10-15' THEN NULL ELSE WHEN_UPDATED END AS WHEN_UPDATED,
+REGISTRATION_NUMBER
+FROM rarn_replication.rar_people;
+
+-- METADATA ********************
+
+-- META {
+-- META   "language": "sparksql",
+-- META   "language_group": "synapse_pyspark"
+-- META }
+
+-- CELL ********************
+
+CREATE MATERIALIZED LAKE VIEW IF NOT EXISTS rarn_sharing.rar_dev_assess_status_audit AS
+SELECT
+DEV_ASSESS_STATUS_AUDIT_ID,
+DEV_ASSESSMENT_ID,
+OLD_STATUS_CODE,
+NEW_STATUS_CODE,
+WHO_CREATED,
+CASE WHEN WHEN_CREATED = DATE '1900-01-01' THEN NULL WHEN WHEN_CREATED < DATE '1582-10-15' THEN NULL ELSE WHEN_CREATED END AS WHEN_CREATED
+FROM rarn_replication.rar_dev_assess_status_audit;
+
+-- METADATA ********************
+
+-- META {
+-- META   "language": "sparksql",
+-- META   "language_group": "synapse_pyspark"
+-- META }
+
+-- CELL ********************
+
+CREATE MATERIALIZED LAKE VIEW IF NOT EXISTS rarn_sharing.rar_addresses AS
+SELECT
+ADDRESS_ID,
+ADDRESS_LINE_1,
+ADDRESS_LINE_2,
+ADDRESS_LINE_3,
+CITY,
+PROVINCE_STATE,
+POSTAL_CODE,
+COUNTRY,
+WHO_CREATED,
+CASE WHEN WHEN_CREATED = DATE '1900-01-01' THEN NULL WHEN WHEN_CREATED < DATE '1582-10-15' THEN NULL ELSE WHEN_CREATED END AS WHEN_CREATED,
+WHO_UPDATED,
+CASE WHEN WHEN_UPDATED = DATE '1900-01-01' THEN NULL WHEN WHEN_UPDATED < DATE '1582-10-15' THEN NULL ELSE WHEN_UPDATED END AS WHEN_UPDATED
+FROM rarn_replication.rar_addresses;
+
+-- METADATA ********************
+
+-- META {
+-- META   "language": "sparksql",
+-- META   "language_group": "synapse_pyspark"
+-- META }
+
+-- CELL ********************
+
+CREATE MATERIALIZED LAKE VIEW IF NOT EXISTS rarn_sharing.rar_dev_assessment_docs AS
+SELECT
+DEV_ASSESSMENT_DOC_ID,
+DEV_ASSESSMENT_ID,
+DOCUMENT_NAME,
+CASE WHEN UPLOAD_DATE = DATE '1900-01-01' THEN NULL WHEN UPLOAD_DATE < DATE '1582-10-15' THEN NULL ELSE UPLOAD_DATE END AS UPLOAD_DATE,
+WHO_CREATED,
+CASE WHEN WHEN_CREATED = DATE '1900-01-01' THEN NULL WHEN WHEN_CREATED < DATE '1582-10-15' THEN NULL ELSE WHEN_CREATED END AS WHEN_CREATED,
+WHO_UPDATED,
+CASE WHEN WHEN_UPDATED = DATE '1900-01-01' THEN NULL WHEN WHEN_UPDATED < DATE '1582-10-15' THEN NULL ELSE WHEN_UPDATED END AS WHEN_UPDATED,
+DOCUMENT_TYPE
+FROM rarn_replication.rar_dev_assessment_docs;
+
+-- METADATA ********************
+
+-- META {
+-- META   "language": "sparksql",
+-- META   "language_group": "synapse_pyspark"
+-- META }
+
+-- CELL ********************
+
+CREATE MATERIALIZED LAKE VIEW IF NOT EXISTS rarn_sharing.rar_dev_assessment_people_xref AS
+SELECT
+DEV_ASSESSMENT_ID,
+PERSON_ID,
+PRIMARY_YN,
+WHO_CREATED,
+CASE WHEN WHEN_CREATED = DATE '1900-01-01' THEN NULL WHEN WHEN_CREATED < DATE '1582-10-15' THEN NULL ELSE WHEN_CREATED END AS WHEN_CREATED,
+WHO_UPDATED,
+CASE WHEN WHEN_UPDATED = DATE '1900-01-01' THEN NULL WHEN WHEN_UPDATED < DATE '1582-10-15' THEN NULL ELSE WHEN_UPDATED END AS WHEN_UPDATED
+FROM rarn_replication.rar_dev_assessment_people_xref;
+
+-- METADATA ********************
+
+-- META {
+-- META   "language": "sparksql",
+-- META   "language_group": "synapse_pyspark"
+-- META }
+
+-- CELL ********************
+
+CREATE MATERIALIZED LAKE VIEW IF NOT EXISTS rarn_sharing.rar_dev_assessments AS
+SELECT
+DEV_ASSESSMENT_ID,
+DEV_NATURE_CODE,
+ADDRESS_ID,
+REGION_CODE,
+STREAM_CODE,
+MUNICIPALITY_CODE,
+DEV_CODE,
+RIPARIAN_AREA_LENGTH,
+CASE WHEN PROPOSED_START_DATE = DATE '1900-01-01' THEN NULL WHEN PROPOSED_START_DATE < DATE '1582-10-15' THEN NULL ELSE PROPOSED_START_DATE END AS PROPOSED_START_DATE,
+CASE WHEN PROPOSED_END_DATE = DATE '1900-01-01' THEN NULL WHEN PROPOSED_END_DATE < DATE '1582-10-15' THEN NULL ELSE PROPOSED_END_DATE END AS PROPOSED_END_DATE,
+LOCATION_LEGAL_DSC,
+LOCATION_STREAM_NAME,
+LOCATION_NEW_WATERSHED_CODE,
+LOCATION_LATITUDE,
+LOCATION_LONGITUDE,
+LOT_AREA,
+SECTION_9_PART_7_ACTIVITIES_YN,
+ALL_PROFESSIONALS_QUALIFIED_YN,
+ASSESSMENT_METHOD_FOLLOWED_YN,
+CERTIFIED_NO_HADD_YN,
+COMPLETE_REPORT_ATTACHED_YN,
+REVISION_NUMBER,
+WHO_CREATED,
+CASE WHEN WHEN_CREATED = DATE '1900-01-01' THEN NULL WHEN WHEN_CREATED < DATE '1582-10-15' THEN NULL ELSE WHEN_CREATED END AS WHEN_CREATED,
+WHO_UPDATED,
+CASE WHEN WHEN_UPDATED = DATE '1900-01-01' THEN NULL WHEN WHEN_UPDATED < DATE '1582-10-15' THEN NULL ELSE WHEN_UPDATED END AS WHEN_UPDATED,
+DEV_AREA,
+DFO_AREA_CODE,
+RETAIN_ASSESS_REPORT_YN,
+DEV_STATUS_CODE
+FROM rarn_replication.rar_dev_assessments;
+
+-- METADATA ********************
+
+-- META {
+-- META   "language": "sparksql",
+-- META   "language_group": "synapse_pyspark"
+-- META }
+
+-- CELL ********************
+
+CREATE MATERIALIZED LAKE VIEW IF NOT EXISTS rarn_sharing.rar_dev_cds AS
+SELECT
+DEV_CODE,
+DESCRIPTION,
+WHO_CREATED,
+CASE WHEN WHEN_CREATED = DATE '1900-01-01' THEN NULL WHEN WHEN_CREATED < DATE '1582-10-15' THEN NULL ELSE WHEN_CREATED END AS WHEN_CREATED,
+WHO_UPDATED,
+CASE WHEN WHEN_UPDATED = DATE '1900-01-01' THEN NULL WHEN WHEN_UPDATED < DATE '1582-10-15' THEN NULL ELSE WHEN_UPDATED END AS WHEN_UPDATED
+FROM rarn_replication.rar_dev_cds;
+
+-- METADATA ********************
+
+-- META {
+-- META   "language": "sparksql",
+-- META   "language_group": "synapse_pyspark"
+-- META }
+
+-- CELL ********************
+
+CREATE MATERIALIZED LAKE VIEW IF NOT EXISTS rarn_sharing.rar_dev_nature_cds AS
+SELECT
+DEV_NATURE_CODE,
+DESCRIPTION,
+WHO_CREATED,
+CASE WHEN WHEN_CREATED = DATE '1900-01-01' THEN NULL WHEN WHEN_CREATED < DATE '1582-10-15' THEN NULL ELSE WHEN_CREATED END AS WHEN_CREATED,
+WHO_UPDATED,
+CASE WHEN WHEN_UPDATED = DATE '1900-01-01' THEN NULL WHEN WHEN_UPDATED < DATE '1582-10-15' THEN NULL ELSE WHEN_UPDATED END AS WHEN_UPDATED
+FROM rarn_replication.rar_dev_nature_cds;
+
+-- METADATA ********************
+
+-- META {
+-- META   "language": "sparksql",
+-- META   "language_group": "synapse_pyspark"
+-- META }
+
+-- CELL ********************
+
+CREATE MATERIALIZED LAKE VIEW IF NOT EXISTS rarn_sharing.rar_dev_status_cds AS
+SELECT
+DEV_STATUS_CODE,
+DESCRIPTION,
+WHO_CREATED,
+CASE WHEN WHEN_CREATED = DATE '1900-01-01' THEN NULL WHEN WHEN_CREATED < DATE '1582-10-15' THEN NULL ELSE WHEN_CREATED END AS WHEN_CREATED,
+WHO_UPDATED,
+CASE WHEN WHEN_UPDATED = DATE '1900-01-01' THEN NULL WHEN WHEN_UPDATED < DATE '1582-10-15' THEN NULL ELSE WHEN_UPDATED END AS WHEN_UPDATED
+FROM rarn_replication.rar_dev_status_cds;
+
+-- METADATA ********************
+
+-- META {
+-- META   "language": "sparksql",
+-- META   "language_group": "synapse_pyspark"
+-- META }
+
+-- CELL ********************
+
+CREATE MATERIALIZED LAKE VIEW IF NOT EXISTS rarn_sharing.rar_dfo_area_cds AS
+SELECT
+DFO_AREA_CODE,
+DESCRIPTION,
+EMAIL_ADDRESS,
+WHO_CREATED,
+CASE WHEN WHEN_CREATED = DATE '1900-01-01' THEN NULL WHEN WHEN_CREATED < DATE '1582-10-15' THEN NULL ELSE WHEN_CREATED END AS WHEN_CREATED,
+WHO_UPDATED,
+CASE WHEN WHEN_UPDATED = DATE '1900-01-01' THEN NULL WHEN WHEN_UPDATED < DATE '1582-10-15' THEN NULL ELSE WHEN_UPDATED END AS WHEN_UPDATED
+FROM rarn_replication.rar_dfo_area_cds;
+
+-- METADATA ********************
+
+-- META {
+-- META   "language": "sparksql",
+-- META   "language_group": "synapse_pyspark"
+-- META }
+
+-- CELL ********************
+
+CREATE MATERIALIZED LAKE VIEW IF NOT EXISTS rarn_sharing.rar_government_file_ref_nos AS
+SELECT
+GOVERNMENT_FILE_REF_NO_ID,
+DEV_ASSESSMENT_ID,
+GOVERNMENT_FILE_REF_NO,
+WHO_CREATED,
+CASE WHEN WHEN_CREATED = DATE '1900-01-01' THEN NULL WHEN WHEN_CREATED < DATE '1582-10-15' THEN NULL ELSE WHEN_CREATED END AS WHEN_CREATED,
+WHO_UPDATED,
+CASE WHEN WHEN_UPDATED = DATE '1900-01-01' THEN NULL WHEN WHEN_UPDATED < DATE '1582-10-15' THEN NULL ELSE WHEN_UPDATED END AS WHEN_UPDATED
+FROM rarn_replication.rar_government_file_ref_nos;
+
+-- METADATA ********************
+
+-- META {
+-- META   "language": "sparksql",
+-- META   "language_group": "synapse_pyspark"
+-- META }
+
+-- CELL ********************
+
+CREATE MATERIALIZED LAKE VIEW IF NOT EXISTS rarn_sharing.rar_municipalities AS
+SELECT
+MUNICIPALITY_CODE,
+DESCRIPTION,
+EMAIL_ADDRESS,
+WHO_CREATED,
+CASE WHEN WHEN_CREATED = DATE '1900-01-01' THEN NULL WHEN WHEN_CREATED < DATE '1582-10-15' THEN NULL ELSE WHEN_CREATED END AS WHEN_CREATED,
+WHO_UPDATED,
+CASE WHEN WHEN_UPDATED = DATE '1900-01-01' THEN NULL WHEN WHEN_UPDATED < DATE '1582-10-15' THEN NULL ELSE WHEN_UPDATED END AS WHEN_UPDATED
+FROM rarn_replication.rar_municipalities;
+
+-- METADATA ********************
+
+-- META {
+-- META   "language": "sparksql",
+-- META   "language_group": "synapse_pyspark"
+-- META }
+
+-- CELL ********************
+
+CREATE MATERIALIZED LAKE VIEW IF NOT EXISTS rarn_sharing.rar_person_cds AS
+SELECT
+PERSON_CODE,
+DESCRIPTION,
+WHO_CREATED,
+CASE WHEN WHEN_CREATED = DATE '1900-01-01' THEN NULL WHEN WHEN_CREATED < DATE '1582-10-15' THEN NULL ELSE WHEN_CREATED END AS WHEN_CREATED,
+WHO_UPDATED,
+CASE WHEN WHEN_UPDATED = DATE '1900-01-01' THEN NULL WHEN WHEN_UPDATED < DATE '1582-10-15' THEN NULL ELSE WHEN_UPDATED END AS WHEN_UPDATED
+FROM rarn_replication.rar_person_cds;
+
+-- METADATA ********************
+
+-- META {
+-- META   "language": "sparksql",
+-- META   "language_group": "synapse_pyspark"
+-- META }
+
+-- CELL ********************
+
+CREATE MATERIALIZED LAKE VIEW IF NOT EXISTS rarn_sharing.rar_professional_designations AS
+SELECT
+PROFESSIONAL_DESIGNATION_CODE,
+DESCRIPTION,
+WHO_CREATED,
+CASE WHEN WHEN_CREATED = DATE '1900-01-01' THEN NULL WHEN WHEN_CREATED < DATE '1582-10-15' THEN NULL ELSE WHEN_CREATED END AS WHEN_CREATED,
+WHO_UPDATED,
+CASE WHEN WHEN_UPDATED = DATE '1900-01-01' THEN NULL WHEN WHEN_UPDATED < DATE '1582-10-15' THEN NULL ELSE WHEN_UPDATED END AS WHEN_UPDATED
+FROM rarn_replication.rar_professional_designations;
+
+-- METADATA ********************
+
+-- META {
+-- META   "language": "sparksql",
+-- META   "language_group": "synapse_pyspark"
+-- META }
+
+-- CELL ********************
+
+CREATE MATERIALIZED LAKE VIEW IF NOT EXISTS rarn_sharing.rar_region_cds AS
+SELECT
+REGION_CODE,
+DESCRIPTION,
+EMAIL_ADDRESS,
+WHO_CREATED,
+CASE WHEN WHEN_CREATED = DATE '1900-01-01' THEN NULL WHEN WHEN_CREATED < DATE '1582-10-15' THEN NULL ELSE WHEN_CREATED END AS WHEN_CREATED,
+WHO_UPDATED,
+CASE WHEN WHEN_UPDATED = DATE '1900-01-01' THEN NULL WHEN WHEN_UPDATED < DATE '1582-10-15' THEN NULL ELSE WHEN_UPDATED END AS WHEN_UPDATED
+FROM rarn_replication.rar_region_cds;
+
+-- METADATA ********************
+
+-- META {
+-- META   "language": "sparksql",
+-- META   "language_group": "synapse_pyspark"
+-- META }
+
+-- CELL ********************
+
+CREATE MATERIALIZED LAKE VIEW IF NOT EXISTS rarn_sharing.rar_stream_type_cds AS
+SELECT
+STREAM_TYPE_CODE,
+DESCRIPTION,
+WHO_CREATED,
+CASE WHEN WHEN_CREATED = DATE '1900-01-01' THEN NULL WHEN WHEN_CREATED < DATE '1582-10-15' THEN NULL ELSE WHEN_CREATED END AS WHEN_CREATED,
+WHO_UPDATED,
+CASE WHEN WHEN_UPDATED = DATE '1900-01-01' THEN NULL WHEN WHEN_UPDATED < DATE '1582-10-15' THEN NULL ELSE WHEN_UPDATED END AS WHEN_UPDATED
+FROM rarn_replication.rar_stream_type_cds;
+
+-- METADATA ********************
+
+-- META {
+-- META   "language": "sparksql",
+-- META   "language_group": "synapse_pyspark"
+-- META }
+
+-- MARKDOWN ********************
+
