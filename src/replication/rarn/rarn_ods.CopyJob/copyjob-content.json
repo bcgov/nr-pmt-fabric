@@ -166,65 +166,6 @@
             },
             {
               "source": {
-                "name": "UPLOAD_DATE",
-                "type": "DateTime",
-                "physicalType": "date"
-              },
-              "destination": {
-                "name": "UPLOAD_DATE",
-                "physicalType": "timestamp"
-              }
-            },
-            {
-              "source": {
-                "name": "WHO_CREATED",
-                "type": "String",
-                "physicalType": "varchar2",
-                "length": "32",
-                "unit": "BYTE"
-              },
-              "destination": {
-                "name": "WHO_CREATED",
-                "physicalType": "string"
-              }
-            },
-            {
-              "source": {
-                "name": "WHEN_CREATED",
-                "type": "DateTime",
-                "physicalType": "date"
-              },
-              "destination": {
-                "name": "WHEN_CREATED",
-                "physicalType": "timestamp"
-              }
-            },
-            {
-              "source": {
-                "name": "WHO_UPDATED",
-                "type": "String",
-                "physicalType": "varchar2",
-                "length": "32",
-                "unit": "BYTE"
-              },
-              "destination": {
-                "name": "WHO_UPDATED",
-                "physicalType": "string"
-              }
-            },
-            {
-              "source": {
-                "name": "WHEN_UPDATED",
-                "type": "DateTime",
-                "physicalType": "date"
-              },
-              "destination": {
-                "name": "WHEN_UPDATED",
-                "physicalType": "timestamp"
-              }
-            },
-            {
-              "source": {
                 "name": "DOCUMENT_TYPE",
                 "type": "String",
                 "physicalType": "varchar2",
@@ -234,6 +175,65 @@
               "destination": {
                 "name": "DOCUMENT_TYPE",
                 "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "UPLOAD_DATE",
+                "type": "DateTime",
+                "physicalType": "date"
+              },
+              "destination": {
+                "name": "UPLOAD_DATE",
+                "physicalType": "timestamp"
+              }
+            },
+            {
+              "source": {
+                "name": "WHO_CREATED",
+                "type": "String",
+                "physicalType": "varchar2",
+                "length": "32",
+                "unit": "BYTE"
+              },
+              "destination": {
+                "name": "WHO_CREATED",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "WHEN_CREATED",
+                "type": "DateTime",
+                "physicalType": "date"
+              },
+              "destination": {
+                "name": "WHEN_CREATED",
+                "physicalType": "timestamp"
+              }
+            },
+            {
+              "source": {
+                "name": "WHO_UPDATED",
+                "type": "String",
+                "physicalType": "varchar2",
+                "length": "32",
+                "unit": "BYTE"
+              },
+              "destination": {
+                "name": "WHO_UPDATED",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "WHEN_UPDATED",
+                "type": "DateTime",
+                "physicalType": "date"
+              },
+              "destination": {
+                "name": "WHEN_UPDATED",
+                "physicalType": "timestamp"
               }
             }
           ]
