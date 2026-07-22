@@ -24,12 +24,14 @@
 -- CELL ********************
 
 -- MAGIC %%pyspark
--- MAGIC 
+-- MAGIC  
 -- MAGIC # Fix legacy datetime issues when reading old Parquet files
 -- MAGIC spark.conf.set("spark.sql.parquet.datetimeRebaseModeInRead", "LEGACY")
 -- MAGIC spark.conf.set("spark.sql.parquet.datetimeRebaseModeInWrite", "CORRECTED")
 -- MAGIC spark.conf.set("spark.sql.parquet.int96RebaseModeInRead", "LEGACY")
 -- MAGIC spark.conf.set("spark.sql.parquet.int96RebaseModeInWrite", "CORRECTED")
+-- MAGIC spark.conf.set("spark.sql.avro.datetimeRebaseModeInRead", "LEGACY")
+-- MAGIC spark.conf.set("spark.sql.avro.datetimeRebaseModeInWrite", "CORRECTED")
 
 -- METADATA ********************
 
@@ -40,23 +42,28 @@
 
 -- CELL ********************
 
-CREATE SCHEMA apts_sharing;
+CREATE SCHEMA IF NOT EXISTS apts_sharing;
 
 -- METADATA ********************
 
 -- META {
 -- META   "language": "sparksql",
--- META   "language_group": "synapse_pyspark"
+-- META   "language_group": "synapse_pyspark",
+-- META   "frozen": false,
+-- META   "editable": true
 -- META }
 
 -- CELL ********************
 
 -- MAGIC %%sql
--- MAGIC 
 -- MAGIC CREATE MATERIALIZED LAKE VIEW IF NOT EXISTS apts_sharing.apts_amsprocesses_subset AS
 -- MAGIC SELECT
 -- MAGIC     PROCESSID,
--- MAGIC     CREATEDDATE,
+-- MAGIC     CASE
+-- MAGIC         WHEN CREATEDDATE = DATE'1900-01-01' THEN NULL
+-- MAGIC         WHEN CREATEDDATE < DATE'1582-10-15' THEN NULL
+-- MAGIC         ELSE CREATEDDATE
+-- MAGIC     END AS CREATEDDATE,
 -- MAGIC     JOBID,
 -- MAGIC     DATECOMPLETED,
 -- MAGIC     OBJECTDEFDESCRIPTION,
@@ -84,6 +91,34 @@ CREATE SCHEMA apts_sharing;
 -- MAGIC ,'p_AR_InviteComments'
 -- MAGIC ,'p_AR_SendCommentReminders'
 -- MAGIC ,'p_AR_RequestInformation');
+
+-- METADATA ********************
+
+-- META {
+-- META   "language": "sparksql",
+-- META   "language_group": "synapse_pyspark"
+-- META }
+
+-- CELL ********************
+
+-- MAGIC %%sql
+-- MAGIC 
+-- MAGIC CREATE MATERIALIZED LAKE VIEW IF NOT EXISTS apts_sharing.apts_ar_permitammendmentrequest_redacted AS
+-- MAGIC SELECT
+-- MAGIC 
+-- MAGIC     OBJECTID,
+-- MAGIC     CASE
+-- MAGIC         WHEN COMPLETIONDATE = DATE'1900-01-01' THEN NULL
+-- MAGIC         WHEN COMPLETIONDATE < DATE'1582-10-15' THEN NULL
+-- MAGIC         ELSE COMPLETIONDATE
+-- MAGIC     END AS COMPLETIONDATE,
+-- MAGIC     PERMITJOBID,
+-- MAGIC     REQUESTEDDATE,
+-- MAGIC     REQUESTNUMBER,
+-- MAGIC     STATUS,
+-- MAGIC     AMENDMENTTYPEID
+-- MAGIC 
+-- MAGIC FROM apts_replication.apts_ar_permitammendmentrequest;
 
 -- METADATA ********************
 
@@ -159,30 +194,6 @@ CREATE SCHEMA apts_sharing;
 -- MAGIC     WORKAUTHORIZATIONOBJECTID
 -- MAGIC 
 -- MAGIC FROM apts_replication.apts_ar_party;
-
--- METADATA ********************
-
--- META {
--- META   "language": "sparksql",
--- META   "language_group": "synapse_pyspark"
--- META }
-
--- CELL ********************
-
--- MAGIC %%sql
--- MAGIC 
--- MAGIC CREATE MATERIALIZED LAKE VIEW IF NOT EXISTS apts_sharing.apts_ar_permitammendmentrequest_redacted AS
--- MAGIC SELECT
--- MAGIC 
--- MAGIC     OBJECTID,
--- MAGIC     COMPLETIONDATE,
--- MAGIC     PERMITJOBID,
--- MAGIC     REQUESTEDDATE,
--- MAGIC     REQUESTNUMBER,
--- MAGIC     STATUS,
--- MAGIC     AMENDMENTTYPEID
--- MAGIC 
--- MAGIC FROM apts_replication.apts_ar_permitammendmentrequest;
 
 -- METADATA ********************
 
@@ -382,7 +393,11 @@ CREATE SCHEMA apts_sharing;
 -- MAGIC SELECT
 -- MAGIC 
 -- MAGIC     PROCESSID,
--- MAGIC     CREATEDDATE,
+-- MAGIC     CASE
+-- MAGIC         WHEN CREATEDDATE = DATE'1900-01-01' THEN NULL
+-- MAGIC         WHEN CREATEDDATE < DATE'1582-10-15' THEN NULL
+-- MAGIC         ELSE CREATEDDATE
+-- MAGIC     END AS CREATEDDATE,
 -- MAGIC     DATECOMPLETED,
 -- MAGIC     JOBID,
 -- MAGIC     OUTCOME,
