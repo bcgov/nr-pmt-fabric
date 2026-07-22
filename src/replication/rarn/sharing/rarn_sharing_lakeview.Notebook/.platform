@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Notebook",
+    "displayName": "rarn_sharing_lakeview"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "4211aab0-e902-aae9-4cc1-7b7f95b15d3f"
+  }
+}
