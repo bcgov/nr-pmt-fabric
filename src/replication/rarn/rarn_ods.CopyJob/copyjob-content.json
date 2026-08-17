@@ -49,7 +49,9 @@
             "schema": "rarn_replication",
             "table": "rar_addresses"
           },
-          "applyVOrder": false
+          "applyVOrder": false,
+          "enableTimestampNtz": false,
+          "enableChangeDataFeed": false
         },
         "enableStaging": false,
         "translator": {
@@ -82,161 +84,13 @@
             "schema": "rarn_replication",
             "table": "rar_dev_assess_status_audit"
           },
-          "applyVOrder": false
+          "applyVOrder": false,
+          "enableTimestampNtz": false,
+          "enableChangeDataFeed": false
         },
         "enableStaging": false,
         "translator": {
           "type": "TabularTranslator"
-        },
-        "typeConversionSettings": {
-          "typeConversion": {
-            "allowDataTruncation": true,
-            "treatBooleanAsNumber": false
-          }
-        }
-      }
-    },
-    {
-      "id": "cd596d73-1b51-45dc-9782-a317b5aa2be6",
-      "properties": {
-        "source": {
-          "datasetSettings": {
-            "schema": "RAR",
-            "table": "RAR_DEV_ASSESSMENT_DOCS"
-          },
-          "partitionSettings": {
-            "partitionOption": "None"
-          }
-        },
-        "destination": {
-          "partitionOption": "None",
-          "writeBehavior": "Overwrite",
-          "datasetSettings": {
-            "schema": "rarn_replication",
-            "table": "rar_dev_assessment_docs"
-          },
-          "applyVOrder": false
-        },
-        "enableStaging": false,
-        "translator": {
-          "type": "TabularTranslator",
-          "mappings": [
-            {
-              "source": {
-                "name": "DEV_ASSESSMENT_DOC_ID",
-                "type": "Double",
-                "physicalType": "number",
-                "scale": 0,
-                "precision": 20
-              },
-              "destination": {
-                "name": "DEV_ASSESSMENT_DOC_ID",
-                "physicalType": "decimal",
-                "scale": 0,
-                "precision": 20
-              }
-            },
-            {
-              "source": {
-                "name": "DEV_ASSESSMENT_ID",
-                "type": "Double",
-                "physicalType": "number",
-                "scale": 0,
-                "precision": 20
-              },
-              "destination": {
-                "name": "DEV_ASSESSMENT_ID",
-                "physicalType": "decimal",
-                "scale": 0,
-                "precision": 20
-              }
-            },
-            {
-              "source": {
-                "name": "DOCUMENT_NAME",
-                "type": "String",
-                "physicalType": "varchar2",
-                "length": "40",
-                "unit": "BYTE"
-              },
-              "destination": {
-                "name": "DOCUMENT_NAME",
-                "physicalType": "string"
-              }
-            },
-            {
-              "source": {
-                "name": "DOCUMENT_TYPE",
-                "type": "String",
-                "physicalType": "varchar2",
-                "length": "20",
-                "unit": "BYTE"
-              },
-              "destination": {
-                "name": "DOCUMENT_TYPE",
-                "physicalType": "string"
-              }
-            },
-            {
-              "source": {
-                "name": "UPLOAD_DATE",
-                "type": "DateTime",
-                "physicalType": "date"
-              },
-              "destination": {
-                "name": "UPLOAD_DATE",
-                "physicalType": "timestamp"
-              }
-            },
-            {
-              "source": {
-                "name": "WHO_CREATED",
-                "type": "String",
-                "physicalType": "varchar2",
-                "length": "32",
-                "unit": "BYTE"
-              },
-              "destination": {
-                "name": "WHO_CREATED",
-                "physicalType": "string"
-              }
-            },
-            {
-              "source": {
-                "name": "WHEN_CREATED",
-                "type": "DateTime",
-                "physicalType": "date"
-              },
-              "destination": {
-                "name": "WHEN_CREATED",
-                "physicalType": "timestamp"
-              }
-            },
-            {
-              "source": {
-                "name": "WHO_UPDATED",
-                "type": "String",
-                "physicalType": "varchar2",
-                "length": "32",
-                "unit": "BYTE"
-              },
-              "destination": {
-                "name": "WHO_UPDATED",
-                "physicalType": "string"
-              }
-            },
-            {
-              "source": {
-                "name": "WHEN_UPDATED",
-                "type": "DateTime",
-                "physicalType": "date"
-              },
-              "destination": {
-                "name": "WHEN_UPDATED",
-                "physicalType": "timestamp"
-              }
-            }
-          ]
         },
         "typeConversionSettings": {
           "typeConversion": {
@@ -265,7 +119,9 @@
             "schema": "rarn_replication",
             "table": "rar_dev_assessment_people_xref"
           },
-          "applyVOrder": false
+          "applyVOrder": false,
+          "enableTimestampNtz": false,
+          "enableChangeDataFeed": false
         },
         "enableStaging": false,
         "translator": {
@@ -298,7 +154,9 @@
             "schema": "rarn_replication",
             "table": "rar_dev_assessments"
           },
-          "applyVOrder": false
+          "applyVOrder": false,
+          "enableTimestampNtz": false,
+          "enableChangeDataFeed": false
         },
         "enableStaging": false,
         "translator": {
@@ -331,7 +189,9 @@
             "schema": "rarn_replication",
             "table": "rar_dev_cds"
           },
-          "applyVOrder": false
+          "applyVOrder": false,
+          "enableTimestampNtz": false,
+          "enableChangeDataFeed": false
         },
         "enableStaging": false,
         "translator": {
@@ -364,7 +224,9 @@
             "schema": "rarn_replication",
             "table": "rar_dev_nature_cds"
           },
-          "applyVOrder": false
+          "applyVOrder": false,
+          "enableTimestampNtz": false,
+          "enableChangeDataFeed": false
         },
         "enableStaging": false,
         "translator": {
@@ -397,7 +259,9 @@
             "schema": "rarn_replication",
             "table": "rar_dev_status_cds"
           },
-          "applyVOrder": false
+          "applyVOrder": false,
+          "enableTimestampNtz": false,
+          "enableChangeDataFeed": false
         },
         "enableStaging": false,
         "translator": {
@@ -430,7 +294,9 @@
             "schema": "rarn_replication",
             "table": "rar_dfo_area_cds"
           },
-          "applyVOrder": false
+          "applyVOrder": false,
+          "enableTimestampNtz": false,
+          "enableChangeDataFeed": false
         },
         "enableStaging": false,
         "translator": {
@@ -463,7 +329,9 @@
             "schema": "rarn_replication",
             "table": "rar_government_file_ref_nos"
           },
-          "applyVOrder": false
+          "applyVOrder": false,
+          "enableTimestampNtz": false,
+          "enableChangeDataFeed": false
         },
         "enableStaging": false,
         "translator": {
@@ -496,7 +364,9 @@
             "schema": "rarn_replication",
             "table": "rar_municipalities"
           },
-          "applyVOrder": false
+          "applyVOrder": false,
+          "enableTimestampNtz": false,
+          "enableChangeDataFeed": false
         },
         "enableStaging": false,
         "translator": {
@@ -529,7 +399,9 @@
             "schema": "rarn_replication",
             "table": "rar_people"
           },
-          "applyVOrder": false
+          "applyVOrder": false,
+          "enableTimestampNtz": false,
+          "enableChangeDataFeed": false
         },
         "enableStaging": false,
         "translator": {
@@ -562,7 +434,9 @@
             "schema": "rarn_replication",
             "table": "rar_person_cds"
           },
-          "applyVOrder": false
+          "applyVOrder": false,
+          "enableTimestampNtz": false,
+          "enableChangeDataFeed": false
         },
         "enableStaging": false,
         "translator": {
@@ -595,7 +469,9 @@
             "schema": "rarn_replication",
             "table": "rar_professional_designations"
           },
-          "applyVOrder": false
+          "applyVOrder": false,
+          "enableTimestampNtz": false,
+          "enableChangeDataFeed": false
         },
         "enableStaging": false,
         "translator": {
@@ -628,7 +504,9 @@
             "schema": "rarn_replication",
             "table": "rar_region_cds"
           },
-          "applyVOrder": false
+          "applyVOrder": false,
+          "enableTimestampNtz": false,
+          "enableChangeDataFeed": false
         },
         "enableStaging": false,
         "translator": {
@@ -661,7 +539,9 @@
             "schema": "rarn_replication",
             "table": "rar_stream_type_cds"
           },
-          "applyVOrder": false
+          "applyVOrder": false,
+          "enableTimestampNtz": false,
+          "enableChangeDataFeed": false
         },
         "enableStaging": false,
         "translator": {
