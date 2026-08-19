@@ -1,0 +1,3 @@
+dependencies:
+  - pip:
+      - boto3==1.43.67
