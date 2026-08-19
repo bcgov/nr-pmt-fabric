@@ -1,0 +1,38 @@
+{
+  "properties": {
+    "activities": [
+      {
+        "type": "TridentNotebook",
+        "typeProperties": {
+          "notebookId": "40bb4a31-e5a9-8e64-4353-ea377d81d0fd",
+          "workspaceId": "00000000-0000-0000-0000-000000000000",
+          "parameters": {
+            "keyvault_url": {
+              "value": {
+                "value": "@pipeline().libraryVariables.keyvault_url",
+                "type": "Expression"
+              },
+              "type": "string"
+            }
+          }
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Notebook_upload_rar",
+        "dependsOn": []
+      }
+    ],
+    "libraryVariables": {
+      "keyvault_url": {
+        "type": "String",
+        "variableName": "keyvault_url",
+        "libraryName": "pmt_env_vars"
+      }
+    }
+  }
+}
