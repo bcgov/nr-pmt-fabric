@@ -123,7 +123,8 @@ JOIN rarn_sharing.rar_dev_status_cds rdsc
 JOIN rarn_sharing.rar_stream_type_cds rstc
     ON rda.STREAM_CODE = rstc.STREAM_TYPE_CODE
 JOIN rarn_sharing.rar_dfo_area_cds rdac
-    ON rda.DFO_AREA_CODE = rdac.DFO_AREA_CODE""")
+    ON rda.DFO_AREA_CODE = rdac.DFO_AREA_CODE
+    AND rda.DEV_ASSESSMENT_ID >= '5958'""")
 
     print(f"Retrieved {df.count()} rows")
 
