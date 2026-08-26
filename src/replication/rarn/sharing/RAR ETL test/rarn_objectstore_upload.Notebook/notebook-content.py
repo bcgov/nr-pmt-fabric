@@ -124,7 +124,8 @@ JOIN rarn_sharing.rar_stream_type_cds rstc
     ON rda.STREAM_CODE = rstc.STREAM_TYPE_CODE
 JOIN rarn_sharing.rar_dfo_area_cds rdac
     ON rda.DFO_AREA_CODE = rdac.DFO_AREA_CODE
-    AND rda.DEV_ASSESSMENT_ID >= '5958'""")
+    AND rda.DEV_ASSESSMENT_ID >= '5958'
+   """)
 
     print(f"Retrieved {df.count()} rows")
 
@@ -194,6 +195,31 @@ try:
 
 except Exception as ex:
     raise RuntimeError(f"Failed to connect to Object Store: {ex}")
+
+# METADATA ********************
+
+# META {
+# META   "language": "python",
+# META   "language_group": "synapse_pyspark"
+# META }
+
+# CELL ********************
+
+try:
+    objectstore_path = f"data_extracts/riparian_areas/{filename}"
+
+    s3_client.upload_file(
+        output_file,
+        bucket,
+        objectstore_path
+    )
+
+    print(f"Upload complete: {objectstore_path}")
+
+except Exception as ex:
+    raise RuntimeError(
+        f"Failed to upload file: {ex}"
+    )
 
 # METADATA ********************
 
