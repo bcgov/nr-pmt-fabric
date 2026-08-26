@@ -109,22 +109,21 @@ SELECT
     rda.RIPARIAN_AREA_LENGTH,
     rda.ADDRESS_ID,
     rda.COMPLETE_REPORT_ATTACHED_YN
-FROM rarn_replication.rar_dev_assessments rda
-JOIN rarn_replication.rar_addresses ra
+FROM rarn_sharing.rar_dev_assessments rda
+JOIN rarn_sharing.rar_addresses ra
     ON rda.ADDRESS_ID = ra.ADDRESS_ID
-JOIN rarn_replication.rar_region_cds rrc
+JOIN rarn_sharing.rar_region_cds rrc
     ON rda.REGION_CODE = rrc.REGION_CODE
-JOIN rarn_replication.rar_dev_cds rdc
+JOIN rarn_sharing.rar_dev_cds rdc
     ON rda.DEV_CODE = rdc.DEV_CODE
-JOIN rarn_replication.rar_municipalities rm
+JOIN rarn_sharing.rar_municipalities rm
     ON rda.MUNICIPALITY_CODE = rm.MUNICIPALITY_CODE
-JOIN rarn_replication.rar_dev_status_cds rdsc
+JOIN rarn_sharing.rar_dev_status_cds rdsc
     ON rda.DEV_STATUS_CODE = rdsc.DEV_STATUS_CODE
-JOIN rarn_replication.rar_stream_type_cds rstc
+JOIN rarn_sharing.rar_stream_type_cds rstc
     ON rda.STREAM_CODE = rstc.STREAM_TYPE_CODE
-JOIN rarn_replication.rar_dfo_area_cds rdac
-    ON rda.DFO_AREA_CODE = rdac.DFO_AREA_CODE
-     WHERE rda.WHEN_CREATED >'20191101'""")
+JOIN rarn_sharing.rar_dfo_area_cds rdac
+    ON rda.DFO_AREA_CODE = rdac.DFO_AREA_CODE""")
 
     print(f"Retrieved {df.count()} rows")
 
