@@ -1,0 +1,23 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/schedules/1.0.0/schema.json",
+  "schedules": [
+    {
+      "enabled": true,
+      "jobType": "Execute",
+      "configuration": {
+        "type": "Monthly",
+        "startDateTime": "2026-08-27T00:00:00",
+        "endDateTime": "2050-02-27T23:59:00",
+        "localTimeZoneId": "Pacific Standard Time",
+        "times": [
+          "04:45"
+        ],
+        "recurrence": 1,
+        "occurrence": {
+          "occurrenceType": "DayOfMonth",
+          "dayOfMonth": 24
+        }
+      }
+    }
+  ]
+}
