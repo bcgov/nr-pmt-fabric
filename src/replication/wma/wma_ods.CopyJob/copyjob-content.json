@@ -25,7 +25,7 @@
       }
     },
     "policy": {
-      "timeout": "0.00:30:00",
+      "timeout": "00:30:00",
       "retry": 3
     }
   },
@@ -615,6 +615,318 @@
               "destination": {
                 "name": "NETTIMEFORDECISION",
                 "physicalType": "float"
+              }
+            }
+          ]
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "00b85a27-a0f2-4339-a005-973b50a50fe8",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "WATERDW",
+            "table": "VFCBC_WATER_APPLICATIONS"
+          },
+          "partitionSettings": {
+            "partitionOption": "None"
+          }
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "wma_replication",
+            "table": "vfcbc_water_applications"
+          }
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator",
+          "mappings": [
+            {
+              "source": {
+                "name": "VFCTRACKINGNUMBER",
+                "type": "String",
+                "physicalType": "varchar2",
+                "length": "40",
+                "unit": "CHAR"
+              },
+              "destination": {
+                "name": "VFCTRACKINGNUMBER",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "SUBMITTEDDATE",
+                "type": "DateTime",
+                "physicalType": "date"
+              },
+              "destination": {
+                "name": "SUBMITTEDDATE",
+                "physicalType": "timestamp"
+              }
+            },
+            {
+              "source": {
+                "name": "RECEIVEDDATE",
+                "type": "DateTime",
+                "physicalType": "date"
+              },
+              "destination": {
+                "name": "RECEIVEDDATE",
+                "physicalType": "timestamp"
+              }
+            },
+            {
+              "source": {
+                "name": "ATSPROJECTNUM",
+                "type": "String",
+                "physicalType": "varchar2",
+                "length": "15",
+                "unit": "CHAR"
+              },
+              "destination": {
+                "name": "ATSPROJECTNUM",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "ATSAUTHNUMBER",
+                "type": "Double",
+                "physicalType": "number"
+              },
+              "destination": {
+                "name": "ATSAUTHNUMBER",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "WATERFILENUM",
+                "type": "String",
+                "physicalType": "varchar2",
+                "length": "50",
+                "unit": "CHAR"
+              },
+              "destination": {
+                "name": "WATERFILENUM",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "WATERJOB",
+                "type": "String",
+                "physicalType": "varchar2",
+                "length": "40",
+                "unit": "CHAR"
+              },
+              "destination": {
+                "name": "WATERJOB",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "FORMCODE",
+                "type": "String",
+                "physicalType": "varchar2",
+                "length": "10",
+                "unit": "CHAR"
+              },
+              "destination": {
+                "name": "FORMCODE",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "FORMNAME",
+                "type": "String",
+                "physicalType": "varchar2",
+                "length": "4000",
+                "unit": "CHAR"
+              },
+              "destination": {
+                "name": "FORMNAME",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "VFCBC_STATUS",
+                "type": "String",
+                "physicalType": "varchar2",
+                "length": "60",
+                "unit": "CHAR"
+              },
+              "destination": {
+                "name": "VFCBC_STATUS",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "APPLICANTNAME",
+                "type": "String",
+                "physicalType": "varchar2",
+                "length": "4000",
+                "unit": "CHAR"
+              },
+              "destination": {
+                "name": "APPLICANTNAME",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "DIVERSIONTYPE",
+                "type": "String",
+                "physicalType": "varchar2",
+                "length": "4000",
+                "unit": "BYTE"
+              },
+              "destination": {
+                "name": "DIVERSIONTYPE",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "DIVERSIONSOURCE",
+                "type": "String",
+                "physicalType": "varchar2",
+                "length": "4000",
+                "unit": "CHAR"
+              },
+              "destination": {
+                "name": "DIVERSIONSOURCE",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "VFCBCPURPOSE",
+                "type": "String",
+                "physicalType": "varchar2",
+                "length": "4000",
+                "unit": "CHAR"
+              },
+              "destination": {
+                "name": "VFCBCPURPOSE",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "VFCBCOFFICE",
+                "type": "String",
+                "physicalType": "varchar2",
+                "length": "150",
+                "unit": "CHAR"
+              },
+              "destination": {
+                "name": "VFCBCOFFICE",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "REGION",
+                "type": "String",
+                "physicalType": "varchar2",
+                "length": "4000",
+                "unit": "CHAR"
+              },
+              "destination": {
+                "name": "REGION",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "CIATYPE",
+                "type": "String",
+                "physicalType": "varchar2",
+                "length": "25",
+                "unit": "BYTE"
+              },
+              "destination": {
+                "name": "CIATYPE",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "TYPEOFWORKS",
+                "type": "String",
+                "physicalType": "varchar2",
+                "length": "4000",
+                "unit": "CHAR"
+              },
+              "destination": {
+                "name": "TYPEOFWORKS",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "VFCBCOBJECTID",
+                "type": "Double",
+                "physicalType": "number",
+                "scale": 0,
+                "precision": 14
+              },
+              "destination": {
+                "name": "VFCBCOBJECTID",
+                "physicalType": "long"
+              }
+            },
+            {
+              "source": {
+                "name": "WATEROBJECTID",
+                "type": "Double",
+                "physicalType": "number",
+                "scale": 0,
+                "precision": 14
+              },
+              "destination": {
+                "name": "WATEROBJECTID",
+                "physicalType": "long"
+              }
+            },
+            {
+              "source": {
+                "name": "ACCEPTEDDATE",
+                "type": "DateTime",
+                "physicalType": "date"
+              },
+              "destination": {
+                "name": "ACCEPTEDDATE",
+                "physicalType": "timestamp"
+              }
+            },
+            {
+              "source": {
+                "name": "AMENDMENTTYPE",
+                "type": "String",
+                "physicalType": "varchar2",
+                "length": "107",
+                "unit": "BYTE"
+              },
+              "destination": {
+                "name": "AMENDMENTTYPE",
+                "physicalType": "string"
               }
             }
           ]
