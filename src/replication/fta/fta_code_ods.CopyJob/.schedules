@@ -6,14 +6,14 @@
       "jobType": "Execute",
       "configuration": {
         "type": "Weekly",
-        "startDateTime": "2026-06-15T00:00:00",
-        "endDateTime": "2027-06-15T00:00:00",
+        "startDateTime": "2026-08-31T00:00:00",
+        "endDateTime": "2027-08-31T00:00:00",
         "localTimeZoneId": "Pacific Standard Time",
         "times": [
           "02:45"
         ],
         "weekdays": [
-          "Tuesday"
+          "Sunday"
         ]
       }
     }
