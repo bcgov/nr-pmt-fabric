@@ -1256,7 +1256,7 @@ def _build_pes(
     on_hold_events: Optional[List[Mapping[str, Any]]] = None,
     version: str = "0.1.0",
     default_system_id: str = "ITSM-6117",
-    record_kind: str = "Permit",
+    record_kind: str = "PERMIT",
 ) -> Dict[str, Any]:
     raw_record_id = row.get("PIESID")
     record_id_value = _to_int_no_decimal(raw_record_id)
@@ -1270,10 +1270,10 @@ def _build_pes(
     return {
         "transaction_id": str(uuid7()),
         "version": version,
-        "kind": "Record",
+        "kind": "RECORD",
         "system_id": str(system_id_value),
-        "record_id": record_id_value,
-        "record_kind": record_kind,
+        "asset_id": record_id_value,
+        "asset_kind": record_kind,
         "on_hold_event_set": list(on_hold_events or []),
         "process_event_set": events,
     }
@@ -1322,7 +1322,7 @@ def post_jsonl_to_api(
             logger.warning("Opening error bucket file: %s", error_path)
         payload = {
             "line_no": line_no,
-            "record_id": record_id,
+            "asset_id": record_id,
             "status_code": status_code,
             "error": error,
             "record": rec,
@@ -1343,7 +1343,7 @@ def post_jsonl_to_api(
                     logger.warning("Skipping invalid JSON at line %d in %s: %s", line_no, out_path, e)
                     continue
 
-                record_id = record.get("record_id", "UNKNOWN")
+                record_id = record.get("asset_id", "UNKNOWN")
                 attempt = 0
                 sent_ok = False
                 refreshed_once = False
@@ -1482,7 +1482,7 @@ def smart_engine_from_rows(
     on_hold_rules: Optional[List[Mapping[str, Any]]] = None,
     on_hold_code_map: Optional[Mapping[str, Any]] = None,
     default_system_id: str = "ITSM-6117",
-    record_kind: str = "Permit",
+    record_kind: str = "PERMIT",
     version: str = "0.1.0",
 ) -> Tuple[Path, int]:
     start = time.perf_counter()
@@ -1608,7 +1608,7 @@ def run_fabric_from_table(
     api_url: Optional[str] = None,
     token_mgr: Optional[PeachTokenManager] = None,  # <-- auth optional
     default_system_id: str = "ITSM-6117",
-    record_kind: str = "Permit",
+    record_kind: str = "PERMIT",
     version: str = "0.1.0",
 ) -> Tuple[Path, int]:
     cfg = Config()
@@ -1820,7 +1820,7 @@ OUTPUT_DIR_ABFS = f"{ABFS_BASE}/Files/pies_module/lands/lands_events_peach/{FABR
 OUTPUT_FILENAME = f"lands_events_distransid_{FABRIC_ENV.lower()}_{timestamp}.jsonl"
 
 DEFAULT_SYSTEM_ID = "ITSM-6072"
-RECORD_KIND = "Permit"
+RECORD_KIND = "PERMIT"
 PES_VERSION = "0.1.0"
 
 # Build token manager ONLY if auth is enabled
