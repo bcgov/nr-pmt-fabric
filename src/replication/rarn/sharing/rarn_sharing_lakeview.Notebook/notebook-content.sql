@@ -48,20 +48,7 @@
 
 -- CELL ********************
 
-CREATE SCHEMA rarn_sharing;
-
--- METADATA ********************
-
--- META {
--- META   "language": "sparksql",
--- META   "language_group": "synapse_pyspark",
--- META   "frozen": true,
--- META   "editable": false
--- META }
-
--- CELL ********************
-
-CREATE MATERIALIZED LAKE VIEW IF NOT EXISTS rarn_sharing.rar_people_redacted AS
+CREATE OR REPLACE MATERIALIZED LAKE VIEW rarn_sharing.rar_people_redacted AS
 SELECT
 PERSON_ID,
 PROFESSIONAL_DESIGNATION_CODE,
@@ -89,7 +76,7 @@ FROM rarn_replication.rar_people;
 
 -- CELL ********************
 
-CREATE MATERIALIZED LAKE VIEW IF NOT EXISTS rarn_sharing.rar_dev_assess_status_audit AS
+CREATE OR REPLACE MATERIALIZED LAKE VIEW rarn_sharing.rar_dev_assess_status_audit AS
 SELECT
 DEV_ASSESS_STATUS_AUDIT_ID,
 DEV_ASSESSMENT_ID,
@@ -108,7 +95,7 @@ FROM rarn_replication.rar_dev_assess_status_audit;
 
 -- CELL ********************
 
-CREATE MATERIALIZED LAKE VIEW IF NOT EXISTS rarn_sharing.rar_addresses AS
+CREATE OR REPLACE MATERIALIZED LAKE VIEW rarn_sharing.rar_addresses AS
 SELECT
 ADDRESS_ID,
 ADDRESS_LINE_1,
@@ -133,7 +120,7 @@ FROM rarn_replication.rar_addresses;
 
 -- CELL ********************
 
-CREATE MATERIALIZED LAKE VIEW IF NOT EXISTS rarn_sharing.rar_dev_assessment_docs AS
+CREATE OR REPLACE MATERIALIZED LAKE VIEW rarn_sharing.rar_dev_assessment_docs AS
 SELECT
 DEV_ASSESSMENT_DOC_ID,
 DEV_ASSESSMENT_ID,
@@ -155,7 +142,7 @@ FROM rarn_replication.rar_dev_assessment_docs;
 
 -- CELL ********************
 
-CREATE MATERIALIZED LAKE VIEW IF NOT EXISTS rarn_sharing.rar_dev_assessment_people_xref AS
+CREATE OR REPLACE MATERIALIZED LAKE VIEW rarn_sharing.rar_dev_assessment_people_xref AS
 SELECT
 DEV_ASSESSMENT_ID,
 PERSON_ID,
@@ -175,7 +162,7 @@ FROM rarn_replication.rar_dev_assessment_people_xref;
 
 -- CELL ********************
 
-CREATE MATERIALIZED LAKE VIEW IF NOT EXISTS rarn_sharing.rar_dev_assessments AS
+CREATE OR REPLACE MATERIALIZED LAKE VIEW rarn_sharing.rar_dev_assessments AS
 SELECT
 DEV_ASSESSMENT_ID,
 DEV_NATURE_CODE,
@@ -185,8 +172,8 @@ STREAM_CODE,
 MUNICIPALITY_CODE,
 DEV_CODE,
 RIPARIAN_AREA_LENGTH,
-CASE WHEN PROPOSED_START_DATE = DATE '1900-01-01' THEN NULL WHEN PROPOSED_START_DATE < DATE '1582-10-15' THEN NULL ELSE PROPOSED_START_DATE END AS PROPOSED_START_DATE,
-CASE WHEN PROPOSED_END_DATE = DATE '1900-01-01' THEN NULL WHEN PROPOSED_END_DATE < DATE '1582-10-15' THEN NULL ELSE PROPOSED_END_DATE END AS PROPOSED_END_DATE,
+CASE     WHEN CAST(PROPOSED_START_DATE AS DATE) < DATE '1582-10-15'         THEN NULL    WHEN CAST(PROPOSED_START_DATE AS DATE) = DATE '1900-01-01'         THEN NULL    ELSE CAST(PROPOSED_START_DATE AS DATE) END AS PROPOSED_START_DATE,
+CASE     WHEN CAST(PROPOSED_END_DATE AS DATE) < DATE '1582-10-15'         THEN NULL    WHEN CAST(PROPOSED_END_DATE AS DATE) = DATE '1900-01-01'         THEN NULL    ELSE CAST(PROPOSED_END_DATE AS DATE) END AS PROPOSED_END_DATE,
 LOCATION_LEGAL_DSC,
 LOCATION_STREAM_NAME,
 LOCATION_NEW_WATERSHED_CODE,
@@ -218,7 +205,7 @@ FROM rarn_replication.rar_dev_assessments;
 
 -- CELL ********************
 
-CREATE MATERIALIZED LAKE VIEW IF NOT EXISTS rarn_sharing.rar_dev_cds AS
+CREATE OR REPLACE MATERIALIZED LAKE VIEW rarn_sharing.rar_dev_cds AS
 SELECT
 DEV_CODE,
 DESCRIPTION,
@@ -237,7 +224,7 @@ FROM rarn_replication.rar_dev_cds;
 
 -- CELL ********************
 
-CREATE MATERIALIZED LAKE VIEW IF NOT EXISTS rarn_sharing.rar_dev_nature_cds AS
+CREATE OR REPLACE MATERIALIZED LAKE VIEW rarn_sharing.rar_dev_nature_cds AS
 SELECT
 DEV_NATURE_CODE,
 DESCRIPTION,
@@ -256,7 +243,7 @@ FROM rarn_replication.rar_dev_nature_cds;
 
 -- CELL ********************
 
-CREATE MATERIALIZED LAKE VIEW IF NOT EXISTS rarn_sharing.rar_dev_status_cds AS
+CREATE OR REPLACE MATERIALIZED LAKE VIEW rarn_sharing.rar_dev_status_cds AS
 SELECT
 DEV_STATUS_CODE,
 DESCRIPTION,
@@ -275,7 +262,7 @@ FROM rarn_replication.rar_dev_status_cds;
 
 -- CELL ********************
 
-CREATE MATERIALIZED LAKE VIEW IF NOT EXISTS rarn_sharing.rar_dfo_area_cds AS
+CREATE OR REPLACE MATERIALIZED LAKE VIEW rarn_sharing.rar_dfo_area_cds AS
 SELECT
 DFO_AREA_CODE,
 DESCRIPTION,
@@ -295,7 +282,7 @@ FROM rarn_replication.rar_dfo_area_cds;
 
 -- CELL ********************
 
-CREATE MATERIALIZED LAKE VIEW IF NOT EXISTS rarn_sharing.rar_government_file_ref_nos AS
+CREATE OR REPLACE MATERIALIZED LAKE VIEW rarn_sharing.rar_government_file_ref_nos AS
 SELECT
 GOVERNMENT_FILE_REF_NO_ID,
 DEV_ASSESSMENT_ID,
@@ -315,7 +302,7 @@ FROM rarn_replication.rar_government_file_ref_nos;
 
 -- CELL ********************
 
-CREATE MATERIALIZED LAKE VIEW IF NOT EXISTS rarn_sharing.rar_municipalities AS
+CREATE OR REPLACE MATERIALIZED LAKE VIEW rarn_sharing.rar_municipalities AS
 SELECT
 MUNICIPALITY_CODE,
 DESCRIPTION,
@@ -335,7 +322,7 @@ FROM rarn_replication.rar_municipalities;
 
 -- CELL ********************
 
-CREATE MATERIALIZED LAKE VIEW IF NOT EXISTS rarn_sharing.rar_person_cds AS
+CREATE OR REPLACE MATERIALIZED LAKE VIEW rarn_sharing.rar_person_cds AS
 SELECT
 PERSON_CODE,
 DESCRIPTION,
@@ -354,7 +341,7 @@ FROM rarn_replication.rar_person_cds;
 
 -- CELL ********************
 
-CREATE MATERIALIZED LAKE VIEW IF NOT EXISTS rarn_sharing.rar_professional_designations AS
+CREATE OR REPLACE MATERIALIZED LAKE VIEW rarn_sharing.rar_professional_designations AS
 SELECT
 PROFESSIONAL_DESIGNATION_CODE,
 DESCRIPTION,
@@ -373,7 +360,7 @@ FROM rarn_replication.rar_professional_designations;
 
 -- CELL ********************
 
-CREATE MATERIALIZED LAKE VIEW IF NOT EXISTS rarn_sharing.rar_region_cds AS
+CREATE OR REPLACE MATERIALIZED LAKE VIEW rarn_sharing.rar_region_cds AS
 SELECT
 REGION_CODE,
 DESCRIPTION,
@@ -393,7 +380,7 @@ FROM rarn_replication.rar_region_cds;
 
 -- CELL ********************
 
-CREATE MATERIALIZED LAKE VIEW IF NOT EXISTS rarn_sharing.rar_stream_type_cds AS
+CREATE OR REPLACE MATERIALIZED LAKE VIEW rarn_sharing.rar_stream_type_cds AS
 SELECT
 STREAM_TYPE_CODE,
 DESCRIPTION,
